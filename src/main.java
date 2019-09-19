@@ -5,6 +5,7 @@ public class main
     public void main(String[] args)
     {
         Measurement thisAfternoon =  new Measurement(rawData);
+        thisAfternoon.getInsideHum();
 
     }
 }

@@ -1,6 +1,5 @@
 public class Measurement
 {
-
     private double barometer;
     private double insideTemp;
     private double insideHum;
@@ -14,6 +13,9 @@ public class Measurement
     private double battLevel;
     private String sunSet;
     private String sunRise;
+    private double dewPoint;
+    private double windChill;
+    private double heatIndex;
 
     public Measurement()
     {
@@ -22,8 +24,22 @@ public class Measurement
 
     public Measurement(RawMeasurement rawData)
     {
-       setBarometer(rawData.getBarometer());
-       setInsideTemp(rawData.getInsideTemp());
+        setBarometer(rawData.getBarometer());
+        setInsideTemp(rawData.getInsideTemp());
+        setInsideHum(rawData.getInsideHum());
+        setOutsideTemp(rawData.getOutsideTemp());
+        setWindSpeed(rawData.getWindSpeed());
+        setAvgWindSpeed(rawData.getAvgWindSpeed());
+        setWindDir(rawData.getWindDir());
+        setOutsideHum(rawData.getOutsideHum());
+        setRainRate(rawData.getRainRate());
+        setUvLevel(rawData.getRainRate());
+        setBattLevel(rawData.getBattLevel());
+        SetSunSet(rawData.getSunset());
+        SetSunRise(rawData.getSunrise());
+        SetDewPoint(getOutsideTemp(),getOutsideHum());
+        SetWindChill(rawData.getWindSpeed(),rawData.getOutsideTemp());
+        SetHeatIndex(getOutsideTemp(),getOutsideHum());
     }
 
     public void setBarometer (short val) { this.barometer = ValueConverter.airPressure(val);};
@@ -70,6 +86,15 @@ public class Measurement
     public void SetSunRise (short val) { this.sunRise = ValueConverter.sunRise(val);};
     public String GetSunRise () { return sunRise; };
 
+    public void SetDewPoint(double val1, double val2) { this.dewPoint = ValueConverter.dewPoint(val1,val2);};
+    public double GetDewPoint() { return dewPoint; };
+
+    public void SetWindChill(short val1, short val2) { this.windChill = ValueConverter.windChill(val1, val2);};
+    public double GetWindChill() { return windChill; };
+
+    public void SetHeatIndex(double val1, double val2) { this.heatIndex = ValueConverter.dewPoint(val1,val2);};
+    public double GetHeatIndex() { return heatIndex; };
+
 
     public String toString()
     {
@@ -85,13 +110,13 @@ public class Measurement
                 + "\nwindDir = \t" + windDir
                 + "\noutsideHum = \t" + outsideHum
                 + "\nrainRate = \t" + rainRate
-                /*+ "\nUVLevel = \t" + UVLevel
-                + "\nsolarRad = \t" + solarRad
+                + "\nUVLevel = \t" + uvLevel
+                /*+ "\nsolarRad = \t" + solarRad
                 + "\nxmitBatt = \t" + xmitBatt*/
-                + "\nbattLevel = \t" + battLevel;
-                /*+ "\nforeIcon = \t" + foreIcon
-                + "\nsunrise = \t" + sunrise
-                + "\nsunset = \t" + sunset;*/
+                + "\nbattLevel = \t" + battLevel
+                /*+ "\nforeIcon = \t" + foreIcon*/
+                + "\nsunrise = \t" + sunRise
+                + "\nsunset = \t" + sunSet;
         return s;
     }
 }
