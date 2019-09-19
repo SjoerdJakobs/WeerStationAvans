@@ -148,8 +148,8 @@ public class ValueConverter {
     }
 
     public static double windChill(short rawValue, short rawValue2) {
-        double wichill = 13.12 + (0.6215 * rawValue2) - (11.37 * Math.pow(rawValue, 0.16)) + ((0.3965 * rawValue2) * Math.pow(rawValue, 0.16));
-        return wichill;
+        double windchill = 13.12 + (0.6215 * rawValue2) - (11.37 * Math.pow(rawValue, 0.16)) + ((0.3965 * rawValue2) * Math.pow(rawValue, 0.16));
+        return windchill;
     }
 
     public static double heatIndex(double Temp,double Humid) {

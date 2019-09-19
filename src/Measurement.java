@@ -1,3 +1,5 @@
+import java.util.logging.Filter;
+
 public class Measurement
 {
 
@@ -26,7 +28,17 @@ public class Measurement
        setInsideTemp(rawData.getInsideTemp());
     }
 
-    public void setBarometer (short val) { this.barometer = ValueConverter.airPressure(val);};
+
+
+    public void setBarometer (short val) {
+        short max = 32767;
+        if (DataFilter(val,max)) {
+            this.barometer = ValueConverter.airPressure(val);
+        } else {
+            this.barometer = ;
+        }
+
+    };
     public double getBarometer () { return barometer; };
 
     public void setInsideTemp (short val) { this.insideTemp = ValueConverter.temperature(val);};
@@ -93,5 +105,13 @@ public class Measurement
                 + "\nsunrise = \t" + sunrise
                 + "\nsunset = \t" + sunset;*/
         return s;
+    }
+    public boolean DataFilter (short rawData, short maxValue) {
+        boolean valid;
+        if (rawData < maxValue) {
+            return valid = true;
+        } else {
+            return valid = false;
+        }
     }
 }
