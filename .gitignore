@@ -18,5 +18,8 @@
 *.tar.gz
 *.rar
 
+#to not keep on changing the java version
+*misc.xml
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*

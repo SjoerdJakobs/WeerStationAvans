@@ -1,7 +1,10 @@
 public class main
 {
-    public static void main(String[] args)
+    public RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
+
+    public void main(String[] args)
     {
+        Measurement thisAfternoon =  new Measurement(rawData);
 
     }
 }
