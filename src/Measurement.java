@@ -1,7 +1,6 @@
 import java.time.LocalDateTime;
 
-public class Measurement
-{
+public class Measurement {
 
     private String stationId;
     private LocalDateTime dateStamp;
@@ -22,13 +21,11 @@ public class Measurement
     private Double windChill;
     private Double heatIndex;
 
-    public Measurement()
-    {
+    public Measurement() {
 
     }
 
-    public Measurement(RawMeasurement rawData)
-    {
+    public Measurement(RawMeasurement rawData) {
         setStationId(rawData.getStationId());
         setDateStamp(rawData.getDateStamp());
         setBarometer(rawData.getBarometer());
@@ -44,34 +41,43 @@ public class Measurement
         setBattLevel(rawData.getBattLevel());
         SetSunSet(rawData.getSunset());
         SetSunRise(rawData.getSunrise());
-        SetDewPoint(getOutsideTemp(),getOutsideHum());
-        SetWindChill(rawData.getWindSpeed(),rawData.getOutsideTemp());
-        SetHeatIndex(getOutsideTemp(),getOutsideHum());
+        SetDewPoint(getOutsideTemp(), getOutsideHum());
+        SetWindChill(rawData.getWindSpeed(), rawData.getOutsideTemp());
+        SetHeatIndex(getOutsideTemp(), getOutsideHum());
     }
 
 
-
-    public void setBarometer (short val) {
+    public void setBarometer(short val) {
         short max = 32767;
-        if (DataFilter(val,max)) {
+        if (DataFilter(val, max)) {
             this.barometer = ValueConverter.airPressure(val);
         } else {
             this.barometer = null;
         }
-    };
-    public Double getBarometer () { return barometer; };
+    }
 
-    public void setInsideTemp (short val) {
+
+    public Double getBarometer() {
+        return barometer;
+    }
+
+
+    public void setInsideTemp(short val) {
         short max = 32767;
-        if (DataFilter(val,max)) {
-            this.insideTemp = ValueConverter.temperature(val);;
+        if (DataFilter(val, max)) {
+            this.insideTemp = ValueConverter.temperature(val);
+            ;
         } else {
             this.insideTemp = null;
         }
     }
-    public Double getInsideTemp () { return insideTemp; };
 
-    public void setInsideHum (short val) {
+    public Double getInsideTemp() {
+        return insideTemp;
+    }
+
+
+    public void setInsideHum(short val) {
         short max = 100;
         if (DataFilter(val, max)) {
             this.insideHum = ValueConverter.humidity(val);
@@ -79,9 +85,13 @@ public class Measurement
             this.insideHum = null;
         }
     }
-    public Double getInsideHum () { return insideHum; };
 
-    public void setOutsideTemp (short val) {
+    public Double getInsideHum() {
+        return insideHum;
+    }
+
+
+    public void setOutsideTemp(short val) {
         short max = 32767;
         if (DataFilter(val, max)) {
             this.outsideTemp = ValueConverter.temperature(val);
@@ -89,9 +99,12 @@ public class Measurement
             this.outsideTemp = null;
         }
     }
-    public Double getOutsideTemp () { return outsideTemp; }
 
-    public void setWindSpeed (short val) {
+    public Double getOutsideTemp() {
+        return outsideTemp;
+    }
+
+    public void setWindSpeed(short val) {
         short max = 255;
         if (DataFilter(val, max)) {
             this.windSpeed = ValueConverter.windSpeed(val);
@@ -99,9 +112,13 @@ public class Measurement
             this.windSpeed = null;
         }
     }
-    public Double getWindSpeed () { return windSpeed; };
 
-    public void setAvgWindSpeed (short val) {
+    public Double getWindSpeed() {
+        return windSpeed;
+    }
+
+
+    public void setAvgWindSpeed(short val) {
         short max = 255;
         if (DataFilter(val, max)) {
             this.avgWindSpeed = ValueConverter.windSpeed(val);
@@ -109,9 +126,13 @@ public class Measurement
             this.avgWindSpeed = null;
         }
     }
-    public Double getAvgWindSpeed () { return avgWindSpeed; };
 
-    public void setWindDir (short val) {
+    public Double getAvgWindSpeed() {
+        return avgWindSpeed;
+    }
+
+
+    public void setWindDir(short val) {
         short max = 32767;
         if (DataFilter(val, max)) {
             this.windDir = ValueConverter.windDirection(val);
@@ -119,9 +140,13 @@ public class Measurement
             this.windDir = null;
         }
     }
-    public Double getWindDir () { return windDir; };
 
-    public void setOutsideHum (short val) {
+    public Double getWindDir() {
+        return windDir;
+    }
+
+
+    public void setOutsideHum(short val) {
         short max = 255;
         if (DataFilter(val, max)) {
             this.outsideHum = ValueConverter.humidity(val);
@@ -129,9 +154,13 @@ public class Measurement
             this.outsideHum = null;
         }
     }
-    public Double getOutsideHum () { return outsideHum; };
 
-    public void setRainRate (short val) {
+    public Double getOutsideHum() {
+        return outsideHum;
+    }
+
+
+    public void setRainRate(short val) {
         short max = 32767;
         if (DataFilter(val, max)) {
             this.rainRate = ValueConverter.rainMeter(val);
@@ -139,9 +168,13 @@ public class Measurement
             this.rainRate = null;
         }
     }
-    public Double getRainRate () { return rainRate; };
 
-    public void setUvLevel (short val) {
+    public Double getRainRate() {
+        return rainRate;
+    }
+
+
+    public void setUvLevel(short val) {
         short max = 255;
         if (DataFilter(val, max)) {
             this.uvLevel = ValueConverter.uvIndex(val);
@@ -149,9 +182,13 @@ public class Measurement
             this.uvLevel = null;
         }
     }
-    public Double getUvLevel () { return uvLevel; };
 
-    public void setBattLevel (short val) {
+    public Double getUvLevel() {
+        return uvLevel;
+    }
+
+
+    public void setBattLevel(short val) {
         short max = 1000;
         if (DataFilter(val, max)) {
             this.battLevel = ValueConverter.batteryLevel(val);
@@ -159,9 +196,13 @@ public class Measurement
             this.battLevel = null;
         }
     }
-    public Double getBattLevel () { return battLevel; };
 
-    public void SetSunSet (short val) {
+    public Double getBattLevel() {
+        return battLevel;
+    }
+
+
+    public void SetSunSet(short val) {
         short max = 2400;
         if (DataFilter(val, max)) {
             this.sunSet = ValueConverter.sunSet(val);
@@ -169,9 +210,13 @@ public class Measurement
             this.sunSet = null;
         }
     }
-    public String GetSunSet () { return sunSet; };
 
-    public void SetSunRise (short val) {
+    public String GetSunSet() {
+        return sunSet;
+    }
+
+
+    public void SetSunRise(short val) {
         short max = 2400;
         if (DataFilter(val, max)) {
             this.sunRise = ValueConverter.sunRise(val);
@@ -180,15 +225,46 @@ public class Measurement
         }
     }
 
-    public void SetDewPoint(double val1, double val2) { this.dewPoint = ValueConverter.dewPoint(val1,val2);};
-    public double GetDewPoint() { return dewPoint; };
+    public String GetSunRise () {
+        return sunRise;
+    }
 
-    public void SetWindChill(short val1, short val2) { this.windChill = ValueConverter.windChill(val1, val2);};
-    public double GetWindChill() { return windChill; };
+    public void SetDewPoint(double val1, double val2) {
+        short max = 100;
+        if (DataFilter((short) val1, max)) {
+            this.dewPoint = ValueConverter.dewPoint(val1, val2);
+        } else {
+            this.dewPoint = null;
+        }
+    }
 
-    public void SetHeatIndex(double val1, double val2) { this.heatIndex = ValueConverter.heatIndex(val1,val2);};
-    public double GetHeatIndex() { return heatIndex; }
-    public String GetSunRise () { return sunRise; }
+    public double GetDewPoint() {
+        return dewPoint;
+    }
+
+    public void SetWindChill(short val1, short val2) {
+        short max = 32767;
+        if (DataFilter(val1, max)){
+            this.windChill = ValueConverter.windChill(val1, val2);
+        } else {
+            this.windChill = null;
+        }
+    }
+
+    public double GetWindChill() {
+        return windChill;
+    }
+
+    public void SetHeatIndex(double val1, double val2) {
+        short max = 32767;
+        if (DataFilter((short)val1, max)){
+            this.heatIndex = ValueConverter.heatIndex(val1,val2);
+        }
+    }
+
+    public double GetHeatIndex() {
+        return heatIndex;
+    }
 
     public void setStationId(String val1) { this.stationId = val1; }
     public String getStationId() { return stationId; }
@@ -213,7 +289,11 @@ public class Measurement
                 + "\nUVLevel = \t" + uvLevel
                 + "\nbattLevel = \t" + battLevel
                 + "\nsunrise = \t" + sunRise
-                + "\nsunset = \t" + sunSet;
+                + "\nsunset = \t" + sunSet
+                + "\nheatindex = \t" + heatIndex
+                + "\ndewpoint = \t" + dewPoint
+                + "\nwindChill = \t" + windChill;
+
         return s;
     }
     public boolean DataFilter (short rawData, short maxValue) {
