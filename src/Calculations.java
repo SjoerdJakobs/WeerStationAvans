@@ -127,17 +127,21 @@ public class Calculations {
     }
 
     /**
-     * Made by Mick van der Werf
+     * Made by Mick van der Werf.
+     *
+     * This function checks the difference between outside temperature and dewpoint to determine if there was a chance of mist.
+     * @param array consists of the values during the period of which to check the values.
+     * @param counter keeps track of how many days it has found.
+     * @param lastDate keeps track of the last day that was found.
      */
     public static ArrayList<LocalDateTime> mist(ArrayList<Measurement> array) {
-        double difference = 2.5;
         int counter = 0;
         int lastDate = 0;
         ArrayList<LocalDateTime> result = new ArrayList<LocalDateTime>();
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getDateStamp().getDayOfYear() != lastDate) {
                 if (array.get(i).getOutsideTemp() !=null && array.get(i).getOutsideHum() != null){
-                    if (Math.abs(array.get(i).getOutsideTemp()-dewPoint(array.get(i).getOutsideTemp(),array.get(i).getOutsideHum())) < difference) {
+                    if (Math.abs(array.get(i).getOutsideTemp()-dewPoint(array.get(i).getOutsideTemp(),array.get(i).getOutsideHum())) < 2.5) {
                         result.add(array.get(i).getDateStamp());
                         counter++;
                         lastDate = array.get(i).getDateStamp().getDayOfYear();
