@@ -131,9 +131,11 @@ public class Calculations {
      *
      * This function checks the difference between outside temperature and dewpoint to determine if there was a chance of mist.
      * @param array consists of the values during the period of which to check the values.
-     * @param counter keeps track of how many days it has found.
-     * @param lastDate keeps track of the last day that was found.
+     * Counter: keeps track of how many days it has found.
+     * LastDate: keeps track of the last day that was found.
+     * 
      */
+
     public static ArrayList<LocalDateTime> mist(ArrayList<Measurement> array) {
         int counter = 0;
         int lastDate = 0;
