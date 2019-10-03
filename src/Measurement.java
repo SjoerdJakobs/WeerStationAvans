@@ -17,7 +17,6 @@ public class Measurement {
     private Double battLevel;
     private String sunSet;
     private String sunRise;
-    private Double dewPoint;
     private Double windChill;
     private Double heatIndex;
 
@@ -41,9 +40,6 @@ public class Measurement {
         setBattLevel(rawData.getBattLevel());
         SetSunSet(rawData.getSunset());
         SetSunRise(rawData.getSunrise());
-        SetDewPoint(getOutsideTemp(), getOutsideHum());
-        SetWindChill(rawData.getWindSpeed(), rawData.getOutsideTemp());
-        SetHeatIndex(getOutsideTemp(), getOutsideHum());
     }
 
 
@@ -229,43 +225,6 @@ public class Measurement {
         return sunRise;
     }
 
-    public void SetDewPoint(double val1, double val2) {
-        short max = 100;
-        if (DataFilter((short) val1, max)) {
-            this.dewPoint = ValueConverter.dewPoint(val1, val2);
-        } else {
-            this.dewPoint = null;
-        }
-    }
-
-    public double GetDewPoint() {
-        return dewPoint;
-    }
-
-    public void SetWindChill(short val1, short val2) {
-        short max = 32767;
-        if (DataFilter(val1, max)){
-            this.windChill = ValueConverter.windChill(val1, val2);
-        } else {
-            this.windChill = null;
-        }
-    }
-
-    public double GetWindChill() {
-        return windChill;
-    }
-
-    public void SetHeatIndex(double val1, double val2) {
-        short max = 32767;
-        if (DataFilter((short)val1, max)){
-            this.heatIndex = ValueConverter.heatIndex(val1,val2);
-        }
-    }
-
-    public double GetHeatIndex() {
-        return heatIndex;
-    }
-
     public void setStationId(String val1) { this.stationId = val1; }
     public String getStationId() { return stationId; }
 
@@ -289,10 +248,7 @@ public class Measurement {
                 + "\nUVLevel = \t" + uvLevel
                 + "\nbattLevel = \t" + battLevel
                 + "\nsunrise = \t" + sunRise
-                + "\nsunset = \t" + sunSet
-                + "\nheatindex = \t" + heatIndex
-                + "\ndewpoint = \t" + dewPoint
-                + "\nwindChill = \t" + windChill;
+                + "\nsunset = \t" + sunSet;
 
         return s;
     }

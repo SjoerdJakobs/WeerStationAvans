@@ -141,34 +141,14 @@ public class ValueConverter {
         return IntTimeIntToString(rawValue);
     }
 
-    public static double dewPoint(double Temp,double Humid) {
-        double result = Temp - ((100 - Humid)/5);
-        return result;
-    }
 
-    public static double windChill(short rawValue, short rawValue2) {
-        double windchill = 13.12 + (0.6215 * rawValue2) - (11.37 * Math.pow(rawValue, 0.16)) + ((0.3965 * rawValue2) * Math.pow(rawValue, 0.16));
-        return windchill;
-    }
 
-    public static double heatIndex(double Temp,double Humid) {
-        double result = -42.379+2.04901523*Temp+10.14333127*Humid-0.22475541*Temp*Humid-0.00683783*Temp*Temp-0.05481717*Humid*Humid+0.00122874*Temp*Temp*Humid+0.00085282*Temp*Humid*Humid-0.00000199*Temp*Temp*Humid*Humid;
-        if (Humid <13 && Temp > 80 && Temp < 112) {
-            result = ((13-Humid)/4)*Math.sqrt((17-Math.abs(Temp-95.))/17);
-        } else {
-            if (Humid > 85 && Temp > 80 && Temp < 87) {
-                result = ((Humid-85)/10)*((87-Temp)/5);
-            } else {
-                if (result < 80) {
-                    result = (Temp + 61.0 + ((Temp-68.0)*1.2) + (Humid*0.094))*0.5;
-                }
-            }
-        }
-        return FahrenheitToCelcius(result);
-    }
-
-    public static double FahrenheitToCelcius(double Fahrenheit) {
+    public static double FahrenheitToCelsius(double Fahrenheit) {
         double returnValue = (Fahrenheit - 32) * (5 / 9.0);
+        return returnValue;
+    }
+    public static double CelsiusToFahrenheit(double Celsius) {
+        double returnValue = Celsius * (5 / 9.0) + 32;
         return returnValue;
     }
 }
