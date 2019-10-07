@@ -41,9 +41,9 @@ public class Measurement {
         setBattLevel(rawData.getBattLevel());
         SetSunSet(rawData.getSunset());
         SetSunRise(rawData.getSunrise());
-        SetDewPoint(getOutsideTemp(), getOutsideHum());
+        //SetDewPoint(getOutsideTemp(), getOutsideHum());
         SetWindChill(rawData.getWindSpeed(), rawData.getOutsideTemp());
-        SetHeatIndex(getOutsideTemp(), getOutsideHum());
+        //SetHeatIndex(getOutsideTemp(), getOutsideHum());
     }
 
 

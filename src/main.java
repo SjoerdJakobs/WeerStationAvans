@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.time.LocalDateTime;
 
 public class main
 {
@@ -43,5 +44,8 @@ public class main
         mean /= measurements.size();
 
         System.out.println(mean);
+
+        MaxRain.run();
+
     }
 }
