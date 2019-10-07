@@ -143,18 +143,16 @@ public class ValueConverter {
 
     public static double dewPoint(double Temp,double Humid) {
         double result = Temp - ((100 - Humid)/5);
-        System.out.println(result);
         return result;
     }
 
     public static double windChill(short rawValue, short rawValue2) {
-        double wichill = 13.12 + (0.6215 * rawValue2) - (11.37 * Math.pow(rawValue, 0.16)) + ((0.3965 * rawValue2) * Math.pow(rawValue, 0.16));
-        return wichill;
+        double windchill = 13.12 + (0.6215 * rawValue2) - (11.37 * Math.pow(rawValue, 0.16)) + ((0.3965 * rawValue2) * Math.pow(rawValue, 0.16));
+        return windchill;
     }
 
     public static double heatIndex(double Temp,double Humid) {
         double result = -42.379+2.04901523*Temp+10.14333127*Humid-0.22475541*Temp*Humid-0.00683783*Temp*Temp-0.05481717*Humid*Humid+0.00122874*Temp*Temp*Humid+0.00085282*Temp*Humid*Humid-0.00000199*Temp*Temp*Humid*Humid;
-        System.out.println(result);
         if (Humid <13 && Temp > 80 && Temp < 112) {
             result = ((13-Humid)/4)*Math.sqrt((17-Math.abs(Temp-95.))/17);
         } else {
