@@ -157,7 +157,7 @@ public class DatabaseConnection {
 			}
 		}
 		try {
-
+			//System.out.println(address);
 			InputStream is = buildStream(address);
 			DataInputStream reader = new DataInputStream(is);
 
