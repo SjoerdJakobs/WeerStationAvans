@@ -34,7 +34,6 @@ public class Calculations {
     /**
      * calculate the median (the middle value of a sorted array)
      */
-
     public static double median(ArrayList<Double> array) {
         double[] sorted = new double[array.size()];
 
@@ -135,7 +134,6 @@ public class Calculations {
      * LastDate: keeps track of the last day that was found.
      * 
      */
-
     public static ArrayList<LocalDateTime> mist(ArrayList<Measurement> array) {
         int counter = 0;
         int lastDate = 0;
