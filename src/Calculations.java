@@ -133,22 +133,20 @@ public class Calculations {
      * Counter: keeps track of how many days it has found.
      * LastDate: keeps track of the last day that was found.
      */
-    public static ArrayList<LocalDateTime> mist(ArrayList<Measurement> array) {
+    public static int mist(ArrayList<Measurement> array) {
         int counter = 0;
         int lastDate = 0;
-        ArrayList<LocalDateTime> result = new ArrayList<LocalDateTime>();
+        int result = 0;
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getDateStamp().getDayOfYear() != lastDate) {
                 if (!Double.isNaN(array.get(i).getOutsideTemp()) && !Double.isNaN(array.get(i).getOutsideHum())) {
                     if (Math.abs(array.get(i).getOutsideTemp() - dewPoint(array.get(i).getOutsideTemp(), array.get(i).getOutsideHum())) < 2.5) {
-                        result.add(array.get(i).getDateStamp());
-                        counter++;
+                        result++;
                         lastDate = array.get(i).getDateStamp().getDayOfYear();
                     }
                 }
             }
         }
-        System.out.println(counter);
         return result;
     }
 
@@ -266,5 +264,37 @@ public class Calculations {
             graaddagen = graaddagen + degreeDifference;
         }
         return graaddagen;
+    }
+
+    /**
+     * Author: Dennis Kruijt.
+     * Purpose: calculate the number of rising temperature series where the temperature may not decrease
+     *          or stay level over a period of 10 minutes.     *
+     *
+     * @param measurements is an array consisting of measurements with values such as temperatures.
+     * series: keeps track of the number of rising temperature series which must rise for at least 10 measurements.
+     * notRising: keeps series of the rising temperature seperate.
+     */
+    public static int risingTemperatureDuration(ArrayList<Measurement> measurements) {
+        int series = 0;
+        int notRising = 0;
+        boolean addCounter = true;
+
+        for (int i = 10; i < measurements.size(); i++) {
+            if (!Double.isNaN(measurements.get(i).getOutsideTemp())) {
+                // Compare temperature indexed i with temperature of 10 places back
+                if (measurements.get(i).getOutsideTemp() > measurements.get(i - 10).getOutsideTemp()) {
+                    if (addCounter) {
+                        addCounter = false; // Don't count the same serie more than once
+                        series++;
+                        notRising = 0;
+                    }
+                } else {
+                    notRising++;
+                    if (notRising == 10) addCounter = true; // If temperatur is not rising, end the serie
+                }
+            }
+        }
+        return series;
     }
 }
