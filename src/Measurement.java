@@ -17,8 +17,6 @@ public class Measurement {
     private double battLevel;
     private String sunSet;
     private String sunRise;
-    private double windChill;
-    private double heatIndex;
 
     public Measurement() {
 
