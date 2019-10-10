@@ -152,4 +152,6 @@ public class Calculations {
         System.out.println(counter);
         return result;
     }
+
+
 }
