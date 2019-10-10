@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class MaxRain {
+/*public class MaxRain {
     public  static void run() {
         ArrayList<RawMeasurement> rawDatas = DatabaseConnection.getMeasurementsLastYear();
         ArrayList<Measurement> measurements = new ArrayList<Measurement>();
@@ -9,7 +9,7 @@ public class MaxRain {
         double finalMax = 0.0;
         for (int i = 0; i < rawDatas.size(); i++) {
             measurements.add(new Measurement(rawDatas.get(i)));
-            if (measurements.get(i).getRainRate() != null) {
+            if (!Double.isNaN(measurements.get(i).getRainRate())) {
                 if (measurements.get(i).getRainRate() > 0) {
                     max += measurements.get(i).getRainRate();
                 } else {
@@ -22,4 +22,4 @@ public class MaxRain {
         }
         System.out.println("max rain is " +finalMax);
     }
-}
+}*/

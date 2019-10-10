@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * bedoelen we dat op een moment de buitentemperatuur boven de binnentemperatuur komt of
  * omgekeerd binnentemperatuur boven de buitentemperatuur komt.
  */
-
+/*
 public class Opdracht2 {
 
     public static double tempChange(ArrayList<Measurement> inside, ArrayList<Double> outside){
@@ -41,4 +41,4 @@ public class Opdracht2 {
         return count;
     }
 
-}
+}*/
