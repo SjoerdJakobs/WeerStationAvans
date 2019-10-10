@@ -12,11 +12,11 @@ public class ValueConverterTest {
     }
 
     @Test
-    public void testFahrenheitToCelcius()
+    public void testFahrenheitToCelsius()
     {
         short testValue = 68;
         double expectedValue = 20;
-        Assert.assertEquals("F to C", ValueConverter.FahrenheitToCelcius(testValue), expectedValue, 0.0001);
+        Assert.assertEquals("F to C", ValueConverter.FahrenheitToCelsius(testValue), expectedValue, 0.0001);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class ValueConverterTest {
         short testValue1 = 20;
         short testValue2 = 60;
         double expectedValue = 12;
-        Assert.assertEquals("temp and humidity to dewPoint", ValueConverter.dewPoint(testValue1,testValue2), expectedValue, 0.0001);
+        Assert.assertEquals("temp and humidity to dewPoint", Calculations.dewPoint(testValue1,testValue2), expectedValue, 0.0001);
     }
 
     @Test
@@ -98,7 +98,7 @@ public class ValueConverterTest {
         short testValue1 = 15;
         short testValue2 = 10;
         double expectedValue = 7.914117477770259;
-        Assert.assertEquals("temp and windspeed to windChill", ValueConverter.windChill(testValue1,testValue2), expectedValue, 0.0001);
+        Assert.assertEquals("temp and windspeed to windChill", Calculations.windChill(testValue1,testValue2), expectedValue, 0.0001);
     }
 
     @Test
@@ -106,7 +106,7 @@ public class ValueConverterTest {
     {
         short testValue1 = 75;
         short testValue2 = 44;
-        double expectedValue = ValueConverter.FahrenheitToCelcius(74.268);
-        Assert.assertEquals("temp and HeatIndex to windChill", ValueConverter.heatIndex(testValue1,testValue2), expectedValue, 0.0001);
+        double expectedValue = ValueConverter.FahrenheitToCelsius(74.268);
+        Assert.assertEquals("temp and HeatIndex to windChill", Calculations.heatIndex(testValue1,testValue2), expectedValue, 0.0001);
     }
 }
