@@ -1,7 +1,9 @@
+import java.net.CookieHandler;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -35,15 +37,12 @@ public class Calculations {
      * calculate the median (the middle value of a sorted array)
      */
     public static double median(ArrayList<Double> array) {
-        double[] sorted = new double[array.size()];
-
-        System.arraycopy(array, 0, sorted, 0, array.size());
-        Arrays.sort(sorted);
+        Collections.sort(array);
 
         if (array.size() % 2 == 0) {
-            return (sorted[(sorted.length / 2) - 1] + sorted[sorted.length / 2]) / 2;
+            return (array.get((array.size() / 2) - 1) + array.get(array.size() / 2)) / 2;
         } else {
-            return sorted[sorted.length / 2];
+            return array.get(array.size() / 2);
         }
     }
 

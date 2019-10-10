@@ -92,6 +92,7 @@ public class Period {
         ArrayList<RawMeasurement> rawMeasurements = getRawMeasurements();
         for (RawMeasurement rawMeasurement : rawMeasurements) {
             Measurement measurement = new Measurement(rawMeasurement);
+            measurements.add(measurement);
             //if(measurement.isValid()) {
             //    measurements.add(measurement);
             //}
