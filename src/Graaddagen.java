@@ -1,7 +1,8 @@
+import java.io.CharArrayReader;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class Graaddagen {
+/*public class Graaddagen {
 
     public LocalDateTime begin;
     public LocalDateTime end;
@@ -37,14 +38,14 @@ public class Graaddagen {
             }
             else if (measurements.get(counter).getDateStamp().getDayOfYear() != prevDate) {
 
-               int RoundedAveragePlusOne = (int)MSD.mean(dayTemps)+1;
-               double CorrectAverage = MSD.mean(dayTemps);
+               int RoundedAveragePlusOne = (int)Calculations.mean(dayTemps)+1;
+               double CorrectAverage = Calculations.mean(dayTemps);
                double offrounderDecider = (double)RoundedAveragePlusOne - CorrectAverage;
                if (offrounderDecider < 0.5){
                    degreeDifference = 18 - RoundedAveragePlusOne;
                }
                else {
-                   degreeDifference = 18 - (int)MSD.mean(dayTemps);
+                   degreeDifference = 18 - (int)Calculations.mean(dayTemps);
                }
 
                  if (degreeDifference > 0){
@@ -58,10 +59,10 @@ public class Graaddagen {
 
                 }
         if (prevDate == OriginalDate && graaddagen == 0){
-            degreeDifference = 18 - (int)MSD.mean(dayTemps);
+            degreeDifference = 18 - (int) Calculations.mean(dayTemps);
             graaddagen = graaddagen + degreeDifference;
         }
         return graaddagen;
             }
-    }
+    }*/
 
