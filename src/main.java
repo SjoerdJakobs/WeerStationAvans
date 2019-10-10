@@ -9,14 +9,5 @@ public class main
     {
         IO.init();
         HelperFunctions.ClearAll();
-        ArrayList<RawMeasurement> rawMeasurements = DatabaseConnection.getMeasurementsLastYear();
-
-        ArrayList<Measurement> measurements = new ArrayList<Measurement>();
-
-        for (int i = 0; i < rawMeasurements.size(); i++) {
-        measurements.add(new Measurement(rawMeasurements.get(i)));
-        }
-
-        System.out.println(Calculations.mist(measurements));
     }
 }

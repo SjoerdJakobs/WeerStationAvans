@@ -4,21 +4,21 @@ public class Measurement {
 
     private String stationId;
     private LocalDateTime dateStamp;
-    private Double barometer;
-    private Double insideTemp;
-    private Double insideHum;
-    private Double outsideTemp;
-    private Double windSpeed;
-    private Double avgWindSpeed;
-    private Double windDir;
-    private Double outsideHum;
-    private Double rainRate;
-    private Double uvLevel;
-    private Double battLevel;
+    private double barometer;
+    private double insideTemp;
+    private double insideHum;
+    private double outsideTemp;
+    private double windSpeed;
+    private double avgWindSpeed;
+    private double windDir;
+    private double outsideHum;
+    private double rainRate;
+    private double uvLevel;
+    private double battLevel;
     private String sunSet;
     private String sunRise;
-    private Double windChill;
-    private Double heatIndex;
+    private double windChill;
+    private double heatIndex;
 
     public Measurement() {
 
@@ -48,12 +48,12 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.barometer = ValueConverter.airPressure(val);
         } else {
-            this.barometer = null;
+            this.barometer = Double.NaN;
         }
     }
 
 
-    public Double getBarometer() {
+    public double getBarometer() {
         return barometer;
     }
 
@@ -64,11 +64,11 @@ public class Measurement {
             this.insideTemp = ValueConverter.temperature(val);
             ;
         } else {
-            this.insideTemp = null;
+            this.insideTemp = Double.NaN;
         }
     }
 
-    public Double getInsideTemp() {
+    public double getInsideTemp() {
         return insideTemp;
     }
 
@@ -78,11 +78,11 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.insideHum = ValueConverter.humidity(val);
         } else {
-            this.insideHum = null;
+            this.insideHum = Double.NaN;
         }
     }
 
-    public Double getInsideHum() {
+    public double getInsideHum() {
         return insideHum;
     }
 
@@ -92,11 +92,11 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.outsideTemp = ValueConverter.temperature(val);
         } else {
-            this.outsideTemp = null;
+            this.outsideTemp = Double.NaN;
         }
     }
 
-    public Double getOutsideTemp() {
+    public double getOutsideTemp() {
         return outsideTemp;
     }
 
@@ -105,11 +105,11 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.windSpeed = ValueConverter.windSpeed(val);
         } else {
-            this.windSpeed = null;
+            this.windSpeed = Double.NaN;
         }
     }
 
-    public Double getWindSpeed() {
+    public double getWindSpeed() {
         return windSpeed;
     }
 
@@ -119,11 +119,11 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.avgWindSpeed = ValueConverter.windSpeed(val);
         } else {
-            this.avgWindSpeed = null;
+            this.avgWindSpeed = Double.NaN;
         }
     }
 
-    public Double getAvgWindSpeed() {
+    public double getAvgWindSpeed() {
         return avgWindSpeed;
     }
 
@@ -133,11 +133,11 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.windDir = ValueConverter.windDirection(val);
         } else {
-            this.windDir = null;
+            this.windDir = Double.NaN;
         }
     }
 
-    public Double getWindDir() {
+    public double getWindDir() {
         return windDir;
     }
 
@@ -147,11 +147,11 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.outsideHum = ValueConverter.humidity(val);
         } else {
-            this.outsideHum = null;
+            this.outsideHum = Double.NaN;
         }
     }
 
-    public Double getOutsideHum() {
+    public double getOutsideHum() {
         return outsideHum;
     }
 
@@ -161,11 +161,11 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.rainRate = ValueConverter.rainMeter(val);
         } else {
-            this.rainRate = null;
+            this.rainRate = Double.NaN;
         }
     }
 
-    public Double getRainRate() {
+    public double getRainRate() {
         return rainRate;
     }
 
@@ -175,11 +175,11 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.uvLevel = ValueConverter.uvIndex(val);
         } else {
-            this.uvLevel = null;
+            this.uvLevel = Double.NaN;
         }
     }
 
-    public Double getUvLevel() {
+    public double getUvLevel() {
         return uvLevel;
     }
 
@@ -189,11 +189,11 @@ public class Measurement {
         if (DataFilter(val, max)) {
             this.battLevel = ValueConverter.batteryLevel(val);
         } else {
-            this.battLevel = null;
+            this.battLevel = Double.NaN;
         }
     }
 
-    public Double getBattLevel() {
+    public double getBattLevel() {
         return battLevel;
     }
 
