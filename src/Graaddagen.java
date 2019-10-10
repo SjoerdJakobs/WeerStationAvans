@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class Graaddagen
 {
-
     /**
      * Author: Samir Rademakers.
      *
@@ -20,14 +19,13 @@ public class Graaddagen
 
     public int calculateGraaddagen(LocalDateTime begin, LocalDateTime end)
     {
-
         int degreedays = 0;
 
         /**
          * The line below creates an arraylist which contains all the raw values from the period.
          */
+
         ArrayList<RawMeasurement> rawValues = DatabaseConnection.getMeasurementsBetween(begin,end);
-//        ArrayList<RawMeasurement> rawValues = DatabaseConnection.getMeasurementsLastYear();
 
         ArrayList<Measurement> measurements = new ArrayList<Measurement>();
         ArrayList<Double> temperature = new ArrayList<>();
@@ -52,7 +50,6 @@ public class Graaddagen
 
         int prevDate = measurements.get(0).getDateStamp().getDayOfYear();
         int OriginalDate = prevDate;
-        int teller =0;
         ArrayList<Double> dayTemps = new ArrayList<>();
         for (int counter = 0; counter<measurements.size(); counter++)
         {
@@ -70,14 +67,7 @@ public class Graaddagen
                 {
                     degreedays = degreedays + degreeDifference;
                 }
-
-                System.out.println(measurements.get(counter).getDateStamp());
-                System.out.println("Dag: "+measurements.get(counter).getDateStamp().getDayOfYear());
-                System.out.println("Graaddagen: "+degreeDifference);
-                System.out.println("");
-                teller++;
-
-                 dayTemps.clear();
+                dayTemps.clear();
                  prevDate = measurements.get(counter).getDateStamp().getDayOfYear();
             }
         }
@@ -90,7 +80,6 @@ public class Graaddagen
             int degreeDifference = 18 - (int) Calculations.mean(dayTemps);
             degreedays = degreedays + degreeDifference;
         }
-        System.out.println(teller);
         return degreedays;
     }
 }
