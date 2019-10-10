@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.time.LocalDateTime;
 
 public class main
 {
@@ -20,7 +19,6 @@ public class main
          */
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement thisAfternoon =  new Measurement(rawData);
-        thisAfternoon.getInsideHum();
 
         System.out.println(thisAfternoon.getOutsideTemp());
 
@@ -30,8 +28,8 @@ public class main
 
 
         /**
-        * get the mean of temperatures from the last hour
-        */
+         * get the mean of temperatures from the last hour
+         */
         ArrayList<RawMeasurement> rawDatas = DatabaseConnection.getMeasurementsLastHour();
         ArrayList<Measurement>  measurements = new ArrayList<Measurement>();
 
@@ -44,8 +42,5 @@ public class main
         mean /= measurements.size();
 
         System.out.println(mean);
-
-        MaxRain.run();
-
     }
 }
