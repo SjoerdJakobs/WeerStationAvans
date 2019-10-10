@@ -93,9 +93,6 @@ public class Period {
         for (RawMeasurement rawMeasurement : rawMeasurements) {
             Measurement measurement = new Measurement(rawMeasurement);
             measurements.add(measurement);
-            //if(measurement.isValid()) {
-            //    measurements.add(measurement);
-            //}
         }
         return measurements;
     }
