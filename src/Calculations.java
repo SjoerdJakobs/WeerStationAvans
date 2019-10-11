@@ -38,20 +38,11 @@ public class Calculations {
      */
     public static double median(ArrayList<Double> array) {
         Collections.sort(array);
-<<<<<<< .merge_file_a09832
-        int middleList = array.size()/2;
-
-        if (array.size() % 2 == 0) {
-            return (array.get(middleList-1) + array.get(middleList));
-        } else {
-            return array.get(middleList);
-=======
 
         if (array.size() % 2 == 0) {
             return (array.get((array.size() / 2) - 1) + array.get(array.size() / 2)) / 2;
         } else {
             return array.get(array.size() / 2);
->>>>>>> .merge_file_a03400
         }
     }
 
