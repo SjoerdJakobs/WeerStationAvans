@@ -12,7 +12,13 @@ public class main
     {
         IO.init();
         HelperFunctions.ClearAll();
+
         Period lastYear = new Period();
         System.out.println(lastYear.dataStorage.maxAirPressure);
+
+        Program program = new Program();
+        program.Run();
     }
+
+
 }
