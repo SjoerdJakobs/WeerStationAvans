@@ -112,7 +112,7 @@ public class Period {
     }
 
     private void setData() {
-        ArrayList<Double> barometer = new ArrayList<Double>();
+        ArrayList<Double> airPressure = new ArrayList<Double>();
         ArrayList<Double> insideTemp = new ArrayList<Double>();
         ArrayList<Double> insideHum = new ArrayList<Double>();
         ArrayList<Double> outsideTemp = new ArrayList<Double>();
@@ -130,7 +130,7 @@ public class Period {
         ArrayList<Double> dewPoint = new ArrayList<Double>();
 
         for (Measurement data : periodMeasurements){
-            barometer.add(data.getBarometer());
+            airPressure.add(data.getBarometer());
             insideTemp.add(data.getInsideTemp());
             insideHum.add(data.getInsideHum());
             outsideTemp.add(data.getOutsideTemp());
@@ -143,7 +143,6 @@ public class Period {
             battLevel.add(data.getBattLevel());
             sunSet.add(data.GetSunSet());
             sunRise.add(data.GetSunRise());
-
         }
         for (int i = 0; i < periodMeasurements.size(); i++) {
             if (!Double.isNaN(outsideTemp.get(i)) & !Double.isNaN(windSpeed.get(i))) {
@@ -157,12 +156,12 @@ public class Period {
             }
         }
 
-        dataStorage.maxAirPressure = Calculations.maximum(barometer);
-        dataStorage.minAirPressure = Calculations.minimum(barometer);
-        dataStorage.meanAirPressure = Calculations.mean(barometer);
-        dataStorage.modeAirPressure = Calculations.mode(barometer);
-        dataStorage.medianAirPressure = Calculations.median(barometer);
-        dataStorage.standardDeviationAirPressure = Calculations.standardDeviation(barometer);
+        dataStorage.maxAirPressure = Calculations.maximum(airPressure);
+        dataStorage.minAirPressure = Calculations.minimum(airPressure);
+        dataStorage.meanAirPressure = Calculations.mean(airPressure);
+        dataStorage.modeAirPressure = Calculations.mode(airPressure);
+        dataStorage.medianAirPressure = Calculations.median(airPressure);
+        dataStorage.standardDeviationAirPressure = Calculations.standardDeviation(airPressure);
 
         dataStorage.maxInsideTemp = Calculations.maximum(insideTemp);
         dataStorage.minInsideTemp = Calculations.minimum(insideTemp);
@@ -261,6 +260,7 @@ public class Period {
         dataStorage.modeHeatIndex = Calculations.mode(heatIndex);
         dataStorage.medianHeatIndex = Calculations.median(heatIndex);
         dataStorage.standardDeviationHeatIndex = Calculations.standardDeviation(heatIndex);
+
 
         dataStorage.maxDewPoint = Calculations.maximum(dewPoint);
         dataStorage.minDewPoint = Calculations.minimum(dewPoint);

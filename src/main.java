@@ -1,10 +1,5 @@
-import java.io.CharArrayReader;
-//import java.time.Period;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.RandomAccess;
-import java.util.concurrent.atomic.DoubleAccumulator;
-
 public class main
 {
 
@@ -12,7 +7,15 @@ public class main
     {
         IO.init();
         HelperFunctions.ClearAll();
-        Period lastYear = new Period();
+        //Period now = new Period();
+        //System.out.println(now.dataStorage.maxAirPressure);
+        //Period lastDay = new Period(1);
+        //System.out.println(lastDay.dataStorage.maxAirPressure);
+        //Period lastWeek = new Period(7);
+        //System.out.println(lastWeek.dataStorage.maxAirPressure);
+        System.out.println(LocalDateTime.now());
+        Period lastYear = new Period(LocalDate.of(2018,1,1),LocalDate.of(2018,12,31));
         System.out.println(lastYear.dataStorage.maxAirPressure);
+        System.out.println(LocalDateTime.now());
     }
 }
