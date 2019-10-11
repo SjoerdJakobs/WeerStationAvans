@@ -223,7 +223,7 @@ public class Calculations {
      * @param end is the end date till when you want to calculate the degreedays.
      */
 
-    public int calculateGraaddagen(LocalDateTime begin, LocalDateTime end)
+    public int calculateDegreeDays(LocalDateTime begin, LocalDateTime end)
     {
         int degreedays = 0;
 
