@@ -34,14 +34,13 @@ public class Opdracht2 {
                 count++;
                 colderOutside = false;
                 System.out.println(inside.get(i).getDateStamp());
-            } else if (colderOutside == false && outsideTemp > insideTemp) {
+                } else if (colderOutside == false && outsideTemp > insideTemp) {
                     count++;
                     colderOutside = true;
                     System.out.println(inside.get(i).getDateStamp());
 
                 }
             }
-
         }
         return count;
     }
