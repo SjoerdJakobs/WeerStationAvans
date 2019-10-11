@@ -286,6 +286,7 @@ public class Calculations {
             int degreeDifference = 18 - (int) Calculations.mean(dayTemps);
             degreedays = degreedays + degreeDifference;
         }
+
         return degreedays;
     }
 

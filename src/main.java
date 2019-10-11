@@ -1,5 +1,6 @@
 import java.io.CharArrayReader;
 //import java.time.Period;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.RandomAccess;
 import java.util.concurrent.atomic.DoubleAccumulator;
@@ -11,6 +12,10 @@ public class main
     {
         IO.init();
         HelperFunctions.ClearAll();
+
+
+        Calculations a = new Calculations();
+        a.calculateGraaddagen(LocalDateTime.of(2010,1,1,0,0), LocalDateTime.of(2010,12,31,0,0));
         /*Period lastYear = new Period(365);
         ArrayList<Measurement> measurements = lastYear.getMeasurements();
         ArrayList<Double> temps = new ArrayList<Double>();
