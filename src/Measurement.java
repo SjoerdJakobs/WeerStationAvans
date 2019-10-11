@@ -15,8 +15,8 @@ public class Measurement {
     private double rainRate;
     private double uvLevel;
     private double battLevel;
-    private String sunSet;
-    private String sunRise;
+    private double sunSet;
+    private double sunRise;
 
     public Measurement() {
 
@@ -195,17 +195,16 @@ public class Measurement {
         return battLevel;
     }
 
-
     public void SetSunSet(short val) {
         short max = 2400;
         if (DataFilter(val, max)) {
-            this.sunSet = ValueConverter.sunSet(val);
+            this.sunSet = val;
         } else {
-            this.sunSet = null;
+            this.sunSet = Double.NaN;
         }
     }
 
-    public String GetSunSet() {
+    public double GetSunSet() {
         return sunSet;
     }
 
@@ -213,13 +212,13 @@ public class Measurement {
     public void SetSunRise(short val) {
         short max = 2400;
         if (DataFilter(val, max)) {
-            this.sunRise = ValueConverter.sunRise(val);
+            this.sunRise = val;
         } else {
-            this.sunRise = null;
+            this.sunRise = Double.NaN;
         }
     }
 
-    public String GetSunRise () {
+    public double GetSunRise () {
         return sunRise;
     }
 
