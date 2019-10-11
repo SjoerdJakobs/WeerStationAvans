@@ -257,6 +257,7 @@ public class Calculations {
         int prevDate = measurements.get(0).getDateStamp().getDayOfYear();
         int OriginalDate = prevDate;
         ArrayList<Double> dayTemps = new ArrayList<>();
+
         for (int counter = 0; counter<measurements.size(); counter++)
         {
             if (measurements.get(counter).getDateStamp().getDayOfYear() == prevDate)
