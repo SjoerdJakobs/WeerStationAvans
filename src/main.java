@@ -9,5 +9,10 @@ public class main
     {
         IO.init();
         HelperFunctions.ClearAll();
+        Program program = new Program();
+        program.Run();
+
     }
+
+
 }

@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-/*public class MaxRain {
+public class MaxRain {
     public  static void run() {
         ArrayList<RawMeasurement> rawDatas = DatabaseConnection.getMeasurementsLastYear();
         ArrayList<Measurement> measurements = new ArrayList<Measurement>();
@@ -22,4 +22,4 @@ import java.util.ArrayList;
         }
         System.out.println("max rain is " +finalMax);
     }
-}*/
+}
