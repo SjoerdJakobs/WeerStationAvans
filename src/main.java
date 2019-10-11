@@ -15,7 +15,15 @@ public class main
 
 
         Calculations a = new Calculations();
-        a.calculateGraaddagen(LocalDateTime.of(2010,1,1,0,0), LocalDateTime.of(2010,12,31,0,0));
+
+        ArrayList<RawMeasurement> rawValues = DatabaseConnection.getMeasurementsLastYear();
+        ArrayList<Measurement> measurements = new ArrayList<>();
+        for (int i = 0; i < rawValues.size(); i++)
+        {
+            measurements.add(new Measurement(rawValues.get(i)));
+        }
+
+        System.out.println(a.calculateDegreeDays(measurements));
         /*Period lastYear = new Period(365);
         ArrayList<Measurement> measurements = lastYear.getMeasurements();
         ArrayList<Double> temps = new ArrayList<Double>();

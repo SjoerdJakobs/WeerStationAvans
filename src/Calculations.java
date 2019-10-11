@@ -215,53 +215,44 @@ public class Calculations {
     /**
      * Author: Samir Rademakers.
      *
-     * This function calculates the amount of degreedays over a given period of time.
-     * The degreedays of one day are equal to 18 - (the average temperature of that day).
-     * If the average temperature of that day was higher than 18, the amount of degreedays of that day is equal to 0.
+     * This function calculates the amount of degree days over a given period of time.
+     * The degree days of one day are equal to 18 - (the average temperature of that day).
+     * If the average temperature of that day was higher than 18, the amount of degree days of that day is equal to 0.
      *
-     * @param begin is the begin date from when you want to calculate the degreedays.
-     * @param end is the end date till when you want to calculate the degreedays.
+     * @param measurements is an array list that contains all converted measurements from the period of time.
      */
 
-    public int calculateDegreeDays(LocalDateTime begin, LocalDateTime end)
+    public int calculateDegreeDays(ArrayList<Measurement> measurements)
     {
         int degreedays = 0;
-        /**
-         * The line below creates an arraylist which contains all the raw values from the period.
-         */
-        ArrayList<RawMeasurement> rawValues = DatabaseConnection.getMeasurementsBetween(begin,end);
-
-        ArrayList<Measurement> measurements = new ArrayList<Measurement>();
         ArrayList<Double> temperature = new ArrayList<>();
         /**
-         * The for-loop below first creates a new arraylist which contains the converted values from the raw values,
-         * after that it creates an arraylist which only contains the converted outside temperature measurements
+         * The for-loop below first creates a new array list which only contains the outside temperature measurements
          * from the period.
          */
-        for (int i = 0; i < rawValues.size(); i++)
+        for (int i = 0; i < measurements.size(); i++)
         {
-            measurements.add(new Measurement(rawValues.get(i)));
             temperature.add(measurements.get(i).getOutsideTemp());
         }
         /**
-         * The for-loop below calculates the average outside temperature separately per day from the arraylist
-         * temperatures and adds the amount of degreedays of each day to the total amount of degreedays.
+         * The for-loop below calculates the average outside temperature separately per day from the array list
+         * temperatures and adds the amount of degree days of each day to the total amount of degree days.
          * This for-loop also contains an if-statement which takes care of incorrect values.
          */
-        int prevDate = measurements.get(0).getDateStamp().getDayOfYear();
-        int OriginalDate = prevDate;
+        int previousDate = measurements.get(0).getDateStamp().getDayOfYear();
+        int OriginalDate = previousDate;
         ArrayList<Double> dayTemps = new ArrayList<>();
 
         for (int counter = 0; counter<measurements.size(); counter++)
         {
-            if (measurements.get(counter).getDateStamp().getDayOfYear() == prevDate)
+            if (measurements.get(counter).getDateStamp().getDayOfYear() == previousDate)
             {
                 if (!Double.isNaN(temperature.get(counter)))
                 {
                     dayTemps.add(temperature.get(counter));
                 }
             }
-            else if (measurements.get(counter).getDateStamp().getDayOfYear() != prevDate)
+            else if (measurements.get(counter).getDateStamp().getDayOfYear() != previousDate)
             {
                 int degreeDifference = 18 - ((int)Math.round(Calculations.mean(dayTemps)));
                 if (degreeDifference > 0)
@@ -269,13 +260,14 @@ public class Calculations {
                     degreedays = degreedays + degreeDifference;
                 }
                 dayTemps.clear();
-                prevDate = measurements.get(counter).getDateStamp().getDayOfYear();
+                previousDate = measurements.get(counter).getDateStamp().getDayOfYear();
             }
         }
         /**
-         * The if-statement below calculates the amount of degreedays in case the given period of time was only one day.
+         * The if-statement below calculates the amount of degree days in case the given period of time was
+         * only one day.
          */
-        if (prevDate == OriginalDate && degreedays == 0)
+        if (previousDate == OriginalDate && degreedays == 0)
         {
             int degreeDifference = 18 - ((int)Math.round(Calculations.mean(dayTemps)));
             degreedays = degreedays + degreeDifference;
