@@ -11,18 +11,7 @@ public class main
     {
         IO.init();
         HelperFunctions.ClearAll();
-        /*Period lastYear = new Period(365);
-        ArrayList<Measurement> measurements = lastYear.getMeasurements();
-        ArrayList<Double> temps = new ArrayList<Double>();
-        System.out.println(Calculations.mist(measurements));
-        for (Measurement reading : measurements){
-            if (!Double.isNaN(reading.getOutsideTemp())){
-                temps.add(reading.getOutsideTemp());
-            }
-        }
-        System.out.println(Calculations.mean(temps));
-        System.out.println(Calculations.maximum(temps));
-        System.out.println(Calculations.minimum(temps));
-        System.out.println(Calculations.median(temps));*/
+        Period lasthour = new Period(1);
+        System.out.println(lasthour.dataStorage.maxAirPressure);
     }
 }

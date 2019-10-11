@@ -102,7 +102,7 @@ public class Calculations {
         return result;
     }
 
-    public static double windChill(short outsideTemp, short windSpeed) {
+    public static double windChill(double outsideTemp, double windSpeed) {
         double windchill = 13.12 + (0.6215 * windSpeed) - (11.37 * Math.pow(outsideTemp, 0.16)) + ((0.3965 * windSpeed) * Math.pow(outsideTemp, 0.16));
         return windchill;
     }
