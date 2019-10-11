@@ -274,7 +274,7 @@ public class Calculations {
         }
 
         return degreedays;
-    }
+    }      
 
     /**
      * Author: Dennis Kruijt.
