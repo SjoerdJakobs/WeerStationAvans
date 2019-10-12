@@ -1,3 +1,6 @@
+/**
+ * A class used as a data storage for all calculated values within the current active period.
+ */
 public class PeriodData {
     public double maxAirPressure;
     public double minAirPressure;
