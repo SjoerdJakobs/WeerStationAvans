@@ -65,8 +65,9 @@ public class Calculations {
      */
     public static double standardDeviation(ArrayList<Double> array) {
         double sd = 0;
+        double average = mean(array);
         for (int i = 0; i < array.size(); i++) {
-            sd = sd + ((sqrt((array.get(i) - mean(array)) * (array.get(i) - mean(array)))) / (array.size() - 1));
+            sd = sd + ((sqrt(array.get(i) - average) * array.get(i) - average) / (array.size() - 1));
         }
         return sd;
     }
