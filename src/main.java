@@ -2,6 +2,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static java.lang.Math.*;
+
 public class main
 {
 
@@ -9,15 +11,13 @@ public class main
     {
         IO.init();
         HelperFunctions.ClearAll();
-        //Period now = new Period();
-        //System.out.println(now.dataStorage.maxAirPressure);
-        //Period lastDay = new Period(1);
-        //System.out.println(lastDay.dataStorage.maxAirPressure);
-        //Period lastWeek = new Period(7);
-        //System.out.println(lastWeek.dataStorage.maxAirPressure);
-        System.out.println(LocalDateTime.now());
+        Period now = new Period();
+        System.out.println(now.getDataStorage().getMaxAirPressure());
+        Period lastDay = new Period(1);
+        System.out.println(lastDay.getDataStorage().getMinAirPressure());
+        Period lastWeek = new Period(7);
+        System.out.println(lastWeek.getDataStorage().getMeanAirPressure());
         Period lastYear = new Period(LocalDate.of(2018,1,1),LocalDate.of(2018,12,31));
-        System.out.println(lastYear.dataStorage.maxAirPressure);
-        System.out.println(LocalDateTime.now());
+        System.out.println(lastYear.getDataStorage().getStandardDeviationAirPressure());
     }
 }
