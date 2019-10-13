@@ -1,7 +1,9 @@
+import java.net.CookieHandler;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
@@ -11,39 +13,36 @@ public class Calculations {
      * calculate the mode (most frequent number in the array)
      */
     public static double mode(ArrayList<Double> array) {
-        double most = 0;
-        int mostCount = 0;
-
-        for (int i = 0; i < array.size(); i++) {
-            int count = 0;
-
-            for (int j = 0; j < array.size(); j++) {
-                if (array.get(j) == array.get(i)) {
-                    count++;
-                }
-
-                if (count > mostCount) {
-                    mostCount = count;
-                    most = array.get(i);
-                }
+        Collections.sort(array);
+        int counter = 0;
+        int prevCount = 0;
+        double result = 0;
+        double leader = array.get(0);
+        for (double data : array) {
+            if (data == leader) {
+                counter++;
+            } else {
+                counter = 1;
             }
+            if (counter > prevCount) {
+                result = leader;
+                prevCount = counter;
+            }
+            leader = data;
         }
-        return most;
+        return result;
     }
 
     /**
      * calculate the median (the middle value of a sorted array)
      */
     public static double median(ArrayList<Double> array) {
-        double[] sorted = new double[array.size()];
-
-        System.arraycopy(array, 0, sorted, 0, array.size());
-        Arrays.sort(sorted);
+        Collections.sort(array);
 
         if (array.size() % 2 == 0) {
-            return (sorted[(sorted.length / 2) - 1] + sorted[sorted.length / 2]) / 2;
+            return (array.get((array.size() / 2) - 1) + array.get(array.size() / 2)) / 2;
         } else {
-            return sorted[sorted.length / 2];
+            return array.get(array.size() / 2);
         }
     }
 
@@ -66,8 +65,9 @@ public class Calculations {
      */
     public static double standardDeviation(ArrayList<Double> array) {
         double sd = 0;
+        double average = mean(array);
         for (int i = 0; i < array.size(); i++) {
-            sd = sd + ((sqrt((array.get(i) - mean(array)) * (array.get(i) - mean(array)))) / (array.size() - 1));
+            sd = sd + ((sqrt(array.get(i) - average) * array.get(i) - average) / (array.size() - 1));
         }
         return sd;
     }
@@ -103,7 +103,7 @@ public class Calculations {
         return result;
     }
 
-    public static double windChill(short outsideTemp, short windSpeed) {
+    public static double windChill(double outsideTemp, double windSpeed) {
         double windchill = 13.12 + (0.6215 * windSpeed) - (11.37 * Math.pow(outsideTemp, 0.16)) + ((0.3965 * windSpeed) * Math.pow(outsideTemp, 0.16));
         return windchill;
     }
@@ -134,22 +134,20 @@ public class Calculations {
      * Counter: keeps track of how many days it has found.
      * LastDate: keeps track of the last day that was found.
      */
-    public static ArrayList<LocalDateTime> mist(ArrayList<Measurement> array) {
+    public static int mist(ArrayList<Measurement> array) {
         int counter = 0;
         int lastDate = 0;
-        ArrayList<LocalDateTime> result = new ArrayList<LocalDateTime>();
+        int result = 0;
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i).getDateStamp().getDayOfYear() != lastDate) {
                 if (!Double.isNaN(array.get(i).getOutsideTemp()) && !Double.isNaN(array.get(i).getOutsideHum())) {
                     if (Math.abs(array.get(i).getOutsideTemp() - dewPoint(array.get(i).getOutsideTemp(), array.get(i).getOutsideHum())) < 2.5) {
-                        result.add(array.get(i).getDateStamp());
-                        counter++;
+                        result++;
                         lastDate = array.get(i).getDateStamp().getDayOfYear();
                     }
                 }
             }
         }
-        System.out.println(counter);
         return result;
     }
 
@@ -216,56 +214,98 @@ public class Calculations {
     }
 
     /**
-     * TODO Samir
+     * Author: Samir Rademakers.
+     *
+     * This function calculates the amount of degree days over a given period of time.
+     * The degree days of one day are equal to 18 - (the average temperature of that day).
+     * If the average temperature of that day was higher than 18, the amount of degree days of that day is equal to 0.
+     *
+     * @param measurements is an array list that contains all converted measurements from the period of time.
      */
-    public int Graaddagen(LocalDateTime begin, LocalDateTime end){
 
-        int graaddagen = 0;
-        ArrayList<RawMeasurement> rawDatas = DatabaseConnection.getMeasurementsBetween(begin,end);
-        ArrayList<Measurement> measurements = new ArrayList<Measurement>();
+    public int calculateDegreeDays(ArrayList<Measurement> measurements)
+    {
+        int degreedays = 0;
         ArrayList<Double> temperature = new ArrayList<>();
-        int degreeDifference;
-
-        for (int i = 0; i < rawDatas.size(); i++)
+        /**
+         * The for-loop below first creates a new array list which only contains the outside temperature measurements
+         * from the period.
+         */
+        for (int i = 0; i < measurements.size(); i++)
         {
-            measurements.add(new Measurement(rawDatas.get(i)));
             temperature.add(measurements.get(i).getOutsideTemp());
         }
-
-        int prevDate = measurements.get(0).getDateStamp().getDayOfYear();
-
-        int OriginalDate = prevDate;
+        /**
+         * The for-loop below calculates the average outside temperature separately per day from the array list
+         * temperatures and adds the amount of degree days of each day to the total amount of degree days.
+         * This for-loop also contains an if-statement which takes care of incorrect values.
+         */
+        int previousDate = measurements.get(0).getDateStamp().getDayOfYear();
+        int OriginalDate = previousDate;
         ArrayList<Double> dayTemps = new ArrayList<>();
-        for (int counter = 0; counter<measurements.size(); counter++){
-            if (measurements.get(counter).getDateStamp().getDayOfYear() == prevDate) {
-                dayTemps.add(temperature.get(counter));
+
+        for (int counter = 0; counter<measurements.size(); counter++)
+        {
+            if (measurements.get(counter).getDateStamp().getDayOfYear() == previousDate)
+            {
+                if (!Double.isNaN(temperature.get(counter)))
+                {
+                    dayTemps.add(temperature.get(counter));
+                }
             }
-            else if (measurements.get(counter).getDateStamp().getDayOfYear() != prevDate) {
-
-                int RoundedAveragePlusOne = (int)Calculations.mean(dayTemps)+1;
-                double CorrectAverage = Calculations.mean(dayTemps);
-                double offrounderDecider = (double)RoundedAveragePlusOne - CorrectAverage;
-                if (offrounderDecider < 0.5){
-                    degreeDifference = 18 - RoundedAveragePlusOne;
-                }
-                else {
-                    degreeDifference = 18 - (int)Calculations.mean(dayTemps);
-                }
-
-                if (degreeDifference > 0){
-                    graaddagen = graaddagen + degreeDifference;
+            else if (measurements.get(counter).getDateStamp().getDayOfYear() != previousDate)
+            {
+                int degreeDifference = 18 - ((int)Math.round(Calculations.mean(dayTemps)));
+                if (degreeDifference > 0)
+                {
+                    degreedays = degreedays + degreeDifference;
                 }
                 dayTemps.clear();
-                prevDate = measurements.get(counter).getDateStamp().getDayOfYear();
-
+                previousDate = measurements.get(counter).getDateStamp().getDayOfYear();
             }
-
-
         }
-        if (prevDate == OriginalDate && graaddagen == 0){
-            degreeDifference = 18 - (int) Calculations.mean(dayTemps);
-            graaddagen = graaddagen + degreeDifference;
+        /**
+         * The if-statement below calculates the amount of degree days in case the given period of time was
+         * only one day.
+         */
+        if (previousDate == OriginalDate && degreedays == 0)
+        {
+            int degreeDifference = 18 - ((int)Math.round(Calculations.mean(dayTemps)));
+            degreedays = degreedays + degreeDifference;
         }
-        return graaddagen;
+
+        return degreedays;
+    }      
+
+    /**
+     * Author: Dennis Kruijt.
+     * Purpose: calculate the number of rising temperature series where the temperature may not decrease
+     *          or stay level over a period of 10 minutes.     *
+     *
+     * @param measurements is an array consisting of measurements with values such as temperatures.
+     * series: keeps track of the number of rising temperature series which must rise for at least 10 measurements.
+     * notRising: keeps series of the rising temperature seperate.
+     */
+    public static int risingTemperatureDuration(ArrayList<Measurement> measurements) {
+        int series = 0;
+        int notRising = 0;
+        boolean addCounter = true;
+
+        for (int i = 10; i < measurements.size(); i++) {
+            if (!Double.isNaN(measurements.get(i).getOutsideTemp())) {
+                // Compare temperature indexed i with temperature of 10 places back
+                if (measurements.get(i).getOutsideTemp() > measurements.get(i - 10).getOutsideTemp()) {
+                    if (addCounter) {
+                        addCounter = false; // Don't count the same serie more than once
+                        series++;
+                        notRising = 0;
+                    }
+                } else {
+                    notRising++;
+                    if (notRising == 10) addCounter = true; // If temperatur is not rising, end the serie
+                }
+            }
+        }
+        return series;
     }
 }
