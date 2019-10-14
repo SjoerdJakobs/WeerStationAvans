@@ -2,6 +2,8 @@ import java.util.ArrayList;
 
 public class Menu extends RunableObject
 {
+    private PixelGrid m_pixelGrid;
+
     public int CurrentTabIndex = 0;
     public Tab CurrentTab;
 
@@ -18,12 +20,12 @@ public class Menu extends RunableObject
 
     protected Menu(Program program, boolean usesInput, boolean usesMain, boolean usesRenderer) {
         super(program, usesInput, usesMain, usesRenderer);
-
     }
 
     @Override
     protected void Start() {
         super.Start();
+        m_pixelGrid = new PixelGrid();
         m_tabs = new ArrayList<Tab>();
         m_tabs.add(new AirPressureTab(this));
         m_tabs.add(new InsideTempTab(this));
@@ -47,6 +49,7 @@ public class Menu extends RunableObject
         CurrentTabIndex = 0;
         CurrentTab = m_tabs.get(CurrentTabIndex);
         CurrentTab.OnOpen();
+
     }
 
     @Override
@@ -64,7 +67,7 @@ public class Menu extends RunableObject
     @Override
     protected void RenderLoop(double deltaTime) {
 
-        HelperFunctions.SetDisplayPixel(true,60,3);
+        //HelperFunctions.SetDisplayPixel(true,60,3);
         //draw stuff
     }
 
@@ -131,6 +134,30 @@ public class Menu extends RunableObject
         {
             CurrentTab.OnButtonBlueTwo();
         }
+    }
+
+    public void DrawMenu() {
+        for (int i = 0; i < m_pixelGrid.PixelGrid.length; i++) {
+            for (int j = 0; j < m_pixelGrid.PixelGrid[0].length; j++) {
+                if (i < 7) {
+                    if (i == 6) {
+                        HelperFunctions.SetDisplayPixel(true, j, i);
+                    }
+                    else if(j>(m_pixelGrid.PixelGrid[0].length/m_tabs.size())*CurrentTabIndex && j < (m_pixelGrid.PixelGrid[0].length/m_tabs.size())*(CurrentTabIndex+1))
+                    {
+                        HelperFunctions.SetDisplayPixel(true,j,i);
+                    }
+                    else if (j % (int) (m_pixelGrid.PixelGrid[0].length / m_tabs.size()) == 0) {
+                        if (Math.abs(m_pixelGrid.PixelGrid[0].length - j) < 4) {
+                            HelperFunctions.SetDisplayPixel(true, m_pixelGrid.PixelGrid[0].length - 1, i);
+                        } else {
+                            HelperFunctions.SetDisplayPixel(true, j, i);
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     @Override
