@@ -17,7 +17,6 @@ public class RedButton extends Tab{
         // Exit menu
         // Shut down program
         HelperFunctions.WriteOnMatrixScreen(text1);
-
     }
 
     @Override
@@ -55,21 +54,14 @@ public class RedButton extends Tab{
         //When on ExitMenu --> go back to main menu
         //When on ShutDown --> run ShutDownTab
         if (text1.equals("Period")){
-            Period; //???
-        }
-        if (text2.equals("Predefined")){
+            SetPeriodTab; //???
+        } else if (text2.equals("Predefined")){
             PredefinedTab;
-        }
-        if (text3.equals("Exit menu")){
+        } else if (text3.equals("Exit menu")){
             ExitMenuTab;
             //        Terug naar main menu misschien?
-        }
-        if (text4.equals("Shut down")){
+        } else if (text4.equals("Shut down")){
             ShutDownTab;
-            // Of meteen:
-            //        HelperFunctions.WriteOnMatrixScreen("Goodbye!");
-            //        IO.delay(500);
-            //        System.exit(0); //denk ik?
         }
     }
 }

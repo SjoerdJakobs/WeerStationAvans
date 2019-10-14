@@ -5,11 +5,13 @@ public class PredefinedTab extends Tab {
     protected PredefinedTab(Menu menu) {
         super(menu);
     }
+
     String text1 = "MaxRain";
     String text2 = "DegreeDays";
     String text3 = "Mist";
     String text4 = "RisingTemperature";
     String text5 = "CrossingTemperature";
+
     @Override
     protected void OnOpen() {
         //runs when tab is opened
@@ -25,13 +27,11 @@ public class PredefinedTab extends Tab {
     @Override
     protected void OnClose() {
         //runs when tab is closed
-
     }
 
     @Override
     protected void Run(double deltaTime) {
         //runs every frame when tab is opened
-
     }
 
     @Override
@@ -39,7 +39,7 @@ public class PredefinedTab extends Tab {
         //runs when red button is pressed(runs once, its an actual bu)
         //Next horizontal tab
         //Denk zoiets?
-        if (text1.equals("MaxRain")){
+        /*if (text1.equals("MaxRain")){
             HelperFunctions.WriteOnMatrixScreen(text2);
         }
         if (text2.equals("DegreeDays")){
@@ -53,7 +53,7 @@ public class PredefinedTab extends Tab {
         }
         if (text5.equals("CrossingTemperature")){
             HelperFunctions.WriteOnMatrixScreen(text1);
-        }
+        }*/
     }
 
     @Override
@@ -68,17 +68,13 @@ public class PredefinedTab extends Tab {
         // ik heb echt geen idee of dit wel klopt...
         if (text1.equals("MaxRain")){
             HelperFunctions.WriteOnMatrixScreen(Calculations.MaxRain());
-        }
-        if (text2.equals("DegreeDays")){
+        } else if (text2.equals("DegreeDays")){
             HelperFunctions.WriteOnMatrixScreen(Calculations.calculateDegreeDays(/*(periodData?)*/));
-        }
-        if (text3.equals("Mist")){
-            HelperFunctions.WriteOnMatrixScreen(Calculations.mist(/*periodData?)*/));
-        }
-        if (text4.equals("RisingTemperature")){
+        } else if (text3.equals("Mist")){
+            HelperFunctions.WriteOnMatrixScreen(Mick);
+        } else if (text4.equals("RisingTemperature")){
             HelperFunctions.WriteOnMatrixScreen(Calculations.risingTemperatureDuration(/*(periodData?)*/));
-        }
-        if (text5.equals("CrossingTemperatures")){
+        } else if (text5.equals("CrossingTemperatures")){
             HelperFunctions.WriteOnMatrixScreen(Calculations.tempChange(/*(periodData), (periodData?)*/));
         }
 
