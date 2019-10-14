@@ -220,7 +220,7 @@ public class Calculations {
      * @param measurements is an array list that contains all converted measurements from the period of time.
      */
 
-    public int calculateDegreeDays(ArrayList<Measurement> measurements)
+    public static int calculateDegreeDays(ArrayList<Measurement> measurements)
     {
         int degreedays = 0;
         ArrayList<Double> temperature = new ArrayList<>();
