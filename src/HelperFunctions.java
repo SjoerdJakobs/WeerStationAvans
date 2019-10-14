@@ -132,12 +132,11 @@ public class HelperFunctions
 
     public static void WriteOnMatrixScreen(String text) {
         char[] chars = text.toCharArray();
-        int earlyEnter = 0;
-        for (int i = 0; i < chars.length; i++) {
+        for (int i = 0, j = 0; i < chars.length; i++, j++) {
             if (chars[i] == '\n') {
-                earlyEnter = i + 1;
+                j = -1;
             }
-            if (i % 21 == 0 && i > 0) {
+            if (j % 21 == 0 && j > 0) {
                 IO.writeShort(0x40, '\n');
             }
             IO.writeShort(0x40, chars[i]);

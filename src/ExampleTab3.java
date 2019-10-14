@@ -8,6 +8,9 @@ public class ExampleTab3 extends Tab
     protected void OnOpen() {
         //runs when tab is opened
         System.out.println("exampletab 3 opened");
+        HelperFunctions.ClearTextDisplay();
+        HelperFunctions.WriteOnMatrixScreen("\n hey 3");
+        m_menu.DrawMenu();
     }
 
     @Override
