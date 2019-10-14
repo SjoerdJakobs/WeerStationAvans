@@ -4,16 +4,16 @@ public class Tab
     protected Tab(Menu menu)
     {
         m_menu = menu;
-        menu.onButtonBlueTwoCall = () -> {
-            OnButtonBlueTwo();
-        };
-        menu.onButtonRedCall = () -> {
-            OnButtonRed();
-        };
     }
 
     protected void OnOpen()
     {
+        m_menu.onButtonBlueTwoCall = () -> {
+        OnButtonBlueTwo();
+    };
+        m_menu.onButtonRedCall = () -> {
+            OnButtonRed();
+        };
         //change screen
     }
 
