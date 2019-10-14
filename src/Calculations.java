@@ -208,7 +208,6 @@ public class Calculations {
                     count++;
                     colderOutside = true;
                     System.out.println(inside.get(i).getDateStamp());
-
                 }
             }
 

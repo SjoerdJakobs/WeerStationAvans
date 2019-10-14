@@ -13,6 +13,7 @@ public class ExitMenuTab extends Tab{
     @Override
     protected void OnClose() {
         //runs when tab is closed
+        HelperFunctions.ClearMatrixDisplay();
 
     }
 

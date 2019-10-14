@@ -2,8 +2,9 @@ public class RedButton extends Tab{
     protected RedButton(Menu menu) {
         super(menu);
     }
+    int count = 0;
 
-    String text1 = "Period";
+    String text1 = "Set period";
     String text2 = "Predefined";
     String text3 = "Exit menu";
     String text4 = "Shut down";
@@ -22,6 +23,7 @@ public class RedButton extends Tab{
     @Override
     protected void OnClose() {
         //runs when tab is closed
+        HelperFunctions.ClearMatrixDisplay();
 
     }
 
@@ -33,18 +35,18 @@ public class RedButton extends Tab{
 
     @Override
     protected void OnButtonBlueTwo() {
-        //runs when red button is pressed(runs once, its an actual bu)
-        if (text1.equals("Period")){
-            HelperFunctions.WriteOnMatrixScreen(text2);
-        }
-        if (text2.equals("Predefined")){
-            HelperFunctions.WriteOnMatrixScreen(text3);
-        }
-        if (text3.equals("Exit menu")) {
-            HelperFunctions.WriteOnMatrixScreen(text4);
-        }
-        if (text4.equals("Shut down")) {
-            HelperFunctions.WriteOnMatrixScreen(text1);
+        count++;
+
+        if(count == 0) {
+            HelperFunctions.WriteOnMatrixScreen("Set period");
+        } else if (count == 1){
+            HelperFunctions.WriteOnMatrixScreen("Predefined");
+        } else if (count == 2){
+            HelperFunctions.WriteOnMatrixScreen("Exit menu");
+        } else if (count == 3){
+            HelperFunctions.WriteOnMatrixScreen("Shut down");
+        } else if (count > 3){
+            count = 0;
         }
     }
     protected void OnButtonRed() {
@@ -53,15 +55,15 @@ public class RedButton extends Tab{
         //When on Predefined --> run PredefinedTab
         //When on ExitMenu --> go back to main menu
         //When on ShutDown --> run ShutDownTab
-        if (text1.equals("Period")){
+        if (count == 0){
             SetPeriodTab; //???
-        } else if (text2.equals("Predefined")){
+        } else if (count == 1){
             PredefinedTab;
-        } else if (text3.equals("Exit menu")){
+        } else if (count == 2){
             ExitMenuTab;
-            //        Terug naar main menu misschien?
-        } else if (text4.equals("Shut down")){
-            ShutDownTab;
+            //Terug naar main menu misschien?
+        } else if (count == 3){
+            ShutDownTab(OnButtonRed());
         }
     }
 }

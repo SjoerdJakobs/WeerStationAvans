@@ -5,7 +5,7 @@ public class PredefinedTab extends Tab {
     protected PredefinedTab(Menu menu) {
         super(menu);
     }
-
+    int count = 0;
     String text1 = "MaxRain";
     String text2 = "DegreeDays";
     String text3 = "Mist";
@@ -27,6 +27,7 @@ public class PredefinedTab extends Tab {
     @Override
     protected void OnClose() {
         //runs when tab is closed
+        HelperFunctions.ClearMatrixDisplay();
     }
 
     @Override
@@ -38,22 +39,20 @@ public class PredefinedTab extends Tab {
     protected void OnButtonBlueTwo() {
         //runs when red button is pressed(runs once, its an actual bu)
         //Next horizontal tab
-        //Denk zoiets?
-        /*if (text1.equals("MaxRain")){
+        count++;
+        if (count == 1){
             HelperFunctions.WriteOnMatrixScreen(text2);
-        }
-        if (text2.equals("DegreeDays")){
+        } else if (count == 2){
             HelperFunctions.WriteOnMatrixScreen(text3);
-        }
-        if (text3.equals("Mist")) {
+        } else if (count == 3) {
             HelperFunctions.WriteOnMatrixScreen(text4);
-        }
-        if (text4.equals("RisingTemperature")){
+        } else if (count == 4){
             HelperFunctions.WriteOnMatrixScreen(text5);
-        }
-        if (text5.equals("CrossingTemperature")){
+        } else if (count == 0){
             HelperFunctions.WriteOnMatrixScreen(text1);
-        }*/
+        } else if (count > 4){
+            count = 0;
+        }
     }
 
     @Override
@@ -66,16 +65,20 @@ public class PredefinedTab extends Tab {
         //When on CrossingTemperatures --> run Calculations.tempChange(period)
 
         // ik heb echt geen idee of dit wel klopt...
-        if (text1.equals("MaxRain")){
+        if (count == 0){
             HelperFunctions.WriteOnMatrixScreen(Calculations.MaxRain());
-        } else if (text2.equals("DegreeDays")){
+        } else if (count == 1){
             HelperFunctions.WriteOnMatrixScreen(Calculations.calculateDegreeDays(/*(periodData?)*/));
-        } else if (text3.equals("Mist")){
-            HelperFunctions.WriteOnMatrixScreen(Mick);
-        } else if (text4.equals("RisingTemperature")){
+        } else if (count == 2){
+            Mick;
+        } else if (count == 3){
             HelperFunctions.WriteOnMatrixScreen(Calculations.risingTemperatureDuration(/*(periodData?)*/));
-        } else if (text5.equals("CrossingTemperatures")){
-            HelperFunctions.WriteOnMatrixScreen(Calculations.tempChange(/*(periodData), (periodData?)*/));
+        } else if (count == 4){
+            RawMeasurement rawData = DatabaseConnection.getMeasurementsBetween(SetPeriodTab, SetPeriodTab);//???
+            Measurement measurement = new Measurement(rawData);
+            ArrayList<Measurement> inside = new ArrayList<>();
+            ArrayList<Double> outside = new ArrayList<>();
+            HelperFunctions.WriteOnMatrixScreen("Times crossed: " + Calculations.tempChange(inside,outside));
         }
 
     }
