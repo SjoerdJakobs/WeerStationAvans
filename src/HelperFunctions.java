@@ -130,16 +130,17 @@ public class HelperFunctions
         }
     }
 
-    public static void WriteOnMatrixScreen(String text)
-    {
+    public static void WriteOnMatrixScreen(String text) {
         char[] chars = text.toCharArray();
-        for (int i = 0; i < chars.length; i++)
-        {
-            if(i%21 == 0 && i > 0)
-            {
-                IO.writeShort(0x40,'\n');
+        int earlyEnter = 0;
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '\n') {
+                earlyEnter = i + 1;
             }
-            IO.writeShort(0x40,chars[i]);
+            if (i % 21 == 0 && i > 0) {
+                IO.writeShort(0x40, '\n');
+            }
+            IO.writeShort(0x40, chars[i]);
         }
     }
 
