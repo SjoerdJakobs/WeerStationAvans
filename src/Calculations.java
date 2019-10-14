@@ -1,12 +1,7 @@
-import java.net.CookieHandler;
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 
 public class Calculations {
     /**
@@ -64,11 +59,13 @@ public class Calculations {
      * calculate the standard deviation
      */
     public static double standardDeviation(ArrayList<Double> array) {
-        double sd = 0;
-        double average = mean(array);
+        double sd;
+        double sum = 0;
+        double mean = mean(array);
         for (int i = 0; i < array.size(); i++) {
-            sd = sd + ((sqrt(array.get(i) - average) * array.get(i) - average) / (array.size() - 1));
+            sum = sum + (Math.pow(array.get(i) - mean, 2));
         }
+        sd = sqrt(sum / array.size());
         return sd;
     }
 

@@ -798,7 +798,7 @@ public class PeriodData {
         mist = Calculations.mist(periodMeasurements);
         //maxRain = Calculations.maxRain(periodMeasurements);
         //tempChange = Calculations.tempChange(periodMeasurements);
-        //degreeDays = Calculations.degreeDays(periodMeasurements);
+        //degreeDays = Calculations.calculateDegreeDays(periodMeasurements);
         risingTemperature = Calculations.risingTemperatureDuration(periodMeasurements);
     }
     /**
