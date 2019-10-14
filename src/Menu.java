@@ -25,9 +25,25 @@ public class Menu extends RunableObject
     protected void Start() {
         super.Start();
         m_tabs = new ArrayList<Tab>();
-        m_tabs.add(new ExampleTab(this));
-        m_tabs.add(new ExampleTab2(this));
-        m_tabs.add(new ExampleTab3(this));
+        m_tabs.add(new AirPressureTab(this));
+        m_tabs.add(new InsideTempTab(this));
+        m_tabs.add(new InsideHumTab(this));
+        m_tabs.add(new OutsideTempTab(this));
+        m_tabs.add(new WindSpeedTab(this));
+        m_tabs.add(new AvgWindSpeedTab(this));
+        m_tabs.add(new WindDirTab(this));
+        m_tabs.add(new OutsideHumTab(this));
+        m_tabs.add(new RainRateTab(this));
+        m_tabs.add(new UVLevelTab(this));
+        m_tabs.add(new SunRiseTab(this));
+        m_tabs.add(new SunSetTab(this));
+        m_tabs.add(new DewPointTab(this));
+        m_tabs.add(new WindChillTab(this));
+        m_tabs.add(new HeatIndexTab(this));
+
+
+
+
         CurrentTabIndex = 0;
         CurrentTab = m_tabs.get(CurrentTabIndex);
         CurrentTab.OnOpen();

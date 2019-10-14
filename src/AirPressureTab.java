@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class AirPressureTab extends Tab
 {
     private int counter = 0;
@@ -12,15 +10,14 @@ public class AirPressureTab extends Tab
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
-        HelperFunctions.WriteOnMatrixScreen("Current: " +measurement.getBarometer() );
+        current = measurement.getBarometer();
+        HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent:%.2f",current));
 
-        //runs when tab is opened
     }
 
     @Override
     protected void OnClose() {
-        //runs when tab is closed
-
+        HelperFunctions.ClearTextDisplay();
     }
 
     @Override
@@ -34,57 +31,51 @@ public class AirPressureTab extends Tab
         counter++;
         HelperFunctions.ClearTextDisplay();
 
+        if (counter == 1){
 
-        if (counter == 0){
-            RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-            Measurement measurement = new Measurement(rawData);
-            HelperFunctions.WriteOnMatrixScreen("Current: " +measurement.getBarometer() );
-        }
-
-        else if (counter == 1){
-
-            HelperFunctions.WriteOnMatrixScreen("Average air pressure: " +min );
+            HelperFunctions.WriteOnMatrixScreen(String.format(String.format("\nAir pressure\nmin:%.2f",min)));
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen("Max air pressure: " +max );
+            HelperFunctions.WriteOnMatrixScreen(String.format(String.format("\nAir pressure\nmax:%.2f",max)));
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen("Average air pressure: " +average );
+            HelperFunctions.WriteOnMatrixScreen(String.format(String.format("\nAir pressure\naverage:%.2f",average)));
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen("Modus of air pressure: " +Mode );
+            HelperFunctions.WriteOnMatrixScreen(String.format(String.format("\nAir pressure\nmodus:%.2f",Mode)));
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen("Median of air pressure: " +Median );
+            HelperFunctions.WriteOnMatrixScreen(String.format(String.format("\nAir pressure\nmedian:%.2f",Median)));
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen("Standard deviation of air pressure: " +stdDev );
+            HelperFunctions.WriteOnMatrixScreen(String.format(String.format("\nAir pressure\nstandard deviation:%.2f",stdDev)));
         }
         else if (counter > 6){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent:%.2f",current));
             counter = 0;
 
         }
-        //runs when red button is pressed(runs once, its an actual bu)
     }
 
     Period period = new Period();
 
-    double min;
-    double max;
-    double average;
-    double Mode;
-    double Median;
-    double stdDev;
+    private double current;
+    private double min;
+    private double max;
+    private double average;
+    private double Mode;
+    private double Median;
+    private double stdDev;
 
     public void setValues(){
         min = period.getDataStorage().getMinAirPressure();
@@ -94,8 +85,6 @@ public class AirPressureTab extends Tab
         Median = period.getDataStorage().getMedianAirPressure();
         stdDev = period.getDataStorage().getStandardDeviationAirPressure();
     }
-
-
 
     @Override
     protected void OnButtonRed() {
