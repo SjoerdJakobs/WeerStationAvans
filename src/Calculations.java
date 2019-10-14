@@ -13,24 +13,24 @@ public class Calculations {
      * calculate the mode (most frequent number in the array)
      */
     public static double mode(ArrayList<Double> array) {
-        double most = 0;
-        int mostCount = 0;
-
-        for (int i = 0; i < array.size(); i++) {
-            int count = 0;
-
-            for (int j = 0; j < array.size(); j++) {
-                if (array.get(j) == array.get(i)) {
-                    count++;
-                }
-
-                if (count > mostCount) {
-                    mostCount = count;
-                    most = array.get(i);
-                }
+        Collections.sort(array);
+        int counter = 0;
+        int prevCount = 0;
+        double result = 0;
+        double leader = array.get(0);
+        for (double data : array) {
+            if (data == leader) {
+                counter++;
+            } else {
+                counter = 1;
             }
+            if (counter > prevCount) {
+                result = leader;
+                prevCount = counter;
+            }
+            leader = data;
         }
-        return most;
+        return result;
     }
 
     /**
@@ -65,8 +65,9 @@ public class Calculations {
      */
     public static double standardDeviation(ArrayList<Double> array) {
         double sd = 0;
+        double average = mean(array);
         for (int i = 0; i < array.size(); i++) {
-            sd = sd + ((sqrt((array.get(i) - mean(array)) * (array.get(i) - mean(array)))) / (array.size() - 1));
+            sd = sd + ((sqrt(array.get(i) - average) * array.get(i) - average) / (array.size() - 1));
         }
         return sd;
     }
@@ -102,7 +103,7 @@ public class Calculations {
         return result;
     }
 
-    public static double windChill(short outsideTemp, short windSpeed) {
+    public static double windChill(double outsideTemp, double windSpeed) {
         double windchill = 13.12 + (0.6215 * windSpeed) - (11.37 * Math.pow(outsideTemp, 0.16)) + ((0.3965 * windSpeed) * Math.pow(outsideTemp, 0.16));
         return windchill;
     }
@@ -280,7 +281,7 @@ public class Calculations {
         }
 
         return degreedays;
-    }
+    }      
 
     /**
      * Author: Dennis Kruijt.
