@@ -12,7 +12,7 @@ public class Program
 
     public Program()
     {
-
+        Menu menu = new Menu(this, true ,true ,true);
     }
 
     public void Run() {
