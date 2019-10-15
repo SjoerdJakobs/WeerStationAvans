@@ -3,6 +3,13 @@ import java.lang.Math;
 
 public class GraphMaker {
 
+    public static PixelGrid createAxels(PixelGrid pixelGrid) {
+        // Draw the x and y axels on the left- and bottom boundary
+        for (int i = 0; i <= 127; i++) pixelGrid.PixelGrid[31][i] = true;
+        for (int i = 8; i <= 31; i++) pixelGrid.PixelGrid[i][0] = true;
+        return pixelGrid;
+    }
+
     public static PixelGrid createGraph(ArrayList<Double> measurements) {
 
         // Create frame
