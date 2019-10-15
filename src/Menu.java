@@ -42,8 +42,7 @@ public class Menu extends RunableObject
         m_tabs.add(new DewPointTab(this));
         m_tabs.add(new WindChillTab(this));
         m_tabs.add(new HeatIndexTab(this));
-
-
+        m_tabs.add(new DegreeDaysTab(this));
 
 
         CurrentTabIndex = 0;

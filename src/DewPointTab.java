@@ -7,6 +7,7 @@ public class DewPointTab extends Tab
 
     @Override
     protected void OnOpen() {
+        m_menu.DrawMenu();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
@@ -30,6 +31,8 @@ public class DewPointTab extends Tab
     protected void OnButtonBlueTwo() {
         counter++;
         HelperFunctions.ClearTextDisplay();
+        m_menu.DrawMenu();
+
 
         if (counter == 1){
 
@@ -58,7 +61,7 @@ public class DewPointTab extends Tab
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nDew point\nstandard deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nDew point\nstd deviation:%.2f",stdDev));
         }
         else if (counter > 6){
             HelperFunctions.WriteOnMatrixScreen(String.format("\nDew point\ncurrent:%.2f",current));
@@ -78,12 +81,12 @@ public class DewPointTab extends Tab
     private double stdDev;
 
     public void setValues(){
-        min = Calculations.dewPoint(period.getDataStorage().getMinOutsideTemp(),period.getDataStorage().getMinOutsideHum());
-        max = Calculations.dewPoint(period.getDataStorage().getMaxOutsideTemp(),period.getDataStorage().getMaxOutsideHum());
-        average = Calculations.dewPoint(period.getDataStorage().getMeanOutsideTemp(),period.getDataStorage().getMeanOutsideHum());
-        Mode = Calculations.dewPoint(period.getDataStorage().getModeOutsideTemp(),period.getDataStorage().getModeOutsideHum());
-        Median = Calculations.dewPoint(period.getDataStorage().getMedianOutsideTemp(),period.getDataStorage().getMedianOutsideHum());
-        stdDev = Calculations.dewPoint(period.getDataStorage().getStandardDeviationOutsideTemp(),period.getDataStorage().getStandardDeviationOutsideHum());
+        min = period.getDataStorage().getMinDewPoint();
+        max = period.getDataStorage().getMaxDewPoint();
+        average = period.getDataStorage().getMeanDewPoint();
+        Mode = period.getDataStorage().getModeDewPoint();
+        Median = period.getDataStorage().getMedianDewPoint();
+        stdDev = period.getDataStorage().getStandardDeviationDewPoint();
     }
 
     @Override

@@ -7,6 +7,7 @@ public class WindChillTab extends Tab
 
     @Override
     protected void OnOpen() {
+        m_menu.DrawMenu();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
@@ -29,6 +30,8 @@ public class WindChillTab extends Tab
     protected void OnButtonBlueTwo() {
         counter++;
         HelperFunctions.ClearTextDisplay();
+        m_menu.DrawMenu();
+
 
         if (counter == 1){
 
@@ -57,7 +60,7 @@ public class WindChillTab extends Tab
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nstandard deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nstd deviation:%.2f",stdDev));
         }
         else if (counter > 6){
             HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\ncurrent:%.2f",current));
@@ -77,12 +80,13 @@ public class WindChillTab extends Tab
     private double stdDev;
 
     public void setValues(){
-        min = Calculations.dewPoint(period.getDataStorage().getMinOutsideTemp(),period.getDataStorage().getMinWindSpeed());
-        max = Calculations.dewPoint(period.getDataStorage().getMaxOutsideTemp(),period.getDataStorage().getMaxWindSpeed());
-        average = Calculations.dewPoint(period.getDataStorage().getMeanOutsideTemp(),period.getDataStorage().getMeanWindSpeed());
-        Mode = Calculations.dewPoint(period.getDataStorage().getModeOutsideTemp(),period.getDataStorage().getModeWindSpeed());
-        Median = Calculations.dewPoint(period.getDataStorage().getMedianOutsideTemp(),period.getDataStorage().getMedianWindSpeed());
-        stdDev = Calculations.dewPoint(period.getDataStorage().getStandardDeviationOutsideTemp(),period.getDataStorage().getStandardDeviationWindSpeed());
+        min = period.getDataStorage().getMinWindChill();
+        max = period.getDataStorage().getMaxWindChill();
+        average = period.getDataStorage().getMeanWindChill();
+        Mode = period.getDataStorage().getModeWindChill();
+        Median = period.getDataStorage().getMedianWindChill();
+        stdDev = period.getDataStorage().getStandardDeviationWindChill();
+
     }
 
     @Override

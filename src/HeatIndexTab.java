@@ -7,6 +7,7 @@ public class HeatIndexTab extends Tab
 
     @Override
     protected void OnOpen() {
+        m_menu.DrawMenu();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
@@ -29,6 +30,8 @@ public class HeatIndexTab extends Tab
     protected void OnButtonBlueTwo() {
         counter++;
         HelperFunctions.ClearTextDisplay();
+        m_menu.DrawMenu();
+
 
         if (counter == 1){
 
@@ -57,7 +60,7 @@ public class HeatIndexTab extends Tab
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nstandard deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nstd deviation:%.2f",stdDev));
         }
         else if (counter > 6){
             HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\ncurrent:%.2f",current));
@@ -77,12 +80,13 @@ public class HeatIndexTab extends Tab
     private double stdDev;
 
     public void setValues(){
-        min = Calculations.dewPoint(period.getDataStorage().getMinInsideTemp(),period.getDataStorage().getMinInsideHum());
-        max = Calculations.dewPoint(period.getDataStorage().getMaxInsideTemp(),period.getDataStorage().getMaxInsideHum());
-        average = Calculations.dewPoint(period.getDataStorage().getMeanInsideTemp(),period.getDataStorage().getMeanInsideHum());
-        Mode = Calculations.dewPoint(period.getDataStorage().getModeInsideTemp(),period.getDataStorage().getModeInsideHum());
-        Median = Calculations.dewPoint(period.getDataStorage().getMedianInsideTemp(),period.getDataStorage().getMedianInsideHum());
-        stdDev = Calculations.dewPoint(period.getDataStorage().getStandardDeviationInsideTemp(),period.getDataStorage().getStandardDeviationInsideHum());
+        min = period.getDataStorage().getMinHeatIndex();
+        max = period.getDataStorage().getMaxHeatIndex();
+        average = period.getDataStorage().getMeanHeatIndex();
+        Mode = period.getDataStorage().getModeHeatIndex();
+        Median = period.getDataStorage().getMedianHeatIndex();
+        stdDev = period.getDataStorage().getStandardDeviationHeatIndex();
+
     }
 
     @Override

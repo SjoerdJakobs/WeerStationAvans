@@ -7,11 +7,12 @@ public class OutsideHumTab extends Tab
 
     @Override
     protected void OnOpen() {
+        m_menu.DrawMenu();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getOutsideHum();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\ncurrent:%.2f",current));
+        HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\ncurrent:%.2f",current) + "%");
 
     }
 
@@ -30,20 +31,22 @@ public class OutsideHumTab extends Tab
     protected void OnButtonBlueTwo() {
         counter++;
         HelperFunctions.ClearTextDisplay();
+        m_menu.DrawMenu();
+
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\nmin:%.2f",min));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\nmin:%.2f",min) + "%");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\nmax:%.2f",max));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\nmax:%.2f",max) + "%");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\naverage:%.2f",average));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\naverage:%.2f",average) + "%");
         }
 
         else if (counter == 4){
@@ -58,10 +61,10 @@ public class OutsideHumTab extends Tab
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\nstandard deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\nstd deviation:%.2f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\ncurrent:%.2f",current));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\ncurrent:%.2f",current) + "%");
             counter = 0;
 
         }

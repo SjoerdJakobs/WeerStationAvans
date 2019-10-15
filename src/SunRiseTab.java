@@ -7,6 +7,7 @@ public class SunRiseTab extends Tab
 
     @Override
     protected void OnOpen() {
+        m_menu.DrawMenu();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
@@ -31,6 +32,8 @@ public class SunRiseTab extends Tab
     protected void OnButtonBlueTwo() {
         counter++;
         HelperFunctions.ClearTextDisplay();
+        m_menu.DrawMenu();
+
 
         if (counter == 1){
 
@@ -59,7 +62,7 @@ public class SunRiseTab extends Tab
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\nstandard deviation: "+stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\nstd deviation: "+stdDev));
         }
         else if (counter > 6){
             HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\ncurrent: "+current));

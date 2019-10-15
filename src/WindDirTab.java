@@ -7,11 +7,12 @@ public class WindDirTab extends Tab
 
     @Override
     protected void OnOpen() {
+        m_menu.DrawMenu();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getWindDir();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent:%.2f",current));
+        HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent:%.2f",current)+ " degrees");
 
     }
 
@@ -30,20 +31,22 @@ public class WindDirTab extends Tab
     protected void OnButtonBlueTwo() {
         counter++;
         HelperFunctions.ClearTextDisplay();
+        m_menu.DrawMenu();
+
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmin:%.2f",min));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmin:%.2f",min)+ " degrees");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmax:%.2f",max));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmax:%.2f",max)+ " degrees");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\naverage:%.2f",average));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\naverage:%.2f",average)+ " degrees");
         }
 
         else if (counter == 4){
@@ -58,10 +61,10 @@ public class WindDirTab extends Tab
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nstandard deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nstd deviation:%.2f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent:%.2f",current));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent:%.2f",current)+ " degrees");
             counter = 0;
 
         }

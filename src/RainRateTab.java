@@ -7,11 +7,12 @@ public class RainRateTab extends Tab
 
     @Override
     protected void OnOpen() {
+        m_menu.DrawMenu();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getRainRate();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent:%.2f",current));
+        HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent:%.2f",current)+ "mm/hour");
 
     }
 
@@ -30,20 +31,22 @@ public class RainRateTab extends Tab
     protected void OnButtonBlueTwo() {
         counter++;
         HelperFunctions.ClearTextDisplay();
+        m_menu.DrawMenu();
+
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmin:%.2f",min));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmin:%.2f",min)+ "mm/hour");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmax:%.2f",max));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmax:%.2f",max)+ "mm/hour");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\naverage:%.2f",average));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\naverage:%.2f",average)+ "mm/hour");
         }
 
         else if (counter == 4){
@@ -58,10 +61,10 @@ public class RainRateTab extends Tab
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nstandard deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nstd deviation:%.2f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent:%.2f",current));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent:%.2f",current)+ "mm/hour");
             counter = 0;
 
         }
