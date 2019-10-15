@@ -17,4 +17,13 @@ public enum PixelGridDrawer
                 }
                 m_lastFrame = newFrame;
         }
+
+        public void HardDraw(boolean[][] newFrame) {
+                for (int i = 0; i < newFrame.length; i++) {
+                        for (int j = 0; j < newFrame[0].length; j++) {
+                                HelperFunctions.SetDisplayPixel(newFrame[i][j], j, i);
+                        }
+                }
+                m_lastFrame = newFrame;
+        }
 }
