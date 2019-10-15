@@ -7,8 +7,11 @@ public class SetPeriodTab extends Tab{
     protected void OnOpen() {
         //runs when tab is opened
         int year = 2006;
+        int maxYear = 2019;
         int month = 1;
+        int maxMonth = 12;
         int day = 1;
+        int maxDay = 30;
         int count = 1;
         boolean acknowlegde = false;
 
@@ -16,36 +19,50 @@ public class SetPeriodTab extends Tab{
         while (acknowlegde){
             HelperFunctions.WriteOnMatrixScreen("\n Year: " + year);
             if (OnButtonBlueTwo()){
-                HelperFunctions.WriteOnMatrixScreen("\n Year: " + year);
-                year = year + count;
 
-                if (IO.readShort(0x80) == 1){
-                    int beginYear = year;
-                    acknowlegde = true;
+                if (year <= maxYear){
+                    HelperFunctions.WriteOnMatrixScreen("\n Year: " + year);
+                    year = year + count;
+
+                    if (IO.readShort(0x80) == 1){
+                        int beginYear = year;
+                        acknowlegde = true;
+                    }
+                } else {
+                    year = 2006;
                 }
+
             }
         }
         while (acknowlegde){
             HelperFunctions.WriteOnMatrixScreen("\n Month: " + month);
-            if (OnButtonBlueTwo()){
-                HelperFunctions.WriteOnMatrixScreen("\n Month: " + month);
-                month = month + count;
+            if (OnButtonBlueTwo()) {
+                if (month <= maxMonth) {
+                    HelperFunctions.WriteOnMatrixScreen("\n Month: " + month);
+                    month = month + count;
 
-                if (IO.readShort(0x80) == 1){
-                    int beginMonth = month;
-                    acknowlegde = true;
+                    if (IO.readShort(0x80) == 1) {
+                        int beginMonth = month;
+                        acknowlegde = true;
+                    }
+                } else {
+                    month = 1;
                 }
             }
         }
         while (acknowlegde){
             HelperFunctions.WriteOnMatrixScreen("\n Day: " + day);
             if (OnButtonBlueTwo()){
-                HelperFunctions.WriteOnMatrixScreen("\n Day: " + day);
-                day = day + count;
+                if (day < maxDay){
+                    HelperFunctions.WriteOnMatrixScreen("\n Day: " + day);
+                    day = day + count;
 
-                if (IO.readShort(0x80) == 1){
-                    int beginDay = day;
-                    acknowlegde = true;
+                    if (IO.readShort(0x80) == 1){
+                        int beginDay = day;
+                        acknowlegde = true;
+                    }
+                } else {
+                    day = 1;
                 }
             }
         }
@@ -53,43 +70,54 @@ public class SetPeriodTab extends Tab{
         while (acknowlegde){
             HelperFunctions.WriteOnMatrixScreen("\n Year: " + year);
             if (OnButtonBlueTwo()){
-                HelperFunctions.WriteOnMatrixScreen("\n Year: " + year);
-                year = year + count;
+                if (year <= maxYear){
+                    HelperFunctions.WriteOnMatrixScreen("\n Year: " + year);
+                    year = year + count;
 
-                if (IO.readShort(0x80) == 1){
-                    int endYear = year;
-                    acknowlegde = true;
+                    if (IO.readShort(0x80) == 1){
+                        int endYear = year;
+                        acknowlegde = true;
+                    }
+                } else {
+                    year = 2006;
                 }
             }
         }
+
         while (acknowlegde){
             HelperFunctions.WriteOnMatrixScreen("\n Month: " + month);
             if (OnButtonBlueTwo()){
-                HelperFunctions.WriteOnMatrixScreen("\n Month: " + month);
-                month = month + count;
+                if (month < maxMonth){
+                    HelperFunctions.WriteOnMatrixScreen("\n Month: " + month);
+                    month = month + count;
 
-                if (IO.readShort(0x80) == 1){
-                    int endMonth = month;
-                    acknowlegde = true;
+                    if (IO.readShort(0x80) == 1){
+                        int endMonth = month;
+                        acknowlegde = true;
+                    }
+                } else {
+                    month = 1;
                 }
             }
         }
         while (acknowlegde){
             HelperFunctions.WriteOnMatrixScreen("\n Day: " + day);
             if (OnButtonBlueTwo()){
-                HelperFunctions.WriteOnMatrixScreen("\n Day: " + day);
-                day = day + count;
+                if (day <= maxDay){
+                    HelperFunctions.WriteOnMatrixScreen("\n Day: " + day);
+                    day = day + count;
 
-                if (IO.readShort(0x80) == 1){
-                    int endDay = day;
-                    acknowlegde = true;
+                    if (IO.readShort(0x80) == 1){
+                        int endDay = day;
+                        acknowlegde = true;
+                    }
+                } else {
+                    day = 1;
                 }
             }
         }
 
-
-        Period givenPeriod = new Period((beginYear, beginMoth, beginYear),(endYear, endMonth, endDay));
-
+        Period givenPeriod = new Period((beginYear, beginMoth, beginYear),(endYear, endMonth, endDay))//??????
     }
 
     @Override

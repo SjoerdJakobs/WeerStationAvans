@@ -12,10 +12,10 @@ public class Opdracht2 {
      * colderOutside: checks if the outside and inside temperature cross each other, and sets it to either false or true for the rest
      *                of the time until the two temperatures cross each other again.
      */
-    /*public static double tempChange(ArrayList<Measurement> inside, ArrayList<Double> outside) {
+    /*public static double tempChange(ArrayList<Measurement> inside, ArrayList<Measurement> outside) {
             int count = 0;
             double insideTemp = inside.get(0).getInsideTemp();
-            double outsideTemp = inside.get(0).getOutsideTemp();
+            double outsideTemp = outside.get(0).getOutsideTemp();
 
             boolean colderOutside = true;
 
@@ -27,7 +27,7 @@ public class Opdracht2 {
 
             for (int i = 0; i < inside.size(); i++) {
                 insideTemp = inside.get(i).getInsideTemp();
-                outsideTemp = inside.get(i).getOutsideTemp();
+                outsideTemp = outside.get(i).getOutsideTemp();
 
                 if (!Double.isNaN(insideTemp) && !Double.isNaN(outsideTemp)){
                 if (colderOutside == true && insideTemp > outsideTemp) {

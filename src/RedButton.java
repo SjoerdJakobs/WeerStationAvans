@@ -38,13 +38,13 @@ public class RedButton extends Tab{
         count++;
 
         if(count == 0) {
-            HelperFunctions.WriteOnMatrixScreen("Set period");
+            HelperFunctions.WriteOnMatrixScreen(text1);
         } else if (count == 1){
-            HelperFunctions.WriteOnMatrixScreen("Predefined");
+            HelperFunctions.WriteOnMatrixScreen(text2);
         } else if (count == 2){
-            HelperFunctions.WriteOnMatrixScreen("Exit menu");
+            HelperFunctions.WriteOnMatrixScreen(text3);
         } else if (count == 3){
-            HelperFunctions.WriteOnMatrixScreen("Shut down");
+            HelperFunctions.WriteOnMatrixScreen(text4);
         } else if (count > 3){
             count = 0;
         }
