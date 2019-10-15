@@ -11,6 +11,7 @@ public class ExampleTab extends Tab
 
         HelperFunctions.ClearTextDisplay();
         HelperFunctions.WriteOnMatrixScreen("\n hey");
+        m_menu.DrawMenu();
     }
 
     @Override
