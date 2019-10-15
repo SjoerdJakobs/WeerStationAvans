@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class ExampleTab extends Tab
 {
     protected ExampleTab(Menu menu) {
@@ -8,10 +10,21 @@ public class ExampleTab extends Tab
     protected void OnOpen() {
         //runs when tab is opened
         System.out.println("example tab opened");
-
         HelperFunctions.ClearTextDisplay();
-        HelperFunctions.WriteOnMatrixScreen("\n hey");
         m_menu.DrawMenu();
+
+        // Get raw measurements of period
+        Period period = new Period(2);
+
+        // Get measurements from period
+        ArrayList<Measurement> measurements = new ArrayList<>();
+        measurements = period.getDataStorage().getPeriodMeasurements();
+
+        // Get temperatures of measurements
+        ArrayList<Double> temperatures = new ArrayList<>();
+        for (int i = 0; i < measurements.size(); i++) temperatures.add(measurements.get(i).getOutsideTemp());
+
+        GraphMaker.createGraph(temperatures);
     }
 
     @Override
