@@ -5,12 +5,16 @@ public class RunableObject
     public boolean UsesMain;
     public boolean UsesRenderer;
 
+    public Program m_program;
+
     protected RunableObject(Program program)
     {
         this(program, true, true, true);
     }
 
     protected RunableObject(Program program, boolean usesInput, boolean usesMain, boolean usesRenderer) {
+        m_program = program;
+
         UsesInput = usesInput;
         UsesMain = usesMain;
         UsesRenderer = usesRenderer;

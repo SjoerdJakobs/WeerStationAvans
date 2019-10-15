@@ -126,7 +126,7 @@ public class Menu extends RunableObject
         }
     }
 
-    public void DrawMenu(boolean MakeGrid) {
+    public void DrawMenu() {
         for (int i = 0; i < m_pixelGrid.PixelGrid.length; i++) {
             for (int j = 0; j < m_pixelGrid.PixelGrid[0].length; j++) {
                 if (i < 7) {
