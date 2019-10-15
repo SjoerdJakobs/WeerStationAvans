@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.time.LocalDate;
+
 public class ExampleTab2 extends Tab
 {
     protected ExampleTab2(Menu menu) {
@@ -9,8 +12,9 @@ public class ExampleTab2 extends Tab
         //runs when tab is opened
         System.out.println("exampletab 2 opened");
         HelperFunctions.ClearTextDisplay();
-        HelperFunctions.WriteOnMatrixScreen("\n hey 2");
         m_menu.DrawMenu();
+
+
     }
 
     @Override

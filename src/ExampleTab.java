@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class ExampleTab extends Tab
@@ -14,7 +15,7 @@ public class ExampleTab extends Tab
         m_menu.DrawMenu();
 
         // Get raw measurements of period
-        Period period = new Period(2);
+        Period period = new Period(LocalDate.of(2010, 11, 1), LocalDate.of(2010, 11, 4));
 
         // Get measurements from period
         ArrayList<Measurement> measurements = new ArrayList<>();
@@ -24,7 +25,10 @@ public class ExampleTab extends Tab
         ArrayList<Double> temperatures = new ArrayList<>();
         for (int i = 0; i < measurements.size(); i++) temperatures.add(measurements.get(i).getOutsideTemp());
 
-        GraphMaker.createGraph(temperatures);
+        PixelGrid frame = GraphMaker.createGraph(temperatures);
+        PixelGridDrawer.INSTANCE.Draw(frame.PixelGrid);
+
+        System.out.println("Finished");
     }
 
     @Override
@@ -38,7 +42,9 @@ public class ExampleTab extends Tab
     protected void Run(double deltaTime) {
         //runs every frame when tab is opened
 
-        //System.out.println("exampletab run");
+        // Get new colomn with 1 dot of step = 20
+        // Move all dots << 1
+        // Add last colomn and print frame
 
     }
 
