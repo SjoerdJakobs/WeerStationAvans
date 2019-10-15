@@ -1,36 +1,31 @@
-import java.net.CookieHandler;
-import java.time.DateTimeException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
-import static java.lang.Math.abs;
-import static java.lang.Math.sqrt;
+import static java.lang.Math.*;
 
 public class Calculations {
     /**
      * calculate the mode (most frequent number in the array)
      */
     public static double mode(ArrayList<Double> array) {
-        double most = 0;
-        int mostCount = 0;
-
-        for (int i = 0; i < array.size(); i++) {
-            int count = 0;
-
-            for (int j = 0; j < array.size(); j++) {
-                if (array.get(j) == array.get(i)) {
-                    count++;
-                }
-
-                if (count > mostCount) {
-                    mostCount = count;
-                    most = array.get(i);
-                }
+        Collections.sort(array);
+        int counter = 0;
+        int prevCount = 0;
+        double result = 0;
+        double leader = array.get(0);
+        for (double data : array) {
+            if (data == leader) {
+                counter++;
+            } else {
+                counter = 1;
             }
+            if (counter > prevCount) {
+                result = leader;
+                prevCount = counter;
+            }
+            leader = data;
         }
-        return most;
+        return result;
     }
 
     /**
@@ -64,10 +59,13 @@ public class Calculations {
      * calculate the standard deviation
      */
     public static double standardDeviation(ArrayList<Double> array) {
-        double sd = 0;
+        double sd;
+        double sum = 0;
+        double mean = mean(array);
         for (int i = 0; i < array.size(); i++) {
-            sd = sd + ((sqrt((array.get(i) - mean(array)) * (array.get(i) - mean(array)))) / (array.size() - 1));
+            sum = sum + (Math.pow(array.get(i) - mean, 2));
         }
+        sd = sqrt(sum / array.size());
         return sd;
     }
 
@@ -102,7 +100,7 @@ public class Calculations {
         return result;
     }
 
-    public static double windChill(short outsideTemp, short windSpeed) {
+    public static double windChill(double outsideTemp, double windSpeed) {
         double windchill = 13.12 + (0.6215 * windSpeed) - (11.37 * Math.pow(outsideTemp, 0.16)) + ((0.3965 * windSpeed) * Math.pow(outsideTemp, 0.16));
         return windchill;
     }
@@ -222,7 +220,7 @@ public class Calculations {
      * @param measurements is an array list that contains all converted measurements from the period of time.
      */
 
-    public int calculateDegreeDays(ArrayList<Measurement> measurements)
+    public static int calculateDegreeDays(ArrayList<Measurement> measurements)
     {
         int degreedays = 0;
         ArrayList<Double> temperature = new ArrayList<>();
@@ -274,7 +272,7 @@ public class Calculations {
         }
 
         return degreedays;
-    }
+    }      
 
     /**
      * Author: Dennis Kruijt.
