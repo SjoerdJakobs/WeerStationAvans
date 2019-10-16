@@ -19,7 +19,7 @@ public class main
         /**
          * Example code for testing setting a period and testing receiving the data from it.
          */
-        Period now = new Period();
+        /*Period now = new Period();
         System.out.println(now.getDataStorage().getMaxAirPressure());
         Period lastDay = new Period(1);
         System.out.println(lastDay.getDataStorage().getMinAirPressure());
@@ -28,7 +28,7 @@ public class main
         Period lastYear = new Period(LocalDate.of(2018,1,1),LocalDate.of(2018,12,31));
         System.out.println(lastYear.getDataStorage().getModeAirPressure());
         System.out.println(lastYear.getDataStorage().getMedianAirPressure());
-        System.out.println(lastYear.getDataStorage().getStandardDeviationAirPressure());
+        System.out.println(lastYear.getDataStorage().getStandardDeviationAirPressure());*/
     }
 
 
