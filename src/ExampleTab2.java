@@ -1,31 +1,29 @@
-public class ExampleTab extends Tab
+public class ExampleTab2 extends Tab
 {
-    protected ExampleTab(Menu menu) {
+    protected ExampleTab2(Menu menu) {
         super(menu);
     }
 
     @Override
     protected void OnOpen() {
         //runs when tab is opened
-        System.out.println("example tab opened");
-
+        System.out.println("exampletab 2 opened");
         HelperFunctions.ClearTextDisplay();
-        HelperFunctions.WriteOnMatrixScreen("\n hey");
+        HelperFunctions.WriteOnMatrixScreen("\n hey 2");
         m_menu.DrawMenu();
     }
 
     @Override
     protected void OnClose() {
         //runs when tab is closed
-        System.out.println("example tab closed");
+        System.out.println("exampletab 2 closed");
 
     }
 
     @Override
     protected void Run(double deltaTime) {
         //runs every frame when tab is opened
-
-        //System.out.println("exampletab run");
+        //System.out.println("exampletab 2 run");
 
     }
 
@@ -33,13 +31,13 @@ public class ExampleTab extends Tab
     protected void OnButtonBlueTwo() {
         //runs when red button is pressed(runs once, its an actual bu)
 
-        System.out.println("example blue tab button pressed");
+        System.out.println("exampletab 2  bluebutton pressed");
     }
 
     @Override
     protected void OnButtonRed() {
         //runs when red button is pressed(runs once, its an actual bu)
 
-        System.out.println("example tab red button pressed");
+        System.out.println("exampletab 2 redbutton pressed");
     }
 }
