@@ -10,7 +10,7 @@ public class ExampleTab3 extends Tab
     private byte leftBoundary = 0;
 
     // Get raw measurements of period
-    Period period = new Period(LocalDate.of(2010, 11, 1), LocalDate.of(2010, 11, 30));
+    Period period = new Period(LocalDate.of(2010, 11, 1), LocalDate.of(2010, 11, 20));
 
     // Get measurements from period
     private ArrayList<Measurement> measurements = period.getDataStorage().getPeriodMeasurements();
@@ -57,42 +57,65 @@ public class ExampleTab3 extends Tab
     protected void Run(double deltaTime) {
         deltaTimer += deltaTime;
 
-        if (showGraph == true && deltaTimer >= 0.03) {
+        if (showGraph == true && deltaTimer >= 0.1) {
             PixelGrid addToGraph = new PixelGrid();
 
-            System.out.println("xIndex: " + xIndex);
+            System.out.println("xIndex: " + xIndex + "\tcurrentColomn: " + currentColomn);
 
-            if (xIndex > 127) {
+            // Keep track of the currentl colomn to draw in to prevent out of bound on DotMatrixDisplay
+            if (xIndex > 1) {
+                // Shift graph to the left
                 graph = ShiftToLeft(graph);
-
             }
+                currentColomn = 127;
 
-            // Variables
-            double sum = 0;
-            int nValues = 0;
-            for (int i = Math.round(step * (xIndex - leftBoundary)); i < Math.round(step * (xIndex - leftBoundary + 1)); i++) {
-                sum += temperatures.get(i);
-                nValues++;
-            }
-            mean = sum / nValues;
+//            else currentColomn = xIndex;
 
-            // Push previous result in old result for later to compare
-            oldResult = result;
-            result = (int)Math.round((mean - minValue) / amplitudeValue * (double)amplitudeGraph);
-
-            // If xIndex out of bound, keep xIndex = 127 while rest of graph ShiftToLeft()
-            if (xIndex <= 127) addToGraph.PixelGrid[bottomBoundary - result - 1][xIndex] = true;
-            else addToGraph.PixelGrid[bottomBoundary - result - 1][127] = true;
-
-            // Create a vertical line for value jumps > 1
-            if (result - oldResult > 1) {
-                for (int i = oldResult + 1; i < result; i++) {
-                    addToGraph.PixelGrid[bottomBoundary - i - 1][xIndex] = true; // Minus one to prevent from drawing on the x-axel
+            // Current xIndex must be able to get values from ArrayList temperatures
+            if (temperatures.size() > Math.round(step * (xIndex - leftBoundary + 1))) {
+                // Variables
+                double sum = 0;
+                int nValues = 0;
+                for (int i = Math.round(step * (xIndex - leftBoundary)); i < Math.round(step * (xIndex - leftBoundary + 1)); i++) {
+                    sum += temperatures.get(i);
+                    nValues++;
                 }
-            }
-            else if (result - oldResult < -1) {
-                for (int i = oldResult - 1; i > result; i--) {
-                    addToGraph.PixelGrid[bottomBoundary - i - 1][xIndex] = true; // Minus one to prevent from drawing on the x-axel
+                mean = sum / nValues;
+
+                // Push previous result in old result for later to compare
+                oldResult = result;
+                result = (int)Math.round((mean - minValue) / amplitudeValue * (double)amplitudeGraph);
+                if (xIndex == 0) oldResult = result;
+
+                // Add result to the current colomn (= at the end of the graph)
+                addToGraph.PixelGrid[bottomBoundary - result - 1][currentColomn] = true;
+
+                // Create a vertical line for value jumps > 1
+                if (result - oldResult > 1) {
+                    for (int i = oldResult + 1; i < result; i++) {
+                        addToGraph.PixelGrid[bottomBoundary - i - 1][currentColomn] = true; // Minus one to prevent from drawing on the x-axel
+                    }
+                }
+                else if (result - oldResult < -1) {
+                    for (int i = oldResult - 1; i > result; i--) {
+                        addToGraph.PixelGrid[bottomBoundary - i - 1][currentColomn] = true; // Minus one to prevent from drawing on the x-axel
+                    }
+                }
+
+
+                // EXPERIMENTAL: Give latest mean
+                HelperFunctions.WriteValueOnSegments(1, mean, 1);
+            } // End if-statement
+
+            // Else: start graphRestart counter to create a gap after which everything restarts
+            else {
+                // EXPERIMENTAL: Remove latest mean
+                if (graphRestart == 0) HelperFunctions.ClearAllSegmentDisplays();
+
+                graphRestart++;
+                if (graphRestart == 128) {
+                    xIndex = -1; // -1 + incremental = 0
+                    graphRestart = 0;
                 }
             }
 
