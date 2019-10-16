@@ -88,14 +88,16 @@ public class SettingsTab extends Tab {
         /**
          * Set a year for the begin period
          */
-        if (state == 1 && periodState == 0 && yearState == 0) {
-            HelperFunctions.WriteOnMatrixScreen("Year: 2006");
+        else if (state == 1 && periodState == 0 && yearState == 0) {
+            //HelperFunctions.ClearTextDisplay();
+           // HelperFunctions.WriteOnMatrixScreen("Choose a year: ");
+            HelperFunctions.WriteOnMatrixScreen("\n 2006");
             System.out.println("yS: " + yearState);
             yearState++;
         } else if (state == 1 && periodState == 0 && yearState == 1) {
-            HelperFunctions.WriteOnMatrixScreen("Year: 2007");
-            System.out.println("yS: " + yearState);
-
+            //HelperFunctions.WriteOnMatrixScreen("Choose a year: ");
+            HelperFunctions.WriteOnMatrixScreen("\n 2007");
+            System.out.println("yS: " + yearState + " pS:" + periodState);
             yearState++;
         } else if (state == 1 && periodState == 0 && yearState == 2) {
             HelperFunctions.WriteOnMatrixScreen("Year: 2008");
@@ -303,27 +305,27 @@ public class SettingsTab extends Tab {
         /**
          * Scroll through the predefined calculations
          */
-        if (state == 0 && menuState == 1 && preDefState == 1) {
+        else if (state == 2 && menuState == 2 && preDefState == 1) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("Mist calculation");
             System.out.print("preDefS: " + preDefState);
             preDefState++;
-        } else if (state == 0 && menuState == 1 && preDefState == 2) {
+        } else if (state == 2 && menuState == 2 && preDefState == 2) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("Max rain calculation");
             System.out.print("preDefS: " + preDefState);
             preDefState++;
-        } else if (state == 0 && menuState == 1 && preDefState == 3) {
+        } else if (state == 2 && menuState == 2 && preDefState == 3) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("Crossing temperatures");
             System.out.print("preDefS: " + preDefState);
             preDefState++;
-        } else if (state == 0 && menuState == 1 && preDefState == 4) {
+        } else if (state == 2 && menuState == 2 && preDefState == 4) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("Degreedays calculation");
             System.out.print("preDefS: " + preDefState);
             preDefState++;
-        } else if (state == 0 && menuState == 1 && preDefState == 5) {
+        } else if (state == 2 && menuState == 2 && preDefState == 5) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("Rising temperature duration");
             System.out.print("preDefS: " + preDefState);
@@ -360,80 +362,91 @@ public class SettingsTab extends Tab {
         if (menuState == 1) {
             state = 1;
             System.out.print("State: "+ state);
-
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("Choose a year: ");
         }
-        if (state == 1 && periodState == 0) {
+        if (menuState == 1 && state == 1 && periodState == 0) {
             year = 2006 + yearState;
             periodState++;
-        } else if (state == 1 && periodState == 1) {
+            System.out.print("pS: " + periodState);
+            System.out.print("chosen year: "+ year);
+        } else if (menuState == 1 && state == 1 && periodState == 1) {
             month = monthState;
             periodState++;
+            System.out.print("pS: " + periodState);
+
         } else if (state == 1 && periodState == 2) {
             day = dayState;
             periodState++;
+            System.out.print("pS: " + periodState);
 
             Period beginPeriod = new Period();
             beginPeriod.setStart(year, month, day);
             periodState++;
         }
 
-
         /**
          * When pressed on the red button, it opens up a new menu to scroll through the predefined calculations (individual assignments)
          */
-        if (state == 0 && menuState == 2) {
+        else if (state == 0 && menuState == 2) {
             preDefState = 1;
-        }
-        if (menuState == 2 && preDefState == 1){
+            state = 2;
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("Options: ");
+        } else if (state == 2 && preDefState == 2){
             Period chunk = new Period(365);
             int mist = chunk.getDataStorage().getMist();
             String mistResult = Integer.toString(mist);
-            String mistText = " \n Days with chance of mist";
+            HelperFunctions.ClearTextDisplay();
+            String mistText = " days with chance of mist";
             HelperFunctions.WriteOnMatrixScreen(mistResult + mistText);
-        } else if (menuState == 2 && preDefState == 2) {
+        } else if (state == 2 && preDefState == 3) {
             //RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
             //Measurement measurement = new Measurement(rawData);
             Calculations.MaxRain();
-        } else if (menuState == 2 && preDefState == 3) {
+        } else if (state == 2 && preDefState == 4) {
             ArrayList<RawMeasurement> rawData = DatabaseConnection.getMeasurementsLastMonth();
             ArrayList<Measurement> measurement = new ArrayList<Measurement>();
             for (int i = 0; i < rawData.size(); i++) {
                 measurement.add(new Measurement(rawData.get(i)));
             }
-            HelperFunctions.WriteOnMatrixScreen("\n Amount of times crossed: " + Calculations.tempChange(measurement));
-        } else if (menuState == 2 && preDefState == 4) {
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("Amount of times crossed: " + Calculations.tempChange(measurement));
+        } else if (state == 2 && preDefState == 5) {
             ArrayList<RawMeasurement> rawData = DatabaseConnection.getMeasurementsLastYear();
             ArrayList<Measurement> measurement = new ArrayList<Measurement>();
             for (int i = 0; i < rawData.size(); i++) {
                 measurement.add(new Measurement(rawData.get(i)));
             }
-            HelperFunctions.WriteOnMatrixScreen("\n Amount of degreedaysCalculations last year: " + Calculations.calculateDegreeDays(measurement));
-        } else if (menuState == 2 && preDefState == 5) {
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("Amount of degreedays last year: " + Calculations.calculateDegreeDays(measurement));
+        } else if (state == 2 && preDefState == 6) {
             ArrayList<RawMeasurement> rawData = DatabaseConnection.getMeasurementsLastMonth();
             ArrayList<Measurement> measurement = new ArrayList<Measurement>();
             for (int i = 0; i < rawData.size(); i++) {
                 measurement.add(new Measurement(rawData.get(i)));
             }
-            HelperFunctions.WriteOnMatrixScreen("\n Temeperature rising: " + Calculations.risingTemperatureDuration(measurement));
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("Temeperature rising: " + Calculations.risingTemperatureDuration(measurement));
         }
 
-            /**
-             * When pressed, the settings menu should revert to the tab with the current weather information
-             */
-            else if(state ==0 && menuState ==3){
-                HelperFunctions.ClearMatrixDisplay();
-                HelperFunctions.WriteOnMatrixScreen("Press first blue button");
-            }
-
-            /**
-             * When pressed, the GUI should quit
-             */
-            else if (state == 0 && menuState == 4) {
-                HelperFunctions.ClearMatrixDisplay();
-                HelperFunctions.WriteOnMatrixScreen("Goodbye!");
-                //IO.delay(500);
-                //m_menu.m_
-            }
+        /**
+         * When pressed, the settings menu should revert to the tab with the current weather information
+         */
+        else if(state ==0 && menuState ==3){
+            HelperFunctions.ClearMatrixDisplay();
+            HelperFunctions.WriteOnMatrixScreen("Press first blue button");
         }
+
+        /**
+         * When pressed, the GUI should quit
+         */
+        else if (state == 0 && menuState == 4) {
+            HelperFunctions.ClearMatrixDisplay();
+            HelperFunctions.WriteOnMatrixScreen("Goodbye!");
+            //IO.delay(500);
+            //m_menu.m_
+        }
+    }
 
 }
