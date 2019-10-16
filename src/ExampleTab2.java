@@ -10,6 +10,7 @@ public class ExampleTab2 extends Tab
         System.out.println("exampletab 2 opened");
         HelperFunctions.ClearTextDisplay();
         HelperFunctions.WriteOnMatrixScreen("\n hey 2");
+        m_menu.DrawMenu();
     }
 
     @Override

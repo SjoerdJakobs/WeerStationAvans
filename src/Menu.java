@@ -2,10 +2,14 @@ import java.util.ArrayList;
 
 public class Menu extends RunableObject
 {
+    private PixelGrid m_pixelGrid;
+
     public int CurrentTabIndex = 0;
     public Tab CurrentTab;
 
     //list off all the tabs
+    //private ArrayList<Tab> m_scrollTabs;
+    //private ArrayList<Tab> m_allTabs;
     private ArrayList<Tab> m_tabs;
 
     public Callback onButtonBlueOneCall;
@@ -18,16 +22,31 @@ public class Menu extends RunableObject
 
     protected Menu(Program program, boolean usesInput, boolean usesMain, boolean usesRenderer) {
         super(program, usesInput, usesMain, usesRenderer);
-
     }
 
     @Override
     protected void Start() {
         super.Start();
+        m_pixelGrid = new PixelGrid();
+
         m_tabs = new ArrayList<Tab>();
         m_tabs.add(new ExampleTab(this));
         m_tabs.add(new ExampleTab2(this));
         m_tabs.add(new ExampleTab3(this));
+
+        /*
+        // if we ever need hidden tabs
+        m_scrollTabs = new ArrayList<Tab>();
+        m_scrollTabs.add(new ExampleTab(this));
+        m_scrollTabs.add(new ExampleTab2(this));
+        m_scrollTabs.add(new ExampleTab3(this));
+
+        m_allTabs = new ArrayList<Tab>();
+        m_allTabs.add(new ExampleTab(this));
+        m_allTabs.add(new ExampleTab2(this));
+        m_allTabs.add(new ExampleTab3(this));
+         */
+
         CurrentTabIndex = 0;
         CurrentTab = m_tabs.get(CurrentTabIndex);
         CurrentTab.OnOpen();
@@ -46,9 +65,9 @@ public class Menu extends RunableObject
     }
 
     @Override
-    protected void RenderLoop(double deltaTime) {
-
-        HelperFunctions.SetDisplayPixel(true,60,3);
+    protected void RenderLoop(double deltaTime)
+    {
+        //HelperFunctions.SetDisplayPixel(true,60,3);
         //draw stuff
     }
 
@@ -114,6 +133,29 @@ public class Menu extends RunableObject
         else if(address == 0x100)
         {
             CurrentTab.OnButtonBlueTwo();
+        }
+    }
+
+    public void DrawMenu() {
+        for (int i = 0; i < m_pixelGrid.PixelGrid.length; i++) {
+            for (int j = 0; j < m_pixelGrid.PixelGrid[0].length; j++) {
+                if (i < 7) {
+                    if (i == 6) {
+                        HelperFunctions.SetDisplayPixel(true, j, i);
+                    }
+                    else if(j>(m_pixelGrid.PixelGrid[0].length/m_tabs.size())*CurrentTabIndex && j < (m_pixelGrid.PixelGrid[0].length/m_tabs.size())*(CurrentTabIndex+1))
+                    {
+                        HelperFunctions.SetDisplayPixel(true,j,i);
+                    }
+                    else if (j % (int) (m_pixelGrid.PixelGrid[0].length / m_tabs.size()) == 0) {
+                        if (Math.abs(m_pixelGrid.PixelGrid[0].length - j) < 4) {
+                            HelperFunctions.SetDisplayPixel(true, m_pixelGrid.PixelGrid[0].length - 1, i);
+                        } else {
+                            HelperFunctions.SetDisplayPixel(true, j, i);
+                        }
+                    }
+                }
+            }
         }
     }
 
