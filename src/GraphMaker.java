@@ -3,17 +3,22 @@ import java.lang.Math;
 
 public class GraphMaker {
 
-    public static PixelGrid createAxels(PixelGrid pixelGrid) {
+    public static void createAxels(PixelGrid pixelGrid) {
         byte topBoundary = 8;
         byte rightBoundary = 127;
-        byte bottomBoundary = 31;
+        byte bottomBoundary = 29;
         byte leftBoundary = 0;
+        byte yAxel = 20; // position x of yAxel
 
         // Draw the x and y axels on the left- and bottom boundary
-        for (int i = leftBoundary; i <= rightBoundary; i++) pixelGrid.PixelGrid[bottomBoundary][i] = true;
-        for (int i = topBoundary; i <= bottomBoundary; i++) pixelGrid.PixelGrid[i][leftBoundary] = true;
 
-        return pixelGrid;
+
+        for (int i = leftBoundary; i <= rightBoundary; i++) pixelGrid.PixelGrid[bottomBoundary][i] = true;
+        for (int i = topBoundary; i <= bottomBoundary; i++) pixelGrid.PixelGrid[i][yAxel] = true;
+
+        PixelGridDrawer.INSTANCE_DRAWER.AddDraw(pixelGrid.PixelGrid);
+
+        // return pixelGrid;
     }
 
     public static PixelGrid createGraph(ArrayList<Double> measurements) {

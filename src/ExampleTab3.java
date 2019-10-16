@@ -6,11 +6,12 @@ public class ExampleTab3 extends Tab
 {
     private byte topBoundary = 8;
     private byte rightBoundary = 127;
-    private byte bottomBoundary = 31;
+    private byte bottomBoundary = 29;
     private byte leftBoundary = 0;
+    private byte yAxel = 20; // position x of yAxel
 
     // Get raw measurements of period
-    Period period = new Period(LocalDate.of(2010, 11, 1), LocalDate.of(2010, 11, 20));
+    Period period = new Period(LocalDate.of(2010, 11, 20), LocalDate.of(2010, 12, 31));
 
     // Get measurements from period
     private ArrayList<Measurement> measurements = period.getDataStorage().getPeriodMeasurements();
@@ -30,8 +31,10 @@ public class ExampleTab3 extends Tab
     private double amplitudeValue = maxValue - minValue;
     private int amplitudeGraph = bottomBoundary - topBoundary - 1; // Minus one to prevent the graph from drawing on the x-axes
 
-    double mean, deltaTimer;
-    int xIndex, oldResult, result = 0, step = 50, graphRestart = 0, currentColomn = 0;
+    private double deltaTimer;
+    private int xIndex, oldResult = 0, step = 50, graphRestart = 0, currentColomn = 127;
+    private double posBar = temperatures.size() / step / (double)(rightBoundary - leftBoundary);
+
 
     // Menu
     protected ExampleTab3(Menu menu) {
@@ -57,38 +60,32 @@ public class ExampleTab3 extends Tab
     protected void Run(double deltaTime) {
         deltaTimer += deltaTime;
 
-        if (showGraph == true && deltaTimer >= 0.1) {
+        if (showGraph == true && deltaTimer >= 0.014) {
             PixelGrid addToGraph = new PixelGrid();
 
-            System.out.println("xIndex: " + xIndex + "\tcurrentColomn: " + currentColomn);
+            // Shift graph to the left only if there are more than two colomns
+            if (xIndex > 1) graph = ShiftToLeft(graph);
 
-            // Keep track of the currentl colomn to draw in to prevent out of bound on DotMatrixDisplay
-            if (xIndex > 1) {
-                // Shift graph to the left
-                graph = ShiftToLeft(graph);
-            }
-                currentColomn = 127;
-
-//            else currentColomn = xIndex;
+            // TODO Redraw axels due to shifting the graph
+            //GraphMaker.createAxels(graph);
 
             // Current xIndex must be able to get values from ArrayList temperatures
             if (temperatures.size() > Math.round(step * (xIndex - leftBoundary + 1))) {
-                // Variables
-                double sum = 0;
-                int nValues = 0;
-                for (int i = Math.round(step * (xIndex - leftBoundary)); i < Math.round(step * (xIndex - leftBoundary + 1)); i++) {
-                    sum += temperatures.get(i);
-                    nValues++;
+
+                int result;
+                double mean = CalculateMean();
+                // Show a new dot (part of graph) only if mean is not NaN
+                if(!Double.isNaN(mean)) {
+                    // Push previous result in old result for later to compare
+
+                    result = (int)Math.round((mean - minValue) / amplitudeValue * (double) amplitudeGraph);
+                    if (xIndex == 0) oldResult = result;
+
+                    // Add result to the current colomn (= at the end of the graph)
+                    addToGraph.PixelGrid[bottomBoundary - result - 1][currentColomn] = true;
                 }
-                mean = sum / nValues;
-
-                // Push previous result in old result for later to compare
-                oldResult = result;
-                result = (int)Math.round((mean - minValue) / amplitudeValue * (double)amplitudeGraph);
-                if (xIndex == 0) oldResult = result;
-
-                // Add result to the current colomn (= at the end of the graph)
-                addToGraph.PixelGrid[bottomBoundary - result - 1][currentColomn] = true;
+                else
+                    result = oldResult;
 
                 // Create a vertical line for value jumps > 1
                 if (result - oldResult > 1) {
@@ -102,15 +99,31 @@ public class ExampleTab3 extends Tab
                     }
                 }
 
+                // Update oldResult with current result for next cycle of Run() function
+                oldResult = result;
 
-                // EXPERIMENTAL: Give latest mean
-                HelperFunctions.WriteValueOnSegments(1, mean, 1);
+                // Position bar shows how much of the graph is left to show
+                posBar = temperatures.size() / step / (double)(rightBoundary - leftBoundary);
+                for (int y = bottomBoundary + 1; y <= 31; y++) {
+                    HelperFunctions.SetDisplayPixel(true, (int)Math.ceil(xIndex / posBar), y);
+                    HelperFunctions.SetDisplayPixel(false, (int)Math.ceil(xIndex / posBar ) - 2, y);
+                }
+
+                // TODO EXPERIMENTAL1: Give latest mean
+                // HelperFunctions.WriteValueOnSegments(1, mean, 1);
             } // End if-statement
 
             // Else: start graphRestart counter to create a gap after which everything restarts
             else {
-                // EXPERIMENTAL: Remove latest mean
-                if (graphRestart == 0) HelperFunctions.ClearAllSegmentDisplays();
+                // TODO EXPERIMENTAL1: Remove latest mean
+                // if (graphRestart == 0) HelperFunctions.ClearAllSegmentDisplays();
+
+
+                // position bar goes back to the beginning
+                for (int y = bottomBoundary + 1; y <= 31; y++) {
+                    HelperFunctions.SetDisplayPixel(true, 127 - graphRestart - 2, y);
+                    HelperFunctions.SetDisplayPixel(false, 127 - graphRestart, y);
+                }
 
                 graphRestart++;
                 if (graphRestart == 128) {
@@ -159,8 +172,12 @@ public class ExampleTab3 extends Tab
                 HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nstd deviation:%.2f",stdDev));
                 break;
             case 7:
-                graph = GraphMaker.createAxels(graph);
+                // Draw axels
+                PixelGrid graph = new PixelGrid();
+                for (int i = leftBoundary; i <= rightBoundary; i++) graph.PixelGrid[bottomBoundary][i] = true;
+                //for (int i = topBoundary; i <= bottomBoundary; i++) graph.PixelGrid[i][yAxel] = true;
                 PixelGridDrawer.INSTANCE_DRAWER.AddDraw(graph.PixelGrid);
+
                 showGraph = true;
                 System.out.println("Graph tab reached!");
                 break;
@@ -202,10 +219,10 @@ public class ExampleTab3 extends Tab
     private PixelGrid ShiftToLeft(PixelGrid pixelGrid) {
         for (int x = leftBoundary + 1; x <= rightBoundary; x++) {
             for (int y = topBoundary; y <= bottomBoundary - 1; y++) {
-                if (pixelGrid.PixelGrid[y][1] == true) {
-                    HelperFunctions.SetDisplayPixel(false, 1, y);
-                    pixelGrid.PixelGrid[y][1] = false;
-                }
+//                if (pixelGrid.PixelGrid[y][1] == true) {
+//                    HelperFunctions.SetDisplayPixel(false, 1, y);
+//                    pixelGrid.PixelGrid[y][1] = false;
+//                }
                 if (pixelGrid.PixelGrid[y][x] == true) {
                     HelperFunctions.SetDisplayPixel(false, x, y);
                     HelperFunctions.SetDisplayPixel(true, x-1, y);
@@ -215,5 +232,15 @@ public class ExampleTab3 extends Tab
             }
         }
         return pixelGrid;
+    }
+
+    private double CalculateMean() {
+        double sum = 0;
+        int nValues = 0;
+        for (int i = Math.round(step * (xIndex - leftBoundary)); i < Math.round(step * (xIndex - leftBoundary + 1)); i++) {
+            sum += temperatures.get(i);
+            if (!Double.isNaN(temperatures.get(i))) nValues++;
+        }
+        return sum / nValues;
     }
 }
