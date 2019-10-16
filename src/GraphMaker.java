@@ -4,9 +4,15 @@ import java.lang.Math;
 public class GraphMaker {
 
     public static PixelGrid createAxels(PixelGrid pixelGrid) {
+        byte topBoundary = 8;
+        byte rightBoundary = 127;
+        byte bottomBoundary = 31;
+        byte leftBoundary = 0;
+
         // Draw the x and y axels on the left- and bottom boundary
-        for (int i = 0; i <= 127; i++) pixelGrid.PixelGrid[31][i] = true;
-        for (int i = 8; i <= 31; i++) pixelGrid.PixelGrid[i][0] = true;
+        for (int i = leftBoundary; i <= rightBoundary; i++) pixelGrid.PixelGrid[bottomBoundary][i] = true;
+        for (int i = topBoundary; i <= bottomBoundary; i++) pixelGrid.PixelGrid[i][leftBoundary] = true;
+
         return pixelGrid;
     }
 
@@ -54,7 +60,7 @@ public class GraphMaker {
             result = (int)Math.round((average - minValue) / amplitudeValue * (double)amplitudeGraph);
 
             // Draw the result as dot in the graph
-            frame.PixelGrid[bottomBoundary - result - 1][x]= true; // Minus one to prevent from drawing on the x-axel
+            frame.PixelGrid[bottomBoundary - result - 1][x] = true; // Minus one to prevent from drawing on the x-axel
 
             if (result - oldResult > 1) {
                 for (int i = oldResult + 1; i < result; i++) {

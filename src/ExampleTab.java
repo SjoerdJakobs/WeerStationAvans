@@ -26,7 +26,7 @@ public class ExampleTab extends Tab
         for (int i = 0; i < measurements.size(); i++) temperatures.add(measurements.get(i).getOutsideTemp());
 
         PixelGrid frame = GraphMaker.createGraph(temperatures);
-        PixelGridDrawer.INSTANCE.Draw(frame.PixelGrid);
+        PixelGridDrawer.INSTANCE_DRAWER.AddDraw(frame.PixelGrid);
 
         System.out.println("Finished");
     }
@@ -42,9 +42,7 @@ public class ExampleTab extends Tab
     protected void Run(double deltaTime) {
         //runs every frame when tab is opened
 
-        // Get new colomn with 1 dot of step = 20
-        // Move all dots << 1
-        // Add last colomn and print frame
+
 
     }
 
