@@ -12,7 +12,12 @@ public class InsideHumTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getInsideHum();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Humidity\ncurrent:%.2f",current)+ "%");
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\ncurrent: %.2f",current)+ "%");
+        }
 
     }
 
@@ -36,35 +41,40 @@ public class InsideHumTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Humidity\nmin:%.2f",min)+ "%");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\nmin: %.2f",min)+ "%");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Humidity\nmax:%.2f",max)+ "%");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\nmax: %.2f",max)+ "%");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Humidity\naverage:%.2f",average)+ "%");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\naverage: %.2f",average)+ "%");
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Humidity\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\nmodus: %.2f",Mode)+ "%");
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Humidity\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\nmedian: %.2f",Median)+ "%");
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Humidity\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\nstd deviation: %.2f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Humidity\ncurrent:%.2f",current)+ "%");
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nInside humidity\ncurrent: %.2f",current)+ "%");
+            }
             counter = 0;
 
         }

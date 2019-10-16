@@ -50,8 +50,9 @@ public class Calculations {
 
         for (int i = 0; i < array.size(); i++) {
             sum = sum + array.get(i);
-            average = sum / array.size();
         }
+        average = sum / array.size();
+
         return average;
     }
 

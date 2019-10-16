@@ -12,7 +12,12 @@ public class UVLevelTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getUvLevel();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\ncurrent:%.2f",current));
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\ncurrent UV index: %.0f",current));
+        }
 
     }
 
@@ -36,35 +41,40 @@ public class UVLevelTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nmin:%.2f",min));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nmin UV index: %.0f",min));
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nmax:%.2f",max));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nmax UV index: %.0f",max));
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\naverage:%.2f",average));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\naverage UV index: %.0f",average));
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nmodus UV index: %.0f",Mode));
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nmedian UV index: %.0f",Median));
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\nstd deviation: %.0f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\ncurrent:%.2f",current));
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\ncurrent UV index: %.0f",current));
+            }
             counter = 0;
 
         }

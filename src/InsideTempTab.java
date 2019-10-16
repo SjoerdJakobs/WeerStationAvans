@@ -12,7 +12,12 @@ public class InsideTempTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getInsideTemp();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Temperature\ncurrent:%.2f",current)+ " C");
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\ncurrent: %.1f",current)+ " C");
+        }
 
     }
 
@@ -36,35 +41,40 @@ public class InsideTempTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Temperature\nmin:%.2f",min)+ " C");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\nmin: %.1f",min)+ " C");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Temperature\nmax:%.2f",max)+ " C");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\nmax: %.1f",max)+ " C");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Temperature\naverage:%.2f",average)+ " C");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\naverage: %.1f",average)+ " C");
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Temperature\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\nmodus: %.1f",Mode)+ " C");
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Temperature\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\nmedian: %.1f",Median)+ " C");
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Temperature\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\nstd deviation: %.2f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Temperature\ncurrent:%.2f",current)+ " C");
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nInside temperature\ncurrent: %.1f",current)+ " C");
+            }
             counter = 0;
 
         }

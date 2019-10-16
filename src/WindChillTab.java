@@ -12,7 +12,12 @@ public class WindChillTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = Calculations.dewPoint(measurement.getOutsideTemp(),measurement.getWindSpeed());
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\ncurrent:%.2f",current));
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\ncurrent: %.1f",current)+ " C");
+        }
     }
 
     @Override
@@ -35,35 +40,40 @@ public class WindChillTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nmin:%.2f",min));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nmin: %.1f",min)+ " C");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nmax:%.2f",max));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nmax: %.1f",max)+ " C");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\naverage:%.2f",average));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\naverage: %.1f",average)+ " C");
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nmodus: %.1f",Mode)+ " C");
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nmedian: %.1f",Median)+ " C");
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\nstd deviation: %.1f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\ncurrent:%.2f",current));
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nWind chill\ncurrent: %.1f",current)+ " C");
+            }
             counter = 0;
 
         }

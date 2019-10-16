@@ -79,7 +79,7 @@ public class SunSetTab extends Tab
     private String average;
     private String Mode;
     private String Median;
-    private String stdDev;
+    private double stdDev;
 
     public void setValues(){
         min = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMinSunSet());
@@ -87,7 +87,7 @@ public class SunSetTab extends Tab
         average = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMeanSunSet());
         Mode = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getModeSunSet());
         Median = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMedianSunSet());
-        stdDev = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getStandardDeviationSunSet());
+        stdDev = period.getDataStorage().getStandardDeviationSunSet();
     }
 
     @Override

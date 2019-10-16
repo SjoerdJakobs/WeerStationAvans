@@ -12,7 +12,12 @@ public class HeatIndexTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = Calculations.dewPoint(measurement.getInsideTemp(),measurement.getInsideHum());
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\ncurrent:%.2f",current));
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\ncurrent: %.2f",current) + " C");
+        }
     }
 
     @Override
@@ -35,35 +40,40 @@ public class HeatIndexTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nmin:%.2f",min));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nmin: %.2f",min) + " C");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nmax:%.2f",max));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nmax: %.2f",max) + " C");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\naverage:%.2f",average));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\naverage: %.2f",average) + " C");
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nmodus: %.2f",Mode) + " C");
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nmedian: %.2f",Median) + " C");
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\nstd deviation: %.2f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\ncurrent:%.2f",current));
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\ncurrent: %.2f",current) + " C");
+            }
             counter = 0;
 
         }

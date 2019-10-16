@@ -12,7 +12,12 @@ public class OutsideTempTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getOutsideTemp();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent:%.2f",current)+ " C");
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\ncurrent: %.1f",current)+ " C");
+        }
 
     }
 
@@ -36,35 +41,40 @@ public class OutsideTempTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmin:%.2f",min)+ " C");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nmin: %.1f",min)+ " C");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmax:%.2f",max)+ " C");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nmax: %.1f",max)+ " C");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\naverage:%.2f",average)+ " C");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\naverage: %.1f",average)+ " C");
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nmodus: %.1f",Mode)+ " C");
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nmedian: %.1f",Median)+ " C");
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nstd deviation: %.1f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent:%.2f",current)+ " C");
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\ncurrent: %.1f",current)+ " C");
+            }
             counter = 0;
 
         }

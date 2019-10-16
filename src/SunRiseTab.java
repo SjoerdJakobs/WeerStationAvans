@@ -79,7 +79,7 @@ public class SunRiseTab extends Tab
     private String average;
     private String Mode;
     private String Median;
-    private String stdDev;
+    private double stdDev;
 
     public void setValues(){
         min = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMinSunRise());
@@ -87,7 +87,7 @@ public class SunRiseTab extends Tab
         average = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMeanSunRise());
         Mode = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getModeSunRise());
         Median = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMedianSunRise());
-        stdDev = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getStandardDeviationSunRise());
+        stdDev = period.getDataStorage().getStandardDeviationSunRise();
     }
 
     @Override

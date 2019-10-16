@@ -12,7 +12,12 @@ public class WindDirTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getWindDir();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent:%.2f",current)+ " degrees");
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent: %.0f",current)+ " degrees");
+        }
 
     }
 
@@ -36,35 +41,40 @@ public class WindDirTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmin:%.2f",min)+ " degrees");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmin: %.0f",min)+ " degrees");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmax:%.2f",max)+ " degrees");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmax: %.0f",max)+ " degrees");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\naverage:%.2f",average)+ " degrees");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\naverage: %.0f",average)+ " degrees");
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmodus: %.0f",Mode)+ " degrees");
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nmedian: %.0f",Median)+ " degrees");
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\nstd deviation: %.0f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent:%.2f",current)+ " degrees");
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent: %.0f",current)+ " degrees");
+            }
             counter = 0;
 
         }

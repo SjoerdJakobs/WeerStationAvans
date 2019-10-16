@@ -12,7 +12,12 @@ public class RainRateTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getRainRate();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent:%.2f",current)+ "mm/hour");
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent: %.2f",current)+ " mm/hour");
+        }
 
     }
 
@@ -36,35 +41,40 @@ public class RainRateTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmin:%.2f",min)+ "mm/hour");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmin: %.2f",min)+ " mm/hour");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmax:%.2f",max)+ "mm/hour");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmax: %.2f",max)+ " mm/hour");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\naverage:%.2f",average)+ "mm/hour");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\naverage: %.2f",average)+ " mm/hour");
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmodus: %.2f",Mode)+ " mm/hour");
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nmedian: %.2f",Median)+ " mm/hour");
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\nstd deviation: %.2f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent:%.2f",current)+ "mm/hour");
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent: %.2f",current)+ " mm/hour");
+            }
             counter = 0;
 
         }

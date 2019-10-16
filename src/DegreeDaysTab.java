@@ -34,32 +34,32 @@ public class DegreeDaysTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 7 days: "+ (int)seven));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 7 days: "+ seven));
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 14 days: "+ (int)fourteen));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 14 days: "+ fourteen));
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 21 days: "+(int)twentyone));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 21 days: "+twentyone));
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 28 days: "+(int)twentyeight));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 28 days: "+twentyeight));
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 2 months: "+(int)sixtyone));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast 2 months: "+sixtyone));
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast year: "+(int)year));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast year: "+year));
         }
         else if (counter > 6){
             HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\ngiven period:: "+AmountOfDegreeDays));
@@ -78,12 +78,12 @@ public class DegreeDaysTab extends Tab
 
 
     private int AmountOfDegreeDays;
-    private double seven;
-    private double fourteen;
-    private double twentyone;
-    private double twentyeight;
-    private double sixtyone;
-    private double year;
+    private int seven;
+    private int fourteen;
+    private int twentyone;
+    private int twentyeight;
+    private int sixtyone;
+    private int year;
 
     public void setValues(){
         seven = sevenPeriod.getDataStorage().getDegreeDays();

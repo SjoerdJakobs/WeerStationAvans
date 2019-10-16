@@ -12,7 +12,12 @@ public class WindSpeedTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getWindSpeed();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\ncurrent:%.2f",current) + " km/h");
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\ncurrent: %.2f", current) + " km/h");
+        }
 
     }
 
@@ -36,35 +41,40 @@ public class WindSpeedTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nmin:%.2f",min) + " km/h");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nmin: %.2f",min) + " km/h");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nmax:%.2f",max) + " km/h");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nmax: %.2f",max) + " km/h");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\naverage:%.2f",average) + " km/h");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\naverage: %.2f",average) + " km/h");
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nmodus: %.2f",Mode) + " km/h");
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nmedian: %.2f",Median) + " km/h");
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\nstd deviation: %.2f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\ncurrent:%.2f",current) + " km/h");
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\ncurrent: %.2f", current) + " km/h");
+            }
             counter = 0;
 
         }

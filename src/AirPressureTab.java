@@ -12,7 +12,12 @@ public class AirPressureTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         current = measurement.getBarometer();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent:%.2f",current)+" hP");
+        if (Double.isNaN(current)){
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent: no value"));
+        }
+        else {
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent: %.2f",current)+" hP");
+        }
 
     }
 
@@ -35,35 +40,40 @@ public class AirPressureTab extends Tab
 
         if (counter == 1){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmin:%.2f",min)+" hP");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmin: %.2f",min)+" hP");
         }
 
         else if (counter == 2){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmax:%.2f",max)+" hP");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmax: %.2f",max)+" hP");
         }
 
         else if (counter == 3){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\naverage:%.2f",average)+" hP");
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\naverage: %.2f",average)+" hP");
         }
 
         else if (counter == 4){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmodus:%.2f",Mode));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmodus: %.2f",Mode)+" hP");
         }
 
         else if (counter == 5){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmedian:%.2f",Median));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmedian: %.2f",Median)+" hP");
         }
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nstd deviation:%.2f",stdDev));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nstd deviation: %.2f",stdDev));
         }
         else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent:%.2f",current)+" hP");
+            if (Double.isNaN(current)){
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent: no value"));
+            }
+            else {
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent: %.2f",current)+" hP");
+            }
             counter = 0;
 
         }
