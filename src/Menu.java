@@ -8,8 +8,9 @@ public class Menu extends RunableObject
     public Tab CurrentTab;
 
     //list off all the tabs
-    private ArrayList<Tab> m_ScrollTabs;
-    private ArrayList<Tab> m_AllTabs;
+    //private ArrayList<Tab> m_scrollTabs;
+    //private ArrayList<Tab> m_allTabs;
+    private ArrayList<Tab> m_tabs;
 
     public Callback onButtonBlueOneCall;
     public Callback onButtonBlueTwoCall;
@@ -27,18 +28,27 @@ public class Menu extends RunableObject
     protected void Start() {
         super.Start();
         m_pixelGrid = new PixelGrid();
-        m_ScrollTabs = new ArrayList<Tab>();
-        m_ScrollTabs.add(new ExampleTab(this));
-        m_ScrollTabs.add(new ExampleTab2(this));
-        m_ScrollTabs.add(new ExampleTab3(this));
 
-        m_AllTabs = new ArrayList<Tab>();
-        m_AllTabs.add(new ExampleTab(this));
-        m_AllTabs.add(new ExampleTab2(this));
-        m_AllTabs.add(new ExampleTab3(this));
+        m_tabs = new ArrayList<Tab>();
+        m_tabs.add(new ExampleTab(this));
+        m_tabs.add(new ExampleTab2(this));
+        m_tabs.add(new ExampleTab3(this));
+
+        /*
+        // if we ever need hidden tabs
+        m_scrollTabs = new ArrayList<Tab>();
+        m_scrollTabs.add(new ExampleTab(this));
+        m_scrollTabs.add(new ExampleTab2(this));
+        m_scrollTabs.add(new ExampleTab3(this));
+
+        m_allTabs = new ArrayList<Tab>();
+        m_allTabs.add(new ExampleTab(this));
+        m_allTabs.add(new ExampleTab2(this));
+        m_allTabs.add(new ExampleTab3(this));
+         */
 
         CurrentTabIndex = 0;
-        CurrentTab = m_ScrollTabs.get(CurrentTabIndex);
+        CurrentTab = m_tabs.get(CurrentTabIndex);
         CurrentTab.OnOpen();
     }
 
@@ -68,7 +78,7 @@ public class Menu extends RunableObject
     private void NextTab()
     {
         CurrentTabIndex ++;
-        if(CurrentTabIndex >= m_ScrollTabs.size())
+        if(CurrentTabIndex >= m_tabs.size())
         {
             CurrentTabIndex = 0;
         }
@@ -83,7 +93,7 @@ public class Menu extends RunableObject
     private void JumpTab(int TabIndex)
     {
         CurrentTab.OnClose();
-        CurrentTab = m_AllTabs.get(TabIndex);
+        CurrentTab = m_tabs.get(TabIndex);
         CurrentTab.OnOpen();
     }
 
@@ -133,11 +143,11 @@ public class Menu extends RunableObject
                     if (i == 6) {
                         HelperFunctions.SetDisplayPixel(true, j, i);
                     }
-                    else if(j>(m_pixelGrid.PixelGrid[0].length/m_ScrollTabs.size())*CurrentTabIndex && j < (m_pixelGrid.PixelGrid[0].length/m_ScrollTabs.size())*(CurrentTabIndex+1))
+                    else if(j>(m_pixelGrid.PixelGrid[0].length/m_tabs.size())*CurrentTabIndex && j < (m_pixelGrid.PixelGrid[0].length/m_tabs.size())*(CurrentTabIndex+1))
                     {
                         HelperFunctions.SetDisplayPixel(true,j,i);
                     }
-                    else if (j % (int) (m_pixelGrid.PixelGrid[0].length / m_ScrollTabs.size()) == 0) {
+                    else if (j % (int) (m_pixelGrid.PixelGrid[0].length / m_tabs.size()) == 0) {
                         if (Math.abs(m_pixelGrid.PixelGrid[0].length - j) < 4) {
                             HelperFunctions.SetDisplayPixel(true, m_pixelGrid.PixelGrid[0].length - 1, i);
                         } else {
