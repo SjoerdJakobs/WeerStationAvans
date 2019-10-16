@@ -1,4 +1,5 @@
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class SettingsTab extends Tab {
@@ -11,11 +12,14 @@ public class SettingsTab extends Tab {
 
     int periodState = 0;
     int yearState = 0;
-    int monthState = 1;
-    int dayState = 1;
-    int year;
-    int month;
-    int day;
+    int monthState = 0;
+    int dayState = 0;
+    int beginYear;
+    int beginMonth;
+    int beginDay;
+    int endYear;
+    int endMonth;
+    int endDay;
 
     int preDefState;
 
@@ -119,179 +123,371 @@ public class SettingsTab extends Tab {
             HelperFunctions.WriteOnMatrixScreen("\n Year: 2019");
             yearState++;
         } else if (yearState > 13) {
-                yearState = 0;
+            yearState = 0;
         }
         /**
          * Set a month for the begin period
          */
-        else if (state == 1 && periodState == 2 && monthState == 1) {
+        else if (state == 1 && periodState == 2 && monthState == 0) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 1");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 2) {
+        } else if (state == 1 && periodState == 2 && monthState == 1) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 2");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 3) {
+        } else if (state == 1 && periodState == 2 && monthState == 2) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 3");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 4) {
+        } else if (state == 1 && periodState == 2 && monthState == 3) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 4");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 5) {
+        } else if (state == 1 && periodState == 2 && monthState == 4) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 5");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 6) {
+        } else if (state == 1 && periodState == 2 && monthState == 5) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 6");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 7) {
+        } else if (state == 1 && periodState == 2 && monthState == 6) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 7");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 8) {
+        } else if (state == 1 && periodState == 2 && monthState == 7) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 8");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 9) {
+        } else if (state == 1 && periodState == 2 && monthState == 8) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 9");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 10) {
+        } else if (state == 1 && periodState == 2 && monthState == 9) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 10");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 11) {
+        } else if (state == 1 && periodState == 2 && monthState == 10) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 11");
             monthState++;
-        } else if (state == 1 && periodState == 2 && monthState == 12) {
+        } else if (state == 1 && periodState == 2 && monthState == 11) {
             HelperFunctions.WriteOnMatrixScreen("\n Month: 12");
             monthState++;
-        } else if (monthState > 12) {
-            monthState = 1;
+        } else if (monthState > 11) {
+            monthState = 0;
         }
 
         /**
          * Set a day for the begin period
          */
-        else if (state == 1 && periodState == 3 && dayState == 1) {
+        else if (state == 1 && periodState == 3 && dayState == 0) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 1");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 2) {
+        } else if (state == 1 && periodState == 3 && dayState == 1) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 2");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 3) {
+        } else if (state == 1 && periodState == 3 && dayState == 2) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 3");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 4) {
+        } else if (state == 1 && periodState == 3 && dayState == 3) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 4");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 5) {
+        } else if (state == 1 && periodState == 3 && dayState == 4) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 5");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 6) {
+        } else if (state == 1 && periodState == 3 && dayState == 5) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 6");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 7) {
+        } else if (state == 1 && periodState == 3 && dayState == 6) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 7");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 8) {
+        } else if (state == 1 && periodState == 3 && dayState == 7) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 8");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 9) {
+        } else if (state == 1 && periodState == 3 && dayState == 8) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 9");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 10) {
+        } else if (state == 1 && periodState == 3 && dayState == 9) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 10");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 11) {
+        } else if (state == 1 && periodState == 3 && dayState == 10) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 11");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 12) {
+        } else if (state == 1 && periodState == 3 && dayState == 11) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 12");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 13) {
+        } else if (state == 1 && periodState == 3 && dayState == 12) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 13");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 14) {
+        } else if (state == 1 && periodState == 3 && dayState == 13) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 14");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 15) {
+        } else if (state == 1 && periodState == 3 && dayState == 14) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 15");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 16) {
+        } else if (state == 1 && periodState == 3 && dayState == 15) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 16");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 17) {
+        } else if (state == 1 && periodState == 3 && dayState == 16) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 17");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 18) {
+        } else if (state == 1 && periodState == 3 && dayState == 17) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 18");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 19) {
+        } else if (state == 1 && periodState == 3 && dayState == 18) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 19");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 20) {
+        } else if (state == 1 && periodState == 3 && dayState == 19) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 20");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 21) {
+        } else if (state == 1 && periodState == 3 && dayState == 20) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 21");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 22) {
+        } else if (state == 1 && periodState == 3 && dayState == 21) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 22");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 23) {
+        } else if (state == 1 && periodState == 3 && dayState == 22) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 23");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 24) {
+        } else if (state == 1 && periodState == 3 && dayState == 23) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 24");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 25) {
+        } else if (state == 1 && periodState == 3 && dayState == 24) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 25");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 26) {
+        } else if (state == 1 && periodState == 3 && dayState == 25) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 26");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 27) {
+        } else if (state == 1 && periodState == 3 && dayState == 26) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 27");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 28) {
+        } else if (state == 1 && periodState == 3 && dayState == 27) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 28");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 29) {
+        } else if (state == 1 && periodState == 3 && dayState == 28) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 29");
             dayState++;
-        } else if (state == 1 && periodState == 3 && dayState == 30) {
+        } else if (state == 1 && periodState == 3 && dayState == 29) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 30");
             dayState++;
-        }else if (state == 1 && periodState == 3 && dayState == 31) {
+        } else if (state == 1 && periodState == 3 && dayState == 30) {
             HelperFunctions.WriteOnMatrixScreen("\n Day: 31");
             dayState++;
-        } else if (dayState > 31) {
+        } else if (dayState > 30) {
             dayState = 0;
         }
 
         /**
-         * Scroll through the predefined calculations
+         * Set a month for the end period
          */
-        else if (state == 2 && menuState == 2 && preDefState == 1) {
+        else if (state == 3 && periodState == 2 && yearState == 0) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2006");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 1) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2007");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 2) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2008");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 3) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2009");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 4) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2010");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 5) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2011");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 6) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2012");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 7) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2013");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 8) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2014");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 9) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2015");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 10) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2016");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 11) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2017");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 12) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2018");
+            yearState++;
+        } else if (state == 3 && periodState == 2 && yearState == 13) {
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2019");
+            yearState++;
+        } else if (yearState > 13) {
+            yearState = 0;
+        }
+
+        /**
+         * Set a month for the end period
+         */
+        else if (state == 3 && periodState == 3 && monthState == 0) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 1");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 1) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 2");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 2) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 3");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 3) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 4");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 4) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 5");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 5) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 6");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 6) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 7");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 7) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 8");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 8) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 9");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 9) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 10");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 10) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 11");
+            monthState++;
+        } else if (state == 3 && periodState == 3 && monthState == 11) {
+            HelperFunctions.WriteOnMatrixScreen("\n Month: 12");
+            monthState++;
+        } else if (monthState > 11) {
+            monthState = 1;
+        }
+
+        /**
+         * Set a day for the end period
+         */
+        else if (state == 3 && periodState == 4 && dayState == 0) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 1");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 1) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 2");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 2) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 3");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 3) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 4");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 4) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 5");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 5) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 6");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 6) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 7");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 7) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 8");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 8) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 9");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 9) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 10");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 10) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 11");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 11) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 12");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 12) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 13");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 13) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 14");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 14) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 15");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 15) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 16");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 16) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 17");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 17) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 18");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 18) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 19");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 19) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 20");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 20) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 21");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 21) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 22");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 22) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 23");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 23) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 24");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 24) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 25");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 25) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 26");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 26) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 27");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 27) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 28");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 28) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 29");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 29) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 30");
+            dayState++;
+        } else if (state == 3 && periodState == 4 && dayState == 30) {
+            HelperFunctions.WriteOnMatrixScreen("\n Day: 31");
+            dayState++;
+        } else if (dayState > 30)
+            dayState = 0;
+
+
+        /**
+         * Scroll through the predefined calculations
+        */
+        else if(state ==2&&menuState ==2&&preDefState ==1) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Mist calculation");
             preDefState++;
-        } else if (state == 2 && menuState == 2 && preDefState == 2) {
+        } else if(state ==2&&menuState ==2&&preDefState ==2) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Max rain calculation");
             preDefState++;
-        } else if (state == 2 && menuState == 2 && preDefState == 3) {
+        } else if(state ==2&&menuState ==2&&preDefState ==3) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Crossing temperature");
             preDefState++;
-        } else if (state == 2 && menuState == 2 && preDefState == 4) {
+        } else if(state ==2&&menuState ==2&&preDefState ==4) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Degreedays" +
-                    "\n calculation");
+                "\n calculation");
             preDefState++;
-        } else if (state == 2 && menuState == 2 && preDefState == 5) {
+        } else if(state ==2&&menuState ==2&&preDefState ==5) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Rising temperature" +
-                    "\n duration");
+                "\n duration");
             preDefState++;
-        } else if (preDefState > 5) {
+        } else if(preDefState >5) {
             preDefState = 1;
-        }
+    }
 
         /*
         /**
@@ -308,7 +504,7 @@ public class SettingsTab extends Tab {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("Shut Down? (press red button");
         }*/
-        //m_menu.DrawMenu();
+    //m_menu.DrawMenu();}
     }
 
     protected void OnButtonRed() {
@@ -321,23 +517,53 @@ public class SettingsTab extends Tab {
             state = 1;
             periodState = 1;
             HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Choose a year: ");
+            HelperFunctions.WriteOnMatrixScreen("\n Choose a begin year: ");
         } else if (menuState == 1 && state == 1 && periodState == 1) {
+            beginYear = 2005 + yearState;
             HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Choose a month: ");
-            year = 2006 + yearState;
+            HelperFunctions.WriteOnMatrixScreen("\n Choose a begin month: ");
             periodState++;
         } else if (menuState == 1 && state == 1 && periodState == 2) {
+            beginMonth = monthState;
             HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Choose a day: ");
-            month = monthState;
+            HelperFunctions.WriteOnMatrixScreen("\n Choose a begin day: ");
             periodState++;
-        } else if (state == 1 && periodState == 3) {
-            day = dayState;
+        } else if (menuState == 1 && state == 1 && periodState == 3) {
+            beginDay = dayState;
             Period beginPeriod = new Period();
-            beginPeriod.setStart(year, month, day);
+            beginPeriod.setStart(beginYear, beginMonth, beginDay);
             HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Chosen period: " + year +", " + month + ", " + day);
+            HelperFunctions.WriteOnMatrixScreen("\n Chosen begin period: " + beginYear +", " + beginMonth + ", " + beginDay);
+            state = 3;
+            periodState = 1;
+        } else if (menuState == 1 && state == 3 && periodState == 1){
+            //resets year to 2006, month to 1, day to 1. Maybe better to keep counting from the last year, month, and day input?
+            //(that is what is happening now)
+            //yearState = 0;
+            //monthState = 1;
+            //dayState = 1;
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("\n Choose an end year: ");
+            periodState++;
+        } else if (menuState == 1 && state == 3 && periodState == 2) {
+            endYear = 2005 + yearState;
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("\n Choose an end month: ");
+            periodState++;
+        } else if (menuState == 1 && state == 3 && periodState == 3){
+            endMonth = monthState;
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("\n Choose an end day: ");
+            periodState++;
+        } else if (menuState == 1 && state == 3 && periodState == 4){
+            HelperFunctions.ClearTextDisplay();
+            endDay = dayState;
+            Period endPeriod = new Period();
+            endPeriod.setEnd(endYear, endMonth, endDay);
+            //RawMeasurement rawData = new RawMeasurement();
+            //Measurement measurement = new Measurement(rawData);
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("\n Chosen end period: " + "\n " + endYear + ", " + endMonth + ", " + endDay);
         }
 
         /**
@@ -392,7 +618,6 @@ public class SettingsTab extends Tab {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Press first blue button to o back to the first tab");
         }
-
         /**
          * When pressed, the GUI should quit
          */
@@ -403,5 +628,7 @@ public class SettingsTab extends Tab {
             //m_menu.m_
         }
     }
-
 }
+
+
+
