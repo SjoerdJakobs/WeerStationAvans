@@ -73,7 +73,15 @@ public class Calculations {
      * calculate the minimum
      */
     public static double minimum(ArrayList<Double> array) {
-        double minimum = array.get(0);
+        double minimum = 0;
+
+        for (int i = 0; i < array.size(); i++) {
+            if (!Double.isNaN(array.get(i))) {
+                minimum = array.get(i);
+                continue;
+            }
+        }
+
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i) < minimum) {
                 minimum = array.get(i);
