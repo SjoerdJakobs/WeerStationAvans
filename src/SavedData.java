@@ -13,7 +13,7 @@ public enum SavedData
     }
 
     public void setStepWidth(int stepWidth){
-        int newStepWidth = stepWidth;
+        int newStepWidth = stepWidth; 
     }
 
 
