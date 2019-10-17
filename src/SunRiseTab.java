@@ -71,7 +71,7 @@ public class SunRiseTab extends Tab
         }
     }
 
-    Period period = new Period();
+    Period period = SavedData.INSTANCE.SavedPeriod;
 
     private String current;
     private String min;

@@ -7,6 +7,7 @@ public enum SavedData
 
     public void SetPeriod()
     {
+        SavedPeriod = new Period(5);
         //todo
     }
 

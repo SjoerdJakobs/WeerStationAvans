@@ -79,7 +79,7 @@ public class HeatIndexTab extends Tab
         }
     }
 
-    Period period = new Period();
+    Period period = SavedData.INSTANCE.SavedPeriod;
 
     private double current;
     private double min;
