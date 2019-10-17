@@ -716,32 +716,46 @@ public class SettingsTab extends Tab {
             m_menu.DrawMenu();
         } else if (state == 2 && preDefState == 2){
             HelperFunctions.ClearTextDisplay();
+            m_menu.DrawMenu();
             Period chunk = new Period(365);
             int mist = chunk.getDataStorage().getMist();
             String mistResult = Integer.toString(mist);
             HelperFunctions.ClearTextDisplay();
-            String mistText = " days with chance of mist";
-            HelperFunctions.WriteOnMatrixScreen("\n" + mistResult + mistText);
+            String mistText = " days with " +
+                    "\n chance of mist";
+            HelperFunctions.WriteOnMatrixScreen("\n " + mistResult + mistText);
+            m_menu.DrawMenu();
+            state = 0;
+            menuState = 2;
             //HelperFunctions.WriteOnMatrixScreen(Calculations.mist(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
         } else if (state == 2 && preDefState == 3) {
            // HelperFunctions.WriteOnMatrixScreen(Calculations.MaxRain(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             Calculations.MaxRain();
+            m_menu.DrawMenu();
+            state = 0;
+            menuState = 2;
         } else if (state == 2 && preDefState == 4) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of times " +
                     "\n crossed: " +
                     Calculations.tempChange(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
+            state = 0;
+            menuState = 2;
         } else if (state == 2 && preDefState == 5) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of degreedays: " +
                     Calculations.calculateDegreeDays(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
+            state = 0;
+            menuState = 2;
         } else if (state == 2 && preDefState == 6) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Temeperature rising: " +
                     Calculations.risingTemperatureDuration(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
+            state = 0;
+            menuState = 2;
         } else if (state == 2 && menuState == 2 && preDefState == 7){
             state = 0;
             menuState = 0;
