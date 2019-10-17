@@ -22,6 +22,9 @@ public class SettingsTab extends Tab {
     int endMonth;
     int endDay;
 
+    int stepWidth = 0;
+    boolean stepWidthAccord = true;
+
     int preDefState;
 
     @Override
@@ -59,22 +62,27 @@ public class SettingsTab extends Tab {
             HelperFunctions.WriteOnMatrixScreen("\n Set period");
             menuState++;
             m_menu.DrawMenu();
-        } else if (state == 0 && menuState == 1) {
-            HelperFunctions.ClearMatrixDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Predefined");
+        } else if (state == 0 && menuState == 1){
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("\n Graph settings");
             menuState++;
             m_menu.DrawMenu();
         } else if (state == 0 && menuState == 2) {
             HelperFunctions.ClearMatrixDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Exit settings");
+            HelperFunctions.WriteOnMatrixScreen("\n Predefined");
             menuState++;
             m_menu.DrawMenu();
         } else if (state == 0 && menuState == 3) {
             HelperFunctions.ClearMatrixDisplay();
+            HelperFunctions.WriteOnMatrixScreen("\n Exit settings");
+            menuState++;
+            m_menu.DrawMenu();
+        } else if (state == 0 && menuState == 4) {
+            HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Shut down");
             menuState++;
             m_menu.DrawMenu();
-        } else if (menuState > 3) {
+        } else if (menuState > 4) {
             menuState = 0;
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Settings: ");
@@ -560,39 +568,69 @@ public class SettingsTab extends Tab {
         m_menu.DrawMenu();
         }
 
-
+        /**
+         * Graph step settings
+         */
+        else if (state == 5 && menuState == 2 && stepWidthAccord == false) {
+            stepWidth = stepWidth + 5;
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
+                    "\n width: " + stepWidth);
+            m_menu.DrawMenu();
+            if (stepWidth > 50){
+                stepWidth = stepWidth + 5;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
+                        "\n width: " + stepWidth);
+                m_menu.DrawMenu();
+            }
+            if (stepWidth > 100){
+                stepWidth = stepWidth + 10;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
+                        "\n width: " + stepWidth);
+                m_menu.DrawMenu();
+            }
+            if (stepWidth > 200) {
+                stepWidth = stepWidth + 30;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
+                        "\n width: " + stepWidth);
+                m_menu.DrawMenu();
+            }
+        }
 
         /**
          * Scroll through the predefined calculations
         */
-        else if(state ==2&&menuState ==2&&preDefState ==1) {
+        else if(state ==2&&menuState ==3&&preDefState ==1) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Mist calculation");
             preDefState++;
             m_menu.DrawMenu();
-        } else if(state ==2&&menuState ==2&&preDefState ==2) {
+        } else if(state ==2&&menuState ==3&&preDefState ==2) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Max rain calculation");
             preDefState++;
             m_menu.DrawMenu();
-        } else if(state ==2&&menuState ==2&&preDefState ==3) {
+        } else if(state ==2&&menuState ==3&&preDefState ==3) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Crossing temperature");
             preDefState++;
             m_menu.DrawMenu();
-        } else if(state ==2&&menuState ==2&&preDefState ==4) {
+        } else if(state ==2&&menuState ==3&&preDefState ==4) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Degreedays" +
                 "\n calculation");
             preDefState++;
             m_menu.DrawMenu();
-        } else if(state ==2&&menuState ==2&&preDefState ==5) {
+        } else if(state ==2&&menuState ==3&&preDefState ==5) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Rising temperature" +
                 "\n duration");
             preDefState++;
             m_menu.DrawMenu();
-        } else if(state == 2 && menuState == 2 && preDefState == 6){
+        } else if(state == 2 && menuState == 3 && preDefState == 6){
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Exit");
             preDefState++;
@@ -602,24 +640,8 @@ public class SettingsTab extends Tab {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Options: ");
             m_menu.DrawMenu();
-    }
-
-        /*
-        /**
-         * Exit settings menu
-         */
-        /* else if (state == 0 && menuState == 3) {
-
         }
 
-        /**
-         * Shut down GUI
-         */
-        /*else if (state == 0 && menuState == 4) {
-            HelperFunctions.ClearMatrixDisplay();
-            HelperFunctions.WriteOnMatrixScreen("Shut Down? (press red button");
-        }*/
-    //m_menu.DrawMenu();}
     }
 
     protected void OnButtonRed() {
@@ -657,15 +679,12 @@ public class SettingsTab extends Tab {
             m_menu.DrawMenu();
         } else if (menuState == 1 && state == 1 && periodState == 3) {
             beginDay = dayState;
-
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Chosen begin period: " + beginYear +", " + beginMonth + ", " + beginDay);
             state = 3;
             periodState = 1;
             m_menu.DrawMenu();
         } else if (menuState == 1 && state == 3 && periodState == 1){
-            //resets year to 2006, month to 1, day to 1. Maybe better to keep counting from the last year, month, and day input?
-            //(that is what is happening now)
             yearState = beginYear;
             monthState = beginMonth -1;
             dayState = beginDay;
@@ -706,9 +725,31 @@ public class SettingsTab extends Tab {
         }
 
         /**
+         * Graph step setting
+         */
+        else if (state == 0 && menuState == 2){
+            state = 5;
+            stepWidthAccord = false;
+            HelperFunctions.ClearTextDisplay();
+            HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
+                    "\n width: " + stepWidth);
+            m_menu.DrawMenu();
+        } else if (state == 5 && menuState == 2 && stepWidthAccord == false){
+            stepWidthAccord = true;
+            if (state == 5 && menuState == 2 && stepWidthAccord ==true){
+                SavedData.INSTANCE.setStepWidth(stepWidth);
+                state = 0;
+                menuState = 2;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\n Settings: ");
+                m_menu.DrawMenu();
+            }
+        }
+
+        /**
          * When pressed on the red button, it opens up a new menu to scroll through the predefined calculations (individual assignments)
          */
-        else if (state == 0 && menuState == 2) {
+        else if (state == 0 && menuState == 3) {
             preDefState = 1;
             state = 2;
             HelperFunctions.ClearTextDisplay();
@@ -726,14 +767,14 @@ public class SettingsTab extends Tab {
             HelperFunctions.WriteOnMatrixScreen("\n " + mistResult + mistText);
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
             //HelperFunctions.WriteOnMatrixScreen(Calculations.mist(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
         } else if (state == 2 && preDefState == 3) {
            // HelperFunctions.WriteOnMatrixScreen(Calculations.MaxRain(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             Calculations.MaxRain();
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
         } else if (state == 2 && preDefState == 4) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of times " +
@@ -741,21 +782,21 @@ public class SettingsTab extends Tab {
                     Calculations.tempChange(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
         } else if (state == 2 && preDefState == 5) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of degreedays: " +
                     Calculations.calculateDegreeDays(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
         } else if (state == 2 && preDefState == 6) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Temeperature rising: " +
                     Calculations.risingTemperatureDuration(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
         } else if (state == 2 && menuState == 2 && preDefState == 7){
             state = 0;
             menuState = 0;
@@ -767,7 +808,7 @@ public class SettingsTab extends Tab {
         /**
          * When pressed, the settings menu should revert to the (first) tab with the current weather information
          */
-        else if(state ==0 && menuState ==3){
+        else if(state ==0 && menuState ==4){
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Press first blue " +
                     "\n button to go back");
@@ -778,7 +819,7 @@ public class SettingsTab extends Tab {
         /**
          * When pressed, the GUI should quit
          */
-        else if (state == 0 && menuState == 4) {
+        else if (state == 0 && menuState == 5) {
             m_menu.DrawMenu();
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Goodbye!");
