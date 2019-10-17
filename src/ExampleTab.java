@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class ExampleTab extends Tab
 {
     protected ExampleTab(Menu menu) {
@@ -8,10 +11,23 @@ public class ExampleTab extends Tab
     protected void OnOpen() {
         //runs when tab is opened
         System.out.println("example tab opened");
-
         HelperFunctions.ClearTextDisplay();
-        HelperFunctions.WriteOnMatrixScreen("\n hey");
         m_menu.DrawMenu();
+
+        // Get raw measurements of period
+        Period period = new Period(LocalDate.of(2010, 11, 1), LocalDate.of(2010, 11, 4));
+
+        // Get measurements from period
+        ArrayList<Measurement> measurements = new ArrayList<>();
+        measurements = period.getDataStorage().getPeriodMeasurements();
+
+        // Get temperatures of measurements
+        ArrayList<Double> temperatures = new ArrayList<>();
+        for (int i = 0; i < measurements.size(); i++) temperatures.add(measurements.get(i).getOutsideTemp());
+
+        GraphMaker.createStaticGraph(temperatures);
+
+        System.out.println("Finished");
     }
 
     @Override
@@ -25,7 +41,7 @@ public class ExampleTab extends Tab
     protected void Run(double deltaTime) {
         //runs every frame when tab is opened
 
-        //System.out.println("exampletab run");
+
 
     }
 
