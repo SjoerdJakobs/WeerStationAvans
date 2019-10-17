@@ -217,13 +217,16 @@ public class Calculations {
                     count++;
                     colderOutside = false;
                     System.out.println(measurement.get(i).getDateStamp());
+                    System.out.println("inside: "+ measurement.get(i).getInsideTemp());
+                    System.out.println("outside: " + measurement.get(i).getOutsideTemp());
                 } else if (colderOutside == false && outsideTemp > insideTemp) {
                     count++;
                     colderOutside = true;
                     System.out.println(measurement.get(i).getDateStamp());
+                    System.out.println("inside: "+ measurement.get(i).getInsideTemp());
+                    System.out.println("outside: " + measurement.get(i).getOutsideTemp());
                 }
             }
-
         }
         return count;
     }

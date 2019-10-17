@@ -12,6 +12,11 @@ public enum SavedData
         SavedPeriod = new Period(startOfPeriod, endOfPeriod);
     }
 
+    public void setStepWidth(int stepWidth){
+        int newStepWidth = stepWidth;
+    }
+
+
     public void SetLastMeasurement()
     {
         LastMeasurement = new Measurement(DatabaseConnection.getMostRecentMeasurement());
