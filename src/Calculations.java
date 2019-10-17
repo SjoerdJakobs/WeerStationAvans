@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,23 +9,25 @@ public class Calculations {
     /**
      * calculate the mode (most frequent number in the array)
      */
-    public static double mode(ArrayList<Double> array) {
-        Collections.sort(array);
+    public static double mode(ArrayList<Double> input) {
+        ArrayList<Double> array = NaNFilter(input);
         int counter = 0;
         int prevCount = 0;
         double result = 0;
         double leader = array.get(0);
         for (double data : array) {
-            if (data == leader) {
-                counter++;
-            } else {
-                counter = 1;
+            if (!Double.isNaN(data)) {
+                if (data == leader) {
+                    counter++;
+                } else {
+                    counter = 1;
+                }
+                if (counter > prevCount) {
+                    result = leader;
+                    prevCount = counter;
+                }
+                leader = data;
             }
-            if (counter > prevCount) {
-                result = leader;
-                prevCount = counter;
-            }
-            leader = data;
         }
         return result;
     }
@@ -31,9 +35,8 @@ public class Calculations {
     /**
      * calculate the median (the middle value of a sorted array)
      */
-    public static double median(ArrayList<Double> array) {
-        Collections.sort(array);
-
+    public static double median(ArrayList<Double> input) {
+        ArrayList<Double> array = NaNFilter(input);
         if (array.size() % 2 == 0) {
             return (array.get((array.size() / 2) - 1) + array.get(array.size() / 2)) / 2;
         } else {
@@ -44,26 +47,29 @@ public class Calculations {
     /**
      * calculate the mean
      */
-    public static double mean(ArrayList<Double> array) {
+    public static double mean(ArrayList<Double> input) {
+        ArrayList<Double> array = NaNFilter(input);
         double sum = 0;
-        double average = 0;
-
-        for (int i = 0; i < array.size(); i++) {
-            sum = sum + array.get(i);
-            average = sum / array.size();
+        double average;
+        for (double data : array) {
+            if (Double.isNaN(data)){
+                sum = sum + data;
+            }
         }
+        average = sum / array.size();
         return average;
     }
 
     /**
      * calculate the standard deviation
      */
-    public static double standardDeviation(ArrayList<Double> array) {
+    public static double standardDeviation(ArrayList<Double> input) {
+        ArrayList<Double> array = NaNFilter(input);
         double sd;
         double sum = 0;
         double mean = mean(array);
-        for (int i = 0; i < array.size(); i++) {
-            sum = sum + (Math.pow(array.get(i) - mean, 2));
+        for (double data : array) {
+            sum = sum + (Math.pow(data - mean, 2));
         }
         sd = sqrt(sum / array.size());
         return sd;
@@ -72,41 +78,17 @@ public class Calculations {
     /**
      * calculate the minimum
      */
-    public static double minimum(ArrayList<Double> array) {
-        double minimum = 0;
-
-        for (int i = 0; i < array.size(); i++)
-            if (!Double.isNaN(array.get(i))) {
-                minimum = array.get(i);
-                continue;
-            }
-
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i) < minimum) {
-                minimum = array.get(i);
-            }
-        }
-        return minimum;
+    public static double minimum(ArrayList<Double> input) {
+        ArrayList<Double> array = NaNFilter(input);
+        return array.get(array.size() - 1);
     }
 
     /**
      * calculate the maximum
      */
-    public static double maximum(ArrayList<Double> array) {
-        double maximum = 0;
-
-        for (int i = 0; i < array.size(); i++)
-            if (!Double.isNaN(array.get(i))) {
-                maximum = array.get(i);
-                continue;
-            }
-
-        for (int i = 0; i < array.size(); i++) {
-            if (array.get(i) > maximum) {
-                maximum = array.get(i);
-            }
-        }
-        return maximum;
+    public static double maximum(ArrayList<Double> input) {
+        ArrayList<Double> array = NaNFilter(input);
+        return array.get(0);
     }
 
     public static double dewPoint(double outsideTemp, double outsideHumid) {
@@ -325,5 +307,19 @@ public class Calculations {
             }
         }
         return series;
+    }
+
+    private static ArrayList<Double> NaNFilter(ArrayList<Double> arrayList) {
+        System.out.println(LocalDateTime.now());
+        ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
+        Collections.sort(sortedList);
+        for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i-- ) {
+            double data = sortedList.get(i);
+            if (Double.isNaN(data)){
+                sortedList.remove(i);
+            }
+        }
+        System.out.println(LocalDateTime.now());
+        return sortedList;
     }
 }
