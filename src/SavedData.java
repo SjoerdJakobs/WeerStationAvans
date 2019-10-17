@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public enum SavedData
 {
     INSTANCE;
@@ -5,9 +7,9 @@ public enum SavedData
     public Measurement LastMeasurement;
     public Period SavedPeriod;
 
-    public void SetPeriod()
+    public void SetPeriod(LocalDate startOfPeriod, LocalDate endOfPeriod)
     {
-        //todo
+        SavedPeriod = new Period(startOfPeriod, endOfPeriod);
     }
 
     public void SetLastMeasurement()

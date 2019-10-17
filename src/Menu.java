@@ -47,7 +47,7 @@ public class Menu extends RunableObject
         m_allTabs.add(new ExampleTab2(this));
         m_allTabs.add(new ExampleTab3(this));
          */
-        
+
         CurrentTabIndex = 0;
         CurrentTab = m_tabs.get(CurrentTabIndex);
         CurrentTab.OnOpen();

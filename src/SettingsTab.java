@@ -1,5 +1,6 @@
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class SettingsTab extends Tab {
@@ -530,8 +531,7 @@ public class SettingsTab extends Tab {
             periodState++;
         } else if (menuState == 1 && state == 1 && periodState == 3) {
             beginDay = dayState;
-            Period beginPeriod = new Period();
-            beginPeriod.setStart(beginYear, beginMonth, beginDay);
+
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Chosen begin period: " + beginYear +", " + beginMonth + ", " + beginDay);
             state = 3;
@@ -558,12 +558,13 @@ public class SettingsTab extends Tab {
         } else if (menuState == 1 && state == 3 && periodState == 4){
             HelperFunctions.ClearTextDisplay();
             endDay = dayState;
-            Period endPeriod = new Period();
-            endPeriod.setEnd(endYear, endMonth, endDay);
-            //RawMeasurement rawData = new RawMeasurement();
-            //Measurement measurement = new Measurement(rawData);
+
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Chosen end period: " + "\n " + endYear + ", " + endMonth + ", " + endDay);
+
+            LocalDate startOfPeriod = LocalDate.of(beginYear, beginMonth, beginDay);
+            LocalDate endOfPeriod = LocalDate.of(endYear, endMonth, endDay);
+            SavedData.INSTANCE.SetPeriod(startOfPeriod,endOfPeriod);
         }
 
         /**
@@ -582,33 +583,35 @@ public class SettingsTab extends Tab {
             String mistText = " days with chance of mist";
             HelperFunctions.WriteOnMatrixScreen("\n" + mistResult + mistText);
         } else if (state == 2 && preDefState == 3) {
-            //RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-            //Measurement measurement = new Measurement(rawData);
+           // HelperFunctions.WriteOnMatrixScreen(SavedData.INSTANCE.SavedPeriod);
             Calculations.MaxRain();
         } else if (state == 2 && preDefState == 4) {
-            ArrayList<RawMeasurement> rawData = DatabaseConnection.getMeasurementsLastMonth();
+            /*ArrayList<RawMeasurement> rawData = DatabaseConnection.getMeasurementsLastMonth();
             ArrayList<Measurement> measurement = new ArrayList<Measurement>();
             for (int i = 0; i < rawData.size(); i++) {
                 measurement.add(new Measurement(rawData.get(i)));
-            }
+            }*/
             HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Amount of times crossed: " + Calculations.tempChange(measurement));
+            HelperFunctions.WriteOnMatrixScreen("\n Amount of times crossed: " +
+                    Calculations.tempChange(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
         } else if (state == 2 && preDefState == 5) {
-            ArrayList<RawMeasurement> rawData = DatabaseConnection.getMeasurementsLastYear();
+           /* ArrayList<RawMeasurement> rawData = DatabaseConnection.getMeasurementsLastYear();
             ArrayList<Measurement> measurement = new ArrayList<Measurement>();
             for (int i = 0; i < rawData.size(); i++) {
                 measurement.add(new Measurement(rawData.get(i)));
-            }
+            }*/
             HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Amount of degreedays last year: " + Calculations.calculateDegreeDays(measurement));
+            HelperFunctions.WriteOnMatrixScreen("\n Amount of degreedays last year: " +
+                    Calculations.calculateDegreeDays(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
         } else if (state == 2 && preDefState == 6) {
-            ArrayList<RawMeasurement> rawData = DatabaseConnection.getMeasurementsLastMonth();
+            /*ArrayList<RawMeasurement> rawData = DatabaseConnection.getMeasurementsLastMonth();
             ArrayList<Measurement> measurement = new ArrayList<Measurement>();
             for (int i = 0; i < rawData.size(); i++) {
                 measurement.add(new Measurement(rawData.get(i)));
-            }
+            }*/
             HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Temeperature rising: " + Calculations.risingTemperatureDuration(measurement));
+            HelperFunctions.WriteOnMatrixScreen("\n Temeperature rising: " +
+                    Calculations.risingTemperatureDuration(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
         }
 
         /**
@@ -624,8 +627,9 @@ public class SettingsTab extends Tab {
         else if (state == 0 && menuState == 4) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Goodbye!");
-            //IO.delay(500);
-            //m_menu.m_
+            IO.delay(500);
+            HelperFunctions.ClearTextDisplay();
+            m_menu.m_program.ExitProgram();
         }
     }
 }
