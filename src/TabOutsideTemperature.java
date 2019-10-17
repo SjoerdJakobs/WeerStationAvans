@@ -8,7 +8,7 @@ public class TabOutsideTemperature extends Tab
     }
 
     // Get raw measurements of period
-    private Period period = new Period(LocalDate.of(2010, 10, 20), LocalDate.of(2010, 11, 30));
+    private Period period = new Period(40);
     private ArrayList<Measurement> measurements = period.getDataStorage().getPeriodMeasurements();
     private ArrayList<Double> unitValues = GetUnit(measurements);
 

@@ -25,6 +25,7 @@ public class GraphMaker {
     private double maxValue;
     private double amplitudeOfUnitValues;
     private double positionBar;
+    private double oldAverage = Double.NaN;
 
     /**
      * Initialise most static variables
@@ -81,7 +82,8 @@ public class GraphMaker {
                 result = oldResult;
 
             // Fill vertical gaps between two consecutive values if needed
-            GraphVerticalGapFiller();
+            if (!Double.isNaN(oldAverage)) GraphVerticalGapFiller();
+            oldAverage = average;
 
             // Update for next run cycle
             oldResult = result;
