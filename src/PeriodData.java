@@ -7,7 +7,7 @@ import java.util.Set;
  */
 public class PeriodData {
     private ArrayList<Measurement> periodMeasurements = new ArrayList<Measurement>();
-    private double stepSize = 50;
+    private double stepSize;
 
     private double maxAirPressure;
     private double minAirPressure;
