@@ -8,7 +8,7 @@ public class ExampleTab2 extends Tab
     }
 
     // Get raw measurements of period
-    private Period period = new Period(LocalDate.of(2010, 11, 20), LocalDate.of(2010, 12, 30));
+    private Period period = new Period(LocalDate.of(2010, 10, 20), LocalDate.of(2010, 11, 30));
 
     // Get measurements from period
     private ArrayList<Measurement> measurements = period.getDataStorage().getPeriodMeasurements();
@@ -147,7 +147,6 @@ public class ExampleTab2 extends Tab
                     HelperFunctions.WriteValueOnSegments(1, unitValueAverageOnYAxel, 1);
                 }
                 else HelperFunctions.ClearAllSegmentDisplays();
-
             }
 
             PixelGridDrawer.INSTANCE_DRAWER.AddDraw(addToGraph.PixelGrid);
@@ -200,10 +199,9 @@ public class ExampleTab2 extends Tab
             case 7:
                 showGraph = true;
 
-                // Draw axels
+                // Draw x-axel
                 PixelGrid graph = new PixelGrid();
                 for (int i = leftBoundary; i <= rightBoundary; i++) graph.PixelGrid[bottomBoundary][i] = true;
-                //for (int i = topBoundary; i <= bottomBoundary; i++) graph.PixelGrid[i][yAxel] = true;
                 PixelGridDrawer.INSTANCE_DRAWER.AddDraw(graph.PixelGrid);
                 break;
         } // End switch-case

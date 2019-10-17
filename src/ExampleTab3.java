@@ -7,12 +7,13 @@ public class ExampleTab3 extends Tab
         super(menu);
     }
 
-    GraphMaker2 graph = new GraphMaker2();
-    private Period period = new Period(LocalDate.of(2010, 11, 20), LocalDate.of(2010, 12, 30));
+    // Get raw measurements of period
+    private Period period = new Period(LocalDate.of(2010, 10, 20), LocalDate.of(2010, 11, 30));
     private ArrayList<Measurement> measurements = period.getDataStorage().getPeriodMeasurements();
-    ArrayList<Double> unitValues = GetUnit(measurements);
+    private ArrayList<Double> unitValues = GetUnit(measurements);
 
-
+    // Create a PixelGrid to keep track of the shown dots
+    GraphMaker2 graph = new GraphMaker2();
 
     // MENU VARIABLES
     private int menuCounter = 0;
@@ -42,6 +43,8 @@ public class ExampleTab3 extends Tab
         Measurement measurement = new Measurement(rawData);
         currentUnitValue = measurement.getOutsideTemp();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: %.2f", currentUnitValue) + " C");
+
+        graph.initialise(unitValues);
     }
 
     @Override
@@ -57,7 +60,8 @@ public class ExampleTab3 extends Tab
 
         if (showGraph == true && deltaTimer >= graphSpeed) {
             deltaTimer = 0;
-            //graph.runCycle();
+            graph.RunCycle();
+
         } // End if-statement showGraph
 
     }
@@ -102,12 +106,7 @@ public class ExampleTab3 extends Tab
                 break;
             case 7:
                 showGraph = true;
-                graph.initialise();
-                // Draw axels
-                //PixelGrid graph = new PixelGrid();
-                //for (int i = leftBoundary; i <= rightBoundary; i++) graph.PixelGrid[bottomBoundary][i] = true;
-                //for (int i = topBoundary; i <= bottomBoundary; i++) graph.PixelGrid[i][yAxel] = true;
-                //PixelGridDrawer.INSTANCE_DRAWER.AddDraw(graph.PixelGrid);
+                graph.DrawAxels();
                 break;
         } // End switch-case
     } // End function OnButtonBlueTwo
