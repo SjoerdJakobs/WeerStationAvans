@@ -7,9 +7,6 @@ public class main
 
     public static void main(String[] args)
     {
-        IO.init();
-        HelperFunctions.ClearAll();
-
         /**
          * Comment out this section if you want to use the below example.
          */
