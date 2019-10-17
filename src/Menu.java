@@ -8,6 +8,8 @@ public class Menu extends RunableObject
     public Tab CurrentTab;
 
     //list off all the tabs
+    //private ArrayList<Tab> m_scrollTabs;
+    //private ArrayList<Tab> m_allTabs;
     private ArrayList<Tab> m_tabs;
 
     public Callback onButtonBlueOneCall;
@@ -26,14 +28,29 @@ public class Menu extends RunableObject
     protected void Start() {
         super.Start();
         m_pixelGrid = new PixelGrid();
+
         m_tabs = new ArrayList<Tab>();
         m_tabs.add(new ExampleTab(this));
         m_tabs.add(new ExampleTab2(this));
+        m_tabs.add(new ExampleTab3(this));
         m_tabs.add(new SettingsTab(this));
+
+        /*
+        // if we ever need hidden tabs
+        m_scrollTabs = new ArrayList<Tab>();
+        m_scrollTabs.add(new ExampleTab(this));
+        m_scrollTabs.add(new ExampleTab2(this));
+        m_scrollTabs.add(new ExampleTab3(this));
+
+        m_allTabs = new ArrayList<Tab>();
+        m_allTabs.add(new ExampleTab(this));
+        m_allTabs.add(new ExampleTab2(this));
+        m_allTabs.add(new ExampleTab3(this));
+         */
+        
         CurrentTabIndex = 0;
         CurrentTab = m_tabs.get(CurrentTabIndex);
         CurrentTab.OnOpen();
-
     }
 
     @Override
@@ -49,8 +66,8 @@ public class Menu extends RunableObject
     }
 
     @Override
-    protected void RenderLoop(double deltaTime) {
-
+    protected void RenderLoop(double deltaTime)
+    {
         //HelperFunctions.SetDisplayPixel(true,60,3);
         //draw stuff
     }
@@ -141,7 +158,6 @@ public class Menu extends RunableObject
                 }
             }
         }
-
     }
 
     @Override
