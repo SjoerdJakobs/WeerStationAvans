@@ -59,7 +59,7 @@ public class DegreeDaysTab extends Tab
 
         else if (counter == 6){
 
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\nlast year: "+year));
+            HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\npast year: "+year));
         }
         else if (counter > 6){
             HelperFunctions.WriteOnMatrixScreen(String.format("\nDegree days\ngiven period:: "+AmountOfDegreeDays));
