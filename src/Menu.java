@@ -33,6 +33,7 @@ public class Menu extends RunableObject
         m_tabs.add(new ExampleTab(this));
         m_tabs.add(new ExampleTab2(this));
         m_tabs.add(new ExampleTab3(this));
+        m_tabs.add(new SettingsTab(this));
 
         /*
         // if we ever need hidden tabs
