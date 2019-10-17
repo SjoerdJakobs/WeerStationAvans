@@ -75,12 +75,11 @@ public class Calculations {
     public static double minimum(ArrayList<Double> array) {
         double minimum = 0;
 
-        for (int i = 0; i < array.size(); i++) {
+        for (int i = 0; i < array.size(); i++)
             if (!Double.isNaN(array.get(i))) {
                 minimum = array.get(i);
                 continue;
             }
-        }
 
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i) < minimum) {
@@ -95,6 +94,13 @@ public class Calculations {
      */
     public static double maximum(ArrayList<Double> array) {
         double maximum = 0;
+
+        for (int i = 0; i < array.size(); i++)
+            if (!Double.isNaN(array.get(i))) {
+                maximum = array.get(i);
+                continue;
+            }
+
         for (int i = 0; i < array.size(); i++) {
             if (array.get(i) > maximum) {
                 maximum = array.get(i);
