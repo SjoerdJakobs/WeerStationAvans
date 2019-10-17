@@ -1,17 +1,18 @@
-public class Mick extends Tab
+public class Mist extends Tab
 {
     /**
      * A way for a period to be given or get is currently not possible, the variable chunk will be the placeholder period.
      * @param menu
      */
-    protected Mick (Menu menu) {
+    protected Mist(Menu menu) {
         super(menu);
     }
 
     @Override
     protected void OnOpen() {
-        Period chunk = new Period(365);
-        int mist = chunk.getDataStorage().getMist();
+        Period period = SavedData.INSTANCE.SavedPeriod;
+
+        int mist = period.getDataStorage().getMist();
         String mistResult = Integer.toString(mist);
         String mistText = " Days with chance of mist";
         HelperFunctions.WriteOnMatrixScreen(mistResult + mistText);
