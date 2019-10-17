@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-public class ExampleTab3 extends Tab
+public class TabOutsideTemperature extends Tab
 {
-    protected ExampleTab3(Menu menu) {
+    protected TabOutsideTemperature(Menu menu) {
         super(menu);
     }
 
@@ -13,7 +13,7 @@ public class ExampleTab3 extends Tab
     private ArrayList<Double> unitValues = GetUnit(measurements);
 
     // Create a PixelGrid to keep track of the shown dots
-    GraphMaker2 graph = new GraphMaker2();
+    GraphMaker graph = new GraphMaker();
 
     // MENU VARIABLES
     private int menuCounter = 0;

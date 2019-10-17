@@ -28,8 +28,7 @@ public class Menu extends RunableObject
         m_pixelGrid = new PixelGrid();
         m_tabs = new ArrayList<Tab>();
         m_tabs.add(new ExampleTab(this));
-        m_tabs.add(new ExampleTab2(this));
-        m_tabs.add(new ExampleTab3(this));
+        m_tabs.add(new TabOutsideTemperature(this));
         CurrentTabIndex = 0;
         CurrentTab = m_tabs.get(CurrentTabIndex);
         CurrentTab.OnOpen();
