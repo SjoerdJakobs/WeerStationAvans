@@ -188,15 +188,17 @@ public class Calculations {
     }
 
     /**
-     * Author: Kim
-     * Bepaal hoe vaak binnen een periode de binnen- en buitentemperatuur elkaar inhalen. Hiermee
-     * bedoelen we dat op een moment de buitentemperatuur boven de binnentemperatuur komt of
-     * omgekeerd binnentemperatuur boven de buitentemperatuur komt.
+     * @author Kim
+     * This function gets the outside and inside temperature and checks if they cross each other in a given period of time.
+     * @param measurement consists of the measured variables in the given time period
+     * Count: keeps track of the amount of times the inside temperature crosses the outside temperature.
+     * colderOutside: checks if the outside and inside temperature cross each other, and sets it to either false or true for the rest
+     *                of the time until the two temperatures cross each other again.
      */
-    public static double tempChange(ArrayList<Measurement> inside, ArrayList<Double> outside) {
+    public static double tempChange(ArrayList<Measurement> measurement) {
         int count = 0;
-        double insideTemp = inside.get(0).getInsideTemp();
-        double outsideTemp = inside.get(0).getOutsideTemp();
+        double insideTemp = measurement.get(0).getInsideTemp();
+        double outsideTemp = measurement.get(0).getOutsideTemp();
 
         boolean colderOutside = true;
 
@@ -206,19 +208,24 @@ public class Calculations {
             colderOutside = false;
         }
 
-        for (int i = 0; i < inside.size(); i++) {
-            insideTemp = inside.get(i).getInsideTemp();
-            outsideTemp = inside.get(i).getOutsideTemp();
+        for (int i = 0; i < measurement.size(); i++) {
+            insideTemp = measurement.get(i).getInsideTemp();
+            outsideTemp = measurement.get(i).getOutsideTemp();
 
-            if (colderOutside == true && insideTemp > outsideTemp) {
-                count++;
-                colderOutside = false;
-                System.out.println(inside.get(i).getDateStamp());
-            } else if (colderOutside == false && outsideTemp > insideTemp) {
-                count++;
-                colderOutside = true;
-                System.out.println(inside.get(i).getDateStamp());
-
+            if (!Double.isNaN(insideTemp) && !Double.isNaN(outsideTemp)){
+                if (colderOutside == true && insideTemp > outsideTemp) {
+                    count++;
+                    colderOutside = false;
+                    System.out.println(measurement.get(i).getDateStamp());
+                    System.out.println("inside: "+ measurement.get(i).getInsideTemp());
+                    System.out.println("outside: " + measurement.get(i).getOutsideTemp());
+                } else if (colderOutside == false && outsideTemp > insideTemp) {
+                    count++;
+                    colderOutside = true;
+                    System.out.println(measurement.get(i).getDateStamp());
+                    System.out.println("inside: "+ measurement.get(i).getInsideTemp());
+                    System.out.println("outside: " + measurement.get(i).getOutsideTemp());
+                }
             }
         }
         return count;
