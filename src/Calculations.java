@@ -315,7 +315,6 @@ public class Calculations {
      */
     private static ArrayList<Double> NaNFilter(ArrayList<Double> arrayList) {
         if (arrayList.isEmpty()) {
-            System.out.println("Your list is empty");
             return arrayList;
         } else {
             ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
