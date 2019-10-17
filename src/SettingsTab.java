@@ -493,14 +493,14 @@ public class SettingsTab extends Tab {
         /**
          * Exit settings menu
          */
-        /*if (state == 0 && menuState == 3) {
+        /* else if (state == 0 && menuState == 3) {
 
         }
 
         /**
          * Shut down GUI
          */
-        /*if (state == 0 && menuState == 4) {
+        /*else if (state == 0 && menuState == 4) {
             HelperFunctions.ClearMatrixDisplay();
             HelperFunctions.WriteOnMatrixScreen("Shut Down? (press red button");
         }*/
@@ -629,6 +629,3 @@ public class SettingsTab extends Tab {
         }
     }
 }
-
-
-
