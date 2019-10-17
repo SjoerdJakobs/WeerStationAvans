@@ -48,6 +48,7 @@ public class Menu extends RunableObject
         m_allTabs.add(new ExampleTab3(this));
          */
 
+        m_tabs.add(new TabOutsideTemperature(this));
         CurrentTabIndex = 0;
         CurrentTab = m_tabs.get(CurrentTabIndex);
         CurrentTab.OnOpen();
