@@ -873,6 +873,11 @@ public class PeriodData {
         return this.risingTemperature;
     }
 
+    /**
+     * Sets the graph positions for each DataType ArrayList.
+     * @param array ArrayList containing one specific Data Type.
+     * @return ArrayList containing pre calculated positions for the graph.
+     */
     private static ArrayList <Integer> SetGraph(ArrayList<Double> array) {
         ArrayList<Integer> positions = new ArrayList<Integer>();
         //
