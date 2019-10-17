@@ -54,11 +54,6 @@ public class SettingsTab extends Tab {
     @Override
     protected void OnButtonBlueTwo() {
         HelperFunctions.ClearMatrixDisplay();
-        System.out.println(state);
-        System.out.println(state);
-        System.out.println(state);
-
-
         /**
          * Scroll through main menu
          */
@@ -772,14 +767,14 @@ public class SettingsTab extends Tab {
             HelperFunctions.WriteOnMatrixScreen("\n " + mistResult + mistText);
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
             //HelperFunctions.WriteOnMatrixScreen(Calculations.mist(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
         } else if (state == 2 && preDefState == 3) {
            // HelperFunctions.WriteOnMatrixScreen(Calculations.MaxRain(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             Calculations.MaxRain();
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
         } else if (state == 2 && preDefState == 4) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of times " +
@@ -787,21 +782,21 @@ public class SettingsTab extends Tab {
                     Calculations.tempChange(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
         } else if (state == 2 && preDefState == 5) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of degreedays: " +
                     Calculations.calculateDegreeDays(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
         } else if (state == 2 && preDefState == 6) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Temeperature rising: " +
                     Calculations.risingTemperatureDuration(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
-            menuState = 2;
+            menuState = 3;
         } else if (state == 2 && menuState == 2 && preDefState == 7){
             state = 0;
             menuState = 0;
