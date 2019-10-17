@@ -310,7 +310,6 @@ public class Calculations {
     }
 
     private static ArrayList<Double> NaNFilter(ArrayList<Double> arrayList) {
-        System.out.println(LocalDateTime.now());
         ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
         Collections.sort(sortedList);
         for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i-- ) {
@@ -319,7 +318,6 @@ public class Calculations {
                 sortedList.remove(i);
             }
         }
-        System.out.println(LocalDateTime.now());
         return sortedList;
     }
 }
