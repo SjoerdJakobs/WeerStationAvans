@@ -8,7 +8,7 @@ public class ExampleTab2 extends Tab
     }
 
     // Get raw measurements of period
-    private Period period = new Period(LocalDate.of(2010, 10, 20), LocalDate.of(2010, 11, 30));
+    private Period period = new Period(LocalDate.of(2010, 11, 20), LocalDate.of(2010, 12, 30));
 
     // Get measurements from period
     private ArrayList<Measurement> measurements = period.getDataStorage().getPeriodMeasurements();
@@ -52,7 +52,7 @@ public class ExampleTab2 extends Tab
     // Runs when tab is opened
     @Override
     protected void OnOpen() {
-        HelperFunctions.ClearTextDisplay();
+        HelperFunctions.ClearAll();
         m_menu.DrawMenu();
 
         // Get current temperature
@@ -76,15 +76,11 @@ public class ExampleTab2 extends Tab
         if (showGraph == true && deltaTimer >= graphSpeed) {
             deltaTimer = 0;
 
-            // Test
-            System.out.println("xIndex: " + xIndex);
-
             // Create new PixelGrid to update the main PixelGrid each run
             PixelGrid addToGraph = new PixelGrid();
 
             // Shift graph to the left only if there are more than two colomns
-            // TODO First colomn: 0, second colomn: 1? Thus xIndex >= 1?
-            if (xIndex > 1) {
+            if (xIndex > 0) {
                 graph = GraphMaker.ShiftGraphToLeft(graph, topBoundary, rightBoundary, bottomBoundary, leftBoundary);
                 GraphMaker.RedrawYAxel(topBoundary, bottomBoundary, yAxel);
             }
@@ -124,8 +120,9 @@ public class ExampleTab2 extends Tab
 
             // Else (if all values are shown as graph), restart the graph
             else {
-                // TODO EXPERIMENTAL: Remove latest unitValueAverage on segments
-                if (graphRestart == 0 && xIndex - (drawColomn - yAxel) == unitValues.size() / step ) HelperFunctions.ClearAllSegmentDisplays();
+                // Remove latest unitValueAverage on segments
+                if (xIndex - (drawColomn - yAxel) == unitValues.size() / step )
+                    HelperFunctions.ClearAllSegmentDisplays();
 
                 // Position bar goes back to the beginning
                 for (int y = bottomBoundary + 1; y <= 31; y++) {
@@ -141,12 +138,16 @@ public class ExampleTab2 extends Tab
                 }
             } // End else
 
-            // TODO EXPERIMENTAL: Give unitValueAverage of position yAxel
+            // Give unitValueAverage of position yAxel
             double unitValueAverageOnYAxel;
             if (unitValues.size() > Math.round(step * (xIndex - (drawColomn - yAxel) - leftBoundary + 1))) {
                 unitValueAverageOnYAxel = GraphMaker.CalculateUnitValueAverage(unitValues, xIndex - (drawColomn - yAxel), step, leftBoundary);
-                if (!Double.isNaN(unitValueAverageOnYAxel))
+                if (!Double.isNaN(unitValueAverageOnYAxel)) {
+                    HelperFunctions.ClearAllSegmentDisplays();
                     HelperFunctions.WriteValueOnSegments(1, unitValueAverageOnYAxel, 1);
+                }
+                else HelperFunctions.ClearAllSegmentDisplays();
+
             }
 
             PixelGridDrawer.INSTANCE_DRAWER.AddDraw(addToGraph.PixelGrid);
@@ -161,7 +162,7 @@ public class ExampleTab2 extends Tab
     @Override
     protected void OnButtonBlueTwo() {
         menuCounter++;
-        HelperFunctions.ClearTextDisplay();
+        HelperFunctions.ClearAll();
         m_menu.DrawMenu();
 
         switch (menuCounter % 8) {
@@ -172,10 +173,13 @@ public class ExampleTab2 extends Tab
                 RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
                 Measurement measurement = new Measurement(rawData);
                 currentUnitValue = measurement.getOutsideTemp();
-
                 HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: %.2f", currentUnitValue) + " C");
                 break;
             case 1:
+                // Test function
+                double testValue = 10.0;
+                HelperFunctions.WriteValueOnSegments(1, testValue, 1);
+
                 HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmin: %.2f", minUnitValue) + " C");
                 break;
             case 2:
@@ -202,10 +206,8 @@ public class ExampleTab2 extends Tab
                 //for (int i = topBoundary; i <= bottomBoundary; i++) graph.PixelGrid[i][yAxel] = true;
                 PixelGridDrawer.INSTANCE_DRAWER.AddDraw(graph.PixelGrid);
                 break;
-
-        }
-
-    }
+        } // End switch-case
+    } // End function OnButtonBlueTwo
 
     @Override
     protected void OnButtonRed() {
