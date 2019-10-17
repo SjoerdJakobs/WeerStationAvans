@@ -4,6 +4,7 @@ import java.lang.Math;
 
 public class ExampleTab3 extends Tab
 {
+
     private byte topBoundary = 8;
     private byte rightBoundary = 127;
     private byte bottomBoundary = 29;
@@ -43,6 +44,7 @@ public class ExampleTab3 extends Tab
 
     @Override
     protected void OnOpen() {
+        HelperFunctions.ClearTextDisplay();
         m_menu.DrawMenu();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
