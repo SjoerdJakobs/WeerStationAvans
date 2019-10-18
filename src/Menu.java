@@ -77,9 +77,15 @@ public class Menu extends RunableObject
         CheckForButtonPress(m_buttonBlueTwo);
     }
 
+    private double renewMeasurementsTimer = 0;
     @Override
     protected void MainLoop(double deltaTime) {
         CurrentTab.Run(deltaTime);
+        renewMeasurementsTimer += deltaTime;
+        if(renewMeasurementsTimer >= 60)
+        {
+            SavedData.INSTANCE.SetLastMeasurement();
+        }
     }
 
     @Override
