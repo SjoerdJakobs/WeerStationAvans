@@ -15,7 +15,7 @@ public class Period {
     private PeriodData dataStorage = new PeriodData();
 
     /**
-     * default constructor, sets the period to today
+     * default constructor, sets the period to today1
      */
     public Period() {
         beginPeriod = LocalDate.now();

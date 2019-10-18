@@ -25,8 +25,7 @@ public class ExampleTab extends Tab
         ArrayList<Double> temperatures = new ArrayList<>();
         for (int i = 0; i < measurements.size(); i++) temperatures.add(measurements.get(i).getOutsideTemp());
 
-        PixelGrid frame = GraphMaker.createGraph(temperatures);
-        PixelGridDrawer.INSTANCE_DRAWER.AddDraw(frame.PixelGrid);
+        GraphMaker.createStaticGraph(temperatures);
 
         System.out.println("Finished");
     }
