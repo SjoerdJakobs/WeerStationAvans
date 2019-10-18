@@ -17,7 +17,7 @@ public class TabOutsideTemperature extends Tab
 
     // MENU VARIABLES
     private int menuCounter = 0;
-    private boolean showGraph = false;
+    private boolean runGraph = false;
 
     // DATA VARIABLES
     private double currentUnitValue;
@@ -58,7 +58,7 @@ public class TabOutsideTemperature extends Tab
     protected void Run(double deltaTime) {
         deltaTimer += deltaTime;
 
-        if (showGraph == true && deltaTimer >= graphSpeed) {
+        if (runGraph == true && deltaTimer >= SavedData.INSTANCE.graphSpeed) {
             deltaTimer = 0;
             graph.RunCycle();
 
@@ -74,7 +74,7 @@ public class TabOutsideTemperature extends Tab
 
         switch (menuCounter % 8) {
             case 0:
-                showGraph = false;
+                runGraph = false;
 
                 // Get current temperature
                 RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
@@ -105,7 +105,7 @@ public class TabOutsideTemperature extends Tab
                 HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nstd deviation: %.2f", stdDevUnitValue));
                 break;
             case 7:
-                showGraph = true;
+                runGraph = true;
                 graph.DrawAxels();
                 break;
         } // End switch-case
@@ -114,6 +114,7 @@ public class TabOutsideTemperature extends Tab
     @Override
     protected void OnButtonRed() {
         //runs when red button is pressed(runs once, its an actual bu)
+        runGraph = !runGraph;
 
         System.out.println("exampletab 2 redbutton pressed");
     }
