@@ -24,10 +24,12 @@ public class Menu extends RunableObject
         super(program, usesInput, usesMain, usesRenderer);
     }
 
+    SavedData savedData;
     @Override
     protected void Start() {
         super.Start();
-        SavedData.INSTANCE.SetLastMeasurement();
+        savedData = SavedData.getInstance();
+        savedData.SetLastMeasurement();
 
         m_pixelGrid = new PixelGrid();
 
@@ -86,7 +88,7 @@ public class Menu extends RunableObject
         renewMeasurementsTimer += deltaTime;
         if(renewMeasurementsTimer >= 60)
         {
-            SavedData.INSTANCE.SetLastMeasurement();
+            SavedData.getInstance().SetLastMeasurement();
         }
     }
 
