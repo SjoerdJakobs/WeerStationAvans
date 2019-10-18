@@ -52,9 +52,7 @@ public class Calculations {
         double sum = 0;
         double average;
         for (double data : array) {
-            if (Double.isNaN(data)){
-                sum = sum + data;
-            }
+            sum = sum + data;
         }
         average = sum / array.size();
         return average;
@@ -80,7 +78,7 @@ public class Calculations {
      */
     public static double minimum(ArrayList<Double> input) {
         ArrayList<Double> array = NaNFilter(input);
-        return array.get(array.size() - 1);
+        return array.get(0);
     }
 
     /**
@@ -88,7 +86,7 @@ public class Calculations {
      */
     public static double maximum(ArrayList<Double> input) {
         ArrayList<Double> array = NaNFilter(input);
-        return array.get(0);
+        return array.get(array.size() - 1);
     }
 
     public static double dewPoint(double outsideTemp, double outsideHumid) {
@@ -314,18 +312,17 @@ public class Calculations {
      * @return sorted list without NaN values.
      */
     private static ArrayList<Double> NaNFilter(ArrayList<Double> arrayList) {
-        if (arrayList.isEmpty()) {
-            return arrayList;
-        } else {
-            ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
-            Collections.sort(sortedList);
-            for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i-- ) {
+        System.out.println(LocalDateTime.now());
+        ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
+        Collections.sort(sortedList);
+        if (!arrayList.isEmpty()) {
+            for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i--) {
                 double data = sortedList.get(i);
-                if (Double.isNaN(data)){
+                if (Double.isNaN(data)) {
                     sortedList.remove(i);
                 }
             }
-            return sortedList;
         }
+        return sortedList;
     }
 }
