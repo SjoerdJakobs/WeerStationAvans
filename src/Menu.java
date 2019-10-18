@@ -27,6 +27,8 @@ public class Menu extends RunableObject
     @Override
     protected void Start() {
         super.Start();
+        SavedData.INSTANCE.SetLastMeasurement();
+
         m_pixelGrid = new PixelGrid();
 
         m_tabs = new ArrayList<Tab>();
