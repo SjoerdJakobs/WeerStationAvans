@@ -34,7 +34,7 @@ public class GraphMaker {
     public void initialise(ArrayList<Double> unitValues) {
         this.unitValues = unitValues;
 
-        step = 500;
+        step = SavedData.INSTANCE.graphStep;;
         minValue = Calculations.minimum(unitValues);
         maxValue = Calculations.maximum(unitValues);
         amplitudeOfUnitValues = maxValue - minValue;
@@ -76,7 +76,7 @@ public class GraphMaker {
                 if (xIndex == 0) oldResult = result;
 
                 // Update the pixelGrid with latest result
-                addToGraph.PixelGrid[topBoundary + result][drawColomn] = true;
+                addToGraph.PixelGrid[bottomBoundary - result - 1][drawColomn] = true;
             } // End if-statement check if value is not NaN
             else
                 // If value is NaN, use oldResult
@@ -207,12 +207,12 @@ public class GraphMaker {
 
         if (result - oldResult > 1) {
             for (int i = oldResult + 1; i < result; i++) {
-                graph.PixelGrid[topBoundary + i][drawColomn] = true; // Minus one to prevent from drawing on the x-axel
+                graph.PixelGrid[bottomBoundary - i - 1][drawColomn] = true; // Minus one to prevent from drawing on the x-axel            }
             }
         }
         else if (result - oldResult < -1) {
             for (int i = oldResult - 1; i > result; i--) {
-                graph.PixelGrid[topBoundary + i][drawColomn] = true; // Minus one to prevent from drawing on the x-axel
+                graph.PixelGrid[bottomBoundary - i - 1][drawColomn] = true; // Minus one to prevent from drawing on the x-axel            }
             }
         }
     }
