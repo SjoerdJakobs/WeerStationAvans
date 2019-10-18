@@ -1,6 +1,7 @@
 public class SunSetTab extends Tab
 {
     private int counter = 0;
+    private Period period;
     protected SunSetTab(Menu menu) {
         super(menu);
     }
@@ -8,6 +9,7 @@ public class SunSetTab extends Tab
     @Override
     protected void OnOpen() {
         m_menu.DrawMenu();
+        setPeriod();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
@@ -71,7 +73,7 @@ public class SunSetTab extends Tab
         }
     }
 
-    Period period = SavedData.INSTANCE.SavedPeriod;
+    public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
 
     private String current;
     private String min;

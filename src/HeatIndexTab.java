@@ -1,6 +1,7 @@
 public class HeatIndexTab extends Tab
 {
     private int counter = 0;
+    private Period period;
     protected HeatIndexTab(Menu menu) {
         super(menu);
     }
@@ -8,6 +9,7 @@ public class HeatIndexTab extends Tab
     @Override
     protected void OnOpen() {
         m_menu.DrawMenu();
+        setPeriod();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
@@ -79,7 +81,7 @@ public class HeatIndexTab extends Tab
         }
     }
 
-    Period period = SavedData.INSTANCE.SavedPeriod;
+    public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
 
     private double current;
     private double min;

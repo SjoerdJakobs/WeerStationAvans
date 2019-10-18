@@ -39,8 +39,10 @@ public class SettingsTab extends Tab {
 
     @Override
     protected void OnClose() {
-        //runs when tab is closed
+        HelperFunctions.ClearTextDisplay();
     }
+        //runs when tab is closed
+
 
     @Override
     protected void Run(double deltaTime) {
@@ -341,7 +343,7 @@ public class SettingsTab extends Tab {
             yearState++;
             m_menu.DrawMenu();
         } else if (state == 3 && periodState == 2 && yearState == 3) {
-            HelperFunctions.WriteOnMatrixScreen("\n Year: 20012");
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2012");
             yearState++;
             m_menu.DrawMenu();
         } else if (state == 3 && periodState == 2 && yearState == 4) {

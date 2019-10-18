@@ -1,6 +1,7 @@
 public class OutsideHumTab extends Tab
 {
     private int counter = 0;
+    private Period period;
     protected OutsideHumTab(Menu menu) {
         super(menu);
     }
@@ -8,6 +9,7 @@ public class OutsideHumTab extends Tab
     @Override
     protected void OnOpen() {
         m_menu.DrawMenu();
+        setPeriod();
         setValues();
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
@@ -80,7 +82,7 @@ public class OutsideHumTab extends Tab
         }
     }
 
-    Period period = SavedData.INSTANCE.SavedPeriod;
+    public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
 
     private double current;
     private double min;
