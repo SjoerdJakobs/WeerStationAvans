@@ -81,7 +81,7 @@ public class HeatIndexTab extends Tab
         }
     }
 
-    public void setPeriod(){period = SavedData.getInstance().GetPeriod(); }
+    public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
 
     private double current;
     private double min;

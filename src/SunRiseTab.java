@@ -73,7 +73,7 @@ public class SunRiseTab extends Tab
         }
     }
 
-    public void setPeriod(){period = SavedData.getInstance().GetPeriod(); }
+    public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
 
     private String current;
     private String min;
