@@ -11,8 +11,7 @@ public class AirPressureTab extends Tab
         m_menu.DrawMenu();
         setPeriod();
         setValues();
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         current = measurement.getBarometer();
         if (Double.isNaN(current)){
             HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent: no value"));

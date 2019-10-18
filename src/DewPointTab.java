@@ -11,8 +11,7 @@ public class DewPointTab extends Tab
         m_menu.DrawMenu();
         setPeriod();
         setValues();
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         current = Calculations.dewPoint(measurement.getOutsideTemp(),measurement.getOutsideHum());
         if (Double.isNaN(current)){
             HelperFunctions.WriteOnMatrixScreen(String.format("\nDew point\ncurrent: no value"));

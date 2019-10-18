@@ -11,8 +11,7 @@ public class UVLevelTab extends Tab
         m_menu.DrawMenu();
         setPeriod();
         setValues();
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         current = measurement.getUvLevel();
         if (Double.isNaN(current)){
             HelperFunctions.WriteOnMatrixScreen(String.format("\nUV level\ncurrent: no value"));

@@ -11,8 +11,7 @@ public class SunRiseTab extends Tab
         m_menu.DrawMenu();
         setPeriod();
         setValues();
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         current = ValueConverter.IntTimeIntToString((short)measurement.GetSunRise());
         HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\ncurrent: "+ current));
 
