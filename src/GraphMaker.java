@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class GraphMaker {
 
@@ -35,9 +36,13 @@ public class GraphMaker {
         this.unitValues = unitValues;
         ArrayList<Double> unitValuesNoNaN = new ArrayList<Double>();
 
-        for (Double data : unitValues)
-            if (!Double.isNaN(data))
+        for (Double data : unitValues) {
+            if (!Double.isNaN(data)) {
                 unitValuesNoNaN.add(data);
+            }
+        }
+        Collections.sort(unitValuesNoNaN);
+
 
         step = SavedData.INSTANCE.GetGraphStep();;
         minValue = Calculations.minimum(unitValuesNoNaN);
