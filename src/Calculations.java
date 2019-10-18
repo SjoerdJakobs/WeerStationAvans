@@ -312,7 +312,6 @@ public class Calculations {
      * @return sorted list without NaN values.
      */
     private static ArrayList<Double> NaNFilter(ArrayList<Double> arrayList) {
-        System.out.println(LocalDateTime.now());
         ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
         Collections.sort(sortedList);
         if (!arrayList.isEmpty()) {
