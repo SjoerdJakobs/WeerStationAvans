@@ -5,10 +5,11 @@ public enum SavedData
     INSTANCE;
 
     // VARIABLES
-    public Measurement LastMeasurement;
-    public Period SavedPeriod = new Period(LocalDate.of(2010, 1, 1), LocalDate.of(2010, 1, 31));
-    public int graphStep = SetGraphStep();
-    public double graphSpeed = 0.06; // 3 different speeds: slow (0.15), medium (0.06) or fast (0.02)
+    private Measurement LastMeasurement;
+    private Period SavedPeriod = new Period(LocalDate.of(2010, 1, 1), LocalDate.of(2010, 1, 31));
+
+    private int graphStep = SetGraphStep();
+    private double graphSpeed = 0.06; // 3 different speeds: slow (0.15), medium (0.06) or fast (0.02)
 
     /**
      * Re-calculate all results of the new period
@@ -17,15 +18,15 @@ public enum SavedData
      */
     public void SetPeriod(LocalDate startOfPeriod, LocalDate endOfPeriod) {
         SavedPeriod = new Period(startOfPeriod, endOfPeriod);
-        SetGraphStep();
-    }
+        SetGraphStep(); }
+    public Period GetPeriod() { return SavedPeriod; }
 
     /**
-     * Set latest measurement
+     * Set and get latest measurement
      */
-    public void SetLastMeasurement() {
-        LastMeasurement = new Measurement(DatabaseConnection.getMostRecentMeasurement());
-    }
+    public void SetLastMeasurement() {LastMeasurement = new Measurement(DatabaseConnection.getMostRecentMeasurement()); }
+    public Measurement GetLastMeasurement() { return LastMeasurement; }
+
 
     /**
      * Set the graph's step based on the number of measurements
@@ -40,19 +41,17 @@ public enum SavedData
     }
 
     /**
-     * Set the graph's step by (user) input
+     * Set and get the graph's step
      * @param graphStep the number of measurements that goes in one dot on the DotMatrixDisplay
      */
-    public void SetGraphStep(int graphStep) {
-        this.graphStep = graphStep;
-    }
+    public void SetGraphStep(int graphStep) { this.graphStep = graphStep; }
+    public int GetGraphStep() { return graphStep; }
 
     /**
-     * Set the graph's speed by (user) input
+     * Set and get the graph's speed
      * @param graphSpeed Time in seconds each time the graph shows one step (dot) of the graph
      */
-    private void SetGraphSpeed(double graphSpeed) {
-        this.graphSpeed = graphSpeed;
-    }
+    public void SetGraphSpeed(double graphSpeed) { this.graphSpeed = graphSpeed; }
+    public double GetGraphSpeed() { return graphSpeed; }
 
 }
