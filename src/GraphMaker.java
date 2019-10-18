@@ -33,10 +33,15 @@ public class GraphMaker {
      */
     public void initialise(ArrayList<Double> unitValues) {
         this.unitValues = unitValues;
+        ArrayList<Double> unitValuesNoNaN = new ArrayList<Double>();
+
+        for (Double data : unitValues)
+            if (!Double.isNaN(data))
+                unitValuesNoNaN.add(data);
 
         step = SavedData.INSTANCE.GetGraphStep();;
-        minValue = Calculations.minimum(unitValues);
-        maxValue = Calculations.maximum(unitValues);
+        minValue = Calculations.minimum(unitValuesNoNaN);
+        maxValue = Calculations.maximum(unitValuesNoNaN);
         amplitudeOfUnitValues = maxValue - minValue;
         amplitudeOfGraph = bottomBoundary - topBoundary - 1; // Minus one to not draw on the x-axes
         positionBar = unitValues.size() / step / (double)(rightBoundary - leftBoundary);
@@ -236,8 +241,8 @@ public class GraphMaker {
 
         // Draw the graph
         double step = measurements.size() / (rightBoundary - leftBoundary); // One dot on the DotMatrixDisplay
-        double maxValue = Calculations.maximum(measurements);
-        double minValue = Calculations.minimum(measurements);
+        double maxValue = Calculations.maximum(measurements); // Als measurements een NaN heeft, dan is maxValue mogelijk foutief
+        double minValue = Calculations.minimum(measurements);// Als measurements een NaN heeft, dan is minValue mogelijk foutief
         double amplitudeValue = maxValue - minValue;
         int amplitudeGraph = bottomBoundary - topBoundary - 1; // Minus one to prevent the graph from drawing on the x-axes
 
