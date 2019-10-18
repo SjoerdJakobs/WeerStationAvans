@@ -695,11 +695,11 @@ public class SettingsTab extends Tab {
             HelperFunctions.WriteOnMatrixScreen("\n Chosen begin period: " + beginYear +", " + beginMonth + ", " + beginDay);
             state = 3;
             periodState = 1;
-            m_menu.DrawMenu();
-        } else if (menuState == 1 && state == 3 && periodState == 1){
             yearState = beginYear;
             monthState = beginMonth -1;
             dayState = beginDay;
+            m_menu.DrawMenu();
+        } else if (menuState == 1 && state == 3 && periodState == 1){
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Choose an end year: ");
             periodState++;
@@ -707,7 +707,8 @@ public class SettingsTab extends Tab {
         } else if (menuState == 1 && state == 3 && periodState == 2) {
             endYear = 2008 + yearState;
             HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Choose an end month: ");
+            HelperFunctions.WriteOnMatrixScreen("\n Choose an end month" +
+                    "\n : ");
             periodState++;
             m_menu.DrawMenu();
         } else if (menuState == 1 && state == 3 && periodState == 3){
@@ -731,6 +732,9 @@ public class SettingsTab extends Tab {
             state = 0;
             menuState = 0;
             periodState = 0;
+            yearState = 0;
+            monthState = 1;
+            dayState = 1;
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Settings: ");
             m_menu.DrawMenu();
