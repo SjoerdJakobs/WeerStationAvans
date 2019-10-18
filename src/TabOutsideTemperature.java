@@ -3,14 +3,25 @@ import java.time.LocalDate;
 
 public class TabOutsideTemperature extends Tab
 {
+
+
     protected TabOutsideTemperature(Menu menu) {
         super(menu);
     }
+    private Period period;
+    public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
 
     // Get raw measurements of period
-    private ArrayList<Measurement> measurements = SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements();
+    private ArrayList<Measurement> measurements;
+    public void setMeasurements(){
+        measurements = period.getDataStorage().getPeriodMeasurements();
 
-    private ArrayList<Double> unitValues = GetUnit(measurements);
+}
+
+    private ArrayList<Double> unitValues;
+    public void setUnitValues(){
+        unitValues = GetUnit(measurements);
+    }
 
     // Create a PixelGrid to keep track of the shown dots
     GraphMaker graph = new GraphMaker();
@@ -19,33 +30,53 @@ public class TabOutsideTemperature extends Tab
     private int menuCounter = 0;
     private boolean runGraph = false;
 
-    // DATA VARIABLES
     private double currentUnitValue;
-    private double minUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getMinOutsideTemp();
-    private double maxUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getMaxOutsideTemp();;
-    private double averageUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getMeanOutsideTemp();;
-    private double ModeUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getModeOutsideTemp();;
-    private double MedianUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getMedianOutsideTemp();;
-    private double stdDevUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getStandardDeviationOutsideTemp();;
+    private double minUnitValue;
+    private double maxUnitValue;
+    private double averageUnitValue;
+    private double ModeUnitValue;
+    private double MedianUnitValue;
+    private double stdDevUnitValue;
+
+    // DATA VARIABLES
+    public void setValues(){
+     minUnitValue = period.getDataStorage().getMinOutsideTemp();
+     maxUnitValue = period.getDataStorage().getMaxOutsideTemp();
+    averageUnitValue = period.getDataStorage().getMeanOutsideTemp();
+     ModeUnitValue = period.getDataStorage().getModeOutsideTemp();
+     MedianUnitValue = period.getDataStorage().getMedianOutsideTemp();
+     stdDevUnitValue = period.getDataStorage().getStandardDeviationOutsideTemp();
+}
+
 
     // GRAPH VARIABLES
     private double deltaTimer = 0;
     private double graphSpeed = 0.03;
 
+
+
     // Runs when tab is opened
     @Override
     protected void OnOpen() {
+        HelperFunctions.ClearTextDisplay();
         HelperFunctions.ClearAll();
+        setPeriod();
+        setValues();
+        setMeasurements();
+        setUnitValues();
+
+        menuCounter=0;
         m_menu.DrawMenu();
 
         // Get current temperature
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         currentUnitValue = measurement.getOutsideTemp();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: %.2f", currentUnitValue) + " C");
+        HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: %.1f", currentUnitValue) + " C");
 
         graph.initialise(unitValues);
     }
+
 
     @Override
     protected void OnClose() {
@@ -56,6 +87,9 @@ public class TabOutsideTemperature extends Tab
         HelperFunctions.ClearAll();
 
     }
+        //runs when tab is closed
+
+
 
     @Override
     protected void Run(double deltaTime) {
@@ -83,26 +117,22 @@ public class TabOutsideTemperature extends Tab
                 RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
                 Measurement measurement = new Measurement(rawData);
                 currentUnitValue = measurement.getOutsideTemp();
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: %.2f", currentUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: %.1f", currentUnitValue) + " C");
                 break;
             case 1:
-                // Test function
-                double testValue = 10.0;
-                HelperFunctions.WriteValueOnSegments(1, testValue, 1);
-
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmin: %.2f", minUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmin: %.1f", minUnitValue) + " C");
                 break;
-            case 2:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmax: %.2f", maxUnitValue) + " C");
+            case 2  :
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmax: %.1f", maxUnitValue) + " C");
                 break;
             case 3:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\naverage: %.2f", averageUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\naverage: %.1f", averageUnitValue) + " C");
                 break;
             case 4:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmodus: %.2f", ModeUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmodus: %.1f", ModeUnitValue) + " C");
                 break;
             case 5:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmedian: %.2f", MedianUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmedian: %.1f", MedianUnitValue) + " C");
                 break;
             case 6:
                 HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nstd deviation: %.2f", stdDevUnitValue));
@@ -117,7 +147,7 @@ public class TabOutsideTemperature extends Tab
     @Override
     protected void OnButtonRed() {
         //runs when red button is pressed(runs once, its an actual bu)
-        if (menuCounter % 8 == 7) runGraph = !runGraph;
+      if (menuCounter % 8 == 7) runGraph = !runGraph;
 
         System.out.println("exampletab 2 redbutton pressed");
     }
