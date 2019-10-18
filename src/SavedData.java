@@ -5,8 +5,9 @@ public enum SavedData
     INSTANCE;
 
     public Measurement LastMeasurement;
-    public Period SavedPeriod;
+    public Period SavedPeriod = new Period(LocalDate.of(2010, 1, 1), LocalDate.of(2010, 12, 31));
     public int graphStep = SetGraphStep();
+
 
     private int SetGraphStep() {
         int nMeasurements = SavedPeriod.getDataStorage().getPeriodMeasurements().size();

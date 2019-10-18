@@ -313,10 +313,12 @@ public class Calculations {
         System.out.println(LocalDateTime.now());
         ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
         Collections.sort(sortedList);
-        for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i-- ) {
-            double data = sortedList.get(i);
-            if (Double.isNaN(data)){
-                sortedList.remove(i);
+        if (!arrayList.isEmpty()) {
+            for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i--) {
+                double data = sortedList.get(i);
+                if (Double.isNaN(data)) {
+                    sortedList.remove(i);
+                }
             }
         }
         System.out.println(LocalDateTime.now());

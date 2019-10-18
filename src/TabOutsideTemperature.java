@@ -8,8 +8,8 @@ public class TabOutsideTemperature extends Tab
     }
 
     // Get raw measurements of period
-    private Period period = new Period(40);
-    private ArrayList<Measurement> measurements = period.getDataStorage().getPeriodMeasurements();
+    private ArrayList<Measurement> measurements = SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements();
+
     private ArrayList<Double> unitValues = GetUnit(measurements);
 
     // Create a PixelGrid to keep track of the shown dots
@@ -21,12 +21,12 @@ public class TabOutsideTemperature extends Tab
 
     // DATA VARIABLES
     private double currentUnitValue;
-    private double minUnitValue = period.getDataStorage().getMinOutsideTemp();
-    private double maxUnitValue = period.getDataStorage().getMaxOutsideTemp();;
-    private double averageUnitValue = period.getDataStorage().getMeanOutsideTemp();;
-    private double ModeUnitValue = period.getDataStorage().getModeOutsideTemp();;
-    private double MedianUnitValue = period.getDataStorage().getMedianOutsideTemp();;
-    private double stdDevUnitValue = period.getDataStorage().getStandardDeviationOutsideTemp();;
+    private double minUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getMinOutsideTemp();
+    private double maxUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getMaxOutsideTemp();;
+    private double averageUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getMeanOutsideTemp();;
+    private double ModeUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getModeOutsideTemp();;
+    private double MedianUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getMedianOutsideTemp();;
+    private double stdDevUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getStandardDeviationOutsideTemp();;
 
     // GRAPH VARIABLES
     private double deltaTimer = 0;
