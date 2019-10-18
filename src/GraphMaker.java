@@ -34,12 +34,13 @@ public class GraphMaker {
     public void initialise(ArrayList<Double> unitValues) {
         this.unitValues = unitValues;
 
-        step = 50;
+        step = SavedData.INSTANCE.GetGraphStep();;
         minValue = Calculations.minimum(unitValues);
         maxValue = Calculations.maximum(unitValues);
         amplitudeOfUnitValues = maxValue - minValue;
         amplitudeOfGraph = bottomBoundary - topBoundary - 1; // Minus one to not draw on the x-axes
         positionBar = unitValues.size() / step / (double)(rightBoundary - leftBoundary);
+
     }
 
     /**
@@ -116,7 +117,8 @@ public class GraphMaker {
             }
         } // End else
 
-        double unitValueAverageOnYAxel;
+        // Calculate value on yAxel and show in top 7 segments display
+        double unitValueAverageOnYAxel = 0;
         if (unitValues.size() > Math.round(step * (xIndex - (drawColomn - yAxel) - leftBoundary + 1))) {
             unitValueAverageOnYAxel = CalculateAverage(xIndex - (drawColomn - yAxel));
             if (!Double.isNaN(unitValueAverageOnYAxel)) {
@@ -202,14 +204,15 @@ public class GraphMaker {
             }
         }
         */
+
         if (result - oldResult > 1) {
             for (int i = oldResult + 1; i < result; i++) {
-                graph.PixelGrid[bottomBoundary - i - 1][drawColomn] = true; // Minus one to prevent from drawing on the x-axel
+                graph.PixelGrid[bottomBoundary - i - 1][drawColomn] = true; // Minus one to prevent from drawing on the x-axel            }
             }
         }
         else if (result - oldResult < -1) {
             for (int i = oldResult - 1; i > result; i--) {
-                graph.PixelGrid[bottomBoundary - i - 1][drawColomn] = true; // Minus one to prevent from drawing on the x-axel
+                graph.PixelGrid[bottomBoundary - i - 1][drawColomn] = true; // Minus one to prevent from drawing on the x-axel            }
             }
         }
     }
