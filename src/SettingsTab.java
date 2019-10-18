@@ -647,7 +647,7 @@ public class SettingsTab extends Tab {
             HelperFunctions.WriteOnMatrixScreen("\n Exit");
             preDefState++;
             m_menu.DrawMenu();
-        } else if(preDefState >6) {
+        } else if(preDefState > 6) {
             preDefState = 1;
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Options: ");
@@ -727,10 +727,10 @@ public class SettingsTab extends Tab {
             SavedData.INSTANCE.SetPeriod(startOfPeriod,endOfPeriod);
             System.out.print(SavedData.INSTANCE.GetPeriod());
             state = 4;
-
         } else if (menuState == 1 && state == 4 && periodState == 4){
             state = 0;
             menuState = 0;
+            periodState = 0;
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Settings: ");
             m_menu.DrawMenu();
@@ -771,18 +771,11 @@ public class SettingsTab extends Tab {
             m_menu.DrawMenu();
         } else if (state == 2 && preDefState == 2){
             HelperFunctions.ClearTextDisplay();
-            m_menu.DrawMenu();
-            Period chunk = new Period(365);
-            int mist = chunk.getDataStorage().getMist();
-            String mistResult = Integer.toString(mist);
-            HelperFunctions.ClearTextDisplay();
-            String mistText = " days with " +
-                    "\n chance of mist";
-            HelperFunctions.WriteOnMatrixScreen("\n " + mistResult + mistText);
+            HelperFunctions.WriteOnMatrixScreen("\n Days with chance of " +
+                    "\n mist: " + Calculations.mist(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
-            //HelperFunctions.WriteOnMatrixScreen(Calculations.mist(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
         } else if (state == 2 && preDefState == 3) {
            // HelperFunctions.WriteOnMatrixScreen(Calculations.MaxRain(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
             Calculations.MaxRain();
@@ -811,7 +804,7 @@ public class SettingsTab extends Tab {
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
-        } else if (state == 2 && menuState == 2 && preDefState == 7){
+        } else if (state == 2 && preDefState == 7){
             state = 0;
             menuState = 0;
             HelperFunctions.ClearTextDisplay();
