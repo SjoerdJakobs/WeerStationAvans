@@ -82,7 +82,7 @@ public class OutsideTempTab extends Tab
         }
     }
 
-    public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
+    public void setPeriod(){period = SavedData.getInstance().GetPeriod(); }
 
     private double current;
     private double min;

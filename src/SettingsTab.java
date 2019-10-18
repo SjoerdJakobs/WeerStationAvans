@@ -606,7 +606,7 @@ public class SettingsTab extends Tab {
             }
             if (stepWidth > 500) {
                 stepWidth = 0;
-                SavedData.INSTANCE.SetGraphStep();
+                SavedData.getInstance().SetGraphStep();
                 HelperFunctions.ClearTextDisplay();
                 HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
                         "\n width: auto");
@@ -727,8 +727,8 @@ public class SettingsTab extends Tab {
             m_menu.DrawMenu();
             LocalDate startOfPeriod = LocalDate.of(beginYear, beginMonth, beginDay);
             LocalDate endOfPeriod = LocalDate.of(endYear, endMonth, endDay);
-            SavedData.INSTANCE.SetPeriod(startOfPeriod,endOfPeriod);
-            System.out.print(SavedData.INSTANCE.GetPeriod());
+            SavedData.getInstance().SetPeriod(startOfPeriod,endOfPeriod);
+            System.out.print(SavedData.getInstance().GetPeriod());
             state = 4;
         } else if (menuState == 1 && state == 4 && periodState == 4){
             state = 0;
@@ -755,8 +755,8 @@ public class SettingsTab extends Tab {
         } else if (state == 5 && menuState == 2 && stepWidthAccord == false){
             stepWidthAccord = true;
             if (state == 5 && menuState == 2 && stepWidthAccord ==true){
-                if (stepWidth != 0) SavedData.INSTANCE.SetGraphStep(stepWidth);
-                else SavedData.INSTANCE.SetGraphStep();
+                if (stepWidth != 0) SavedData.getInstance().SetGraphStep(stepWidth);
+                else SavedData.getInstance().SetGraphStep();
                 stepWidth = 0; // Reset stepWidth
                 state = 0;
                 menuState = 2;
@@ -778,7 +778,7 @@ public class SettingsTab extends Tab {
         } else if (state == 2 && preDefState == 2){
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Days with chance of " +
-                    "\n mist: " + Calculations.mist(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
+                    "\n mist: " + Calculations.mist(SavedData.getInstance().GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
@@ -792,21 +792,21 @@ public class SettingsTab extends Tab {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of times " +
                     "\n crossed: " +
-                    Calculations.tempChange(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
+                    Calculations.tempChange(SavedData.getInstance().GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
         } else if (state == 2 && preDefState == 5) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of degreedays: " +
-                    Calculations.calculateDegreeDays(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
+                    Calculations.calculateDegreeDays(SavedData.getInstance().GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
         } else if (state == 2 && preDefState == 6) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Temeperature rising: " +
-                    Calculations.risingTemperatureDuration(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
+                    Calculations.risingTemperatureDuration(SavedData.getInstance().GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;

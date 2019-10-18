@@ -1,8 +1,21 @@
 import java.time.LocalDate;
 
-public enum SavedData
+public class SavedData
 {
-    INSTANCE;
+    private static SavedData INSTANCE = null;
+
+    private SavedData() {}
+
+    public static SavedData getInstance() {
+        if (INSTANCE == null) {
+            synchronized (SavedData.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new SavedData();
+                }
+            }
+        }
+        return INSTANCE;
+    }
 
     // VARIABLES
     private Measurement LastMeasurement;

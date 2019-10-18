@@ -68,7 +68,7 @@ public class DegreeDaysTab extends Tab
         }
     }
 
-    Period period = SavedData.INSTANCE.GetPeriod();
+    Period period = SavedData.getInstance().GetPeriod();
     Period sevenPeriod = new Period(7);
     Period fourteenPeriod = new Period(14);
     Period twentyonePeriod = new Period(21);

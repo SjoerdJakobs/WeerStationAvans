@@ -878,8 +878,8 @@ public class PeriodData {
      */
     private static ArrayList <Integer> SetGraph(ArrayList<Double> array) {
         ArrayList<Integer> positions = new ArrayList<Integer>();
-        double stepSize = SavedData.INSTANCE.GetGraphStep();
-        double graphSpeed = SavedData.INSTANCE.GetGraphSpeed();
+        double stepSize = SavedData.getInstance().GetGraphStep();
+        double graphSpeed = SavedData.getInstance().GetGraphSpeed();
         //
         //
         //

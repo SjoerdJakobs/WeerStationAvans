@@ -34,7 +34,7 @@ public class GraphMaker {
     public void initialise(ArrayList<Double> unitValues) {
         this.unitValues = unitValues;
 
-        step = SavedData.INSTANCE.GetGraphStep();;
+        step = SavedData.getInstance().GetGraphStep();;
         minValue = Calculations.minimum(unitValues);
         maxValue = Calculations.maximum(unitValues);
         amplitudeOfUnitValues = maxValue - minValue;

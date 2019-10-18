@@ -24,9 +24,13 @@ public class Menu extends RunableObject
         super(program, usesInput, usesMain, usesRenderer);
     }
 
+    SavedData savedData;
     @Override
     protected void Start() {
         super.Start();
+        savedData = SavedData.getInstance();
+        savedData.SetLastMeasurement();
+
         m_pixelGrid = new PixelGrid();
 
         m_tabs = new ArrayList<Tab>();
@@ -77,9 +81,15 @@ public class Menu extends RunableObject
         CheckForButtonPress(m_buttonBlueTwo);
     }
 
+    private double renewMeasurementsTimer = 0;
     @Override
     protected void MainLoop(double deltaTime) {
         CurrentTab.Run(deltaTime);
+        renewMeasurementsTimer += deltaTime;
+        if(renewMeasurementsTimer >= 60)
+        {
+            SavedData.getInstance().SetLastMeasurement();
+        }
     }
 
     @Override
