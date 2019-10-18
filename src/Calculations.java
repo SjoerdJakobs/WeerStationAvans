@@ -119,7 +119,7 @@ public class Calculations {
     }
 
     /**
-     * Author: Mick van der Werf.
+     * Author: Mist van der Werf.
      * <p>
      * This function checks the difference between outside temperature and dewpoint to determine if there was a chance of mist.
      *
@@ -128,7 +128,6 @@ public class Calculations {
      * LastDate: keeps track of the last day that was found.
      */
     public static int mist(ArrayList<Measurement> array) {
-        int counter = 0;
         int lastDate = 0;
         int result = 0;
         for (int i = 0; i < array.size(); i++) {
@@ -275,7 +274,7 @@ public class Calculations {
         }
 
         return degreedays;
-    }      
+    }
 
     /**
      * Author: Dennis Kruijt.
@@ -309,6 +308,11 @@ public class Calculations {
         return series;
     }
 
+    /**
+     * Sorts the input list and filters out all NaN values.
+     * @param arrayList unsorted list with NaN values.
+     * @return sorted list without NaN values.
+     */
     private static ArrayList<Double> NaNFilter(ArrayList<Double> arrayList) {
         System.out.println(LocalDateTime.now());
         ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
@@ -320,8 +324,7 @@ public class Calculations {
                     sortedList.remove(i);
                 }
             }
+            return sortedList;
         }
-        System.out.println(LocalDateTime.now());
-        return sortedList;
     }
 }

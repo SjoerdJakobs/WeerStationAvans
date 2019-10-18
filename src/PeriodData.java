@@ -7,7 +7,8 @@ import java.util.Set;
  */
 public class PeriodData {
     private ArrayList<Measurement> periodMeasurements = new ArrayList<Measurement>();
-    private double stepSize = 50;
+    private double stepSize;
+    private double graphSpeed;
 
     private double maxAirPressure;
     private double minAirPressure;
@@ -872,6 +873,11 @@ public class PeriodData {
         return this.risingTemperature;
     }
 
+    /**
+     * Sets the graph positions for each DataType ArrayList.
+     * @param array ArrayList containing one specific Data Type.
+     * @return ArrayList containing pre calculated positions for the graph.
+     */
     private static ArrayList <Integer> SetGraph(ArrayList<Double> array) {
         ArrayList<Integer> positions = new ArrayList<Integer>();
         //
@@ -880,11 +886,25 @@ public class PeriodData {
         return positions;
     }
 
+    /**
+     * Set and get function for stepSize, used in graph creation.
+     * @param step size of the step for the graph to take during creation.
+     */
     public void setStepSize(double step) {
         this.stepSize = step;
     }
-
     public double getStepSize() {
         return this.stepSize;
+    }
+
+    /**
+     * Set and get function for graphSpeed, used in graph creation.
+     * @param speed speed of the graph in the interface.
+     */
+    public void setGraphSpeed(double speed) {
+        this.graphSpeed = speed;
+    }
+    public double getGraphSpeed() {
+        return this.graphSpeed;
     }
 }

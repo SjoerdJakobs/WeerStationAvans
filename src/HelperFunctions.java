@@ -90,9 +90,16 @@ public class HelperFunctions
                 break;
         }
 
+        boolean numberIsNegative = false;
+
         if (value == 0) {
             IO.writeShort(segmentAdresses.get(0), 0);
         } else {
+            if(value < 0)
+            {
+                numberIsNegative = true;
+                value = Math.abs(value);
+            }
 
             double checkValue = value;
             value = Math.round(value* Math.pow(10, numbersBehindComma));
@@ -125,6 +132,14 @@ public class HelperFunctions
                 if((j != numbersBehindComma || j == 0)&&segmentAdresses.size()>j)
                 {
                     IO.writeShort(segmentAdresses.get(j), myList.get(j));
+                }
+            }
+            if(numberIsNegative)
+            {
+                if(myList.size() < segmentAdresses.size())
+                {
+                    int[] intArray = new int[]{6};
+                    SetSegment(segmentAdresses.get(myList.size()),intArray);
                 }
             }
         }
