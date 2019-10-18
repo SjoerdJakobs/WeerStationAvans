@@ -8,7 +8,7 @@ public class TabOutsideTemperature extends Tab
     }
 
     // Get raw measurements of period
-    private ArrayList<Measurement> measurements = SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements();
+    private ArrayList<Measurement> measurements = SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements();
 
     private ArrayList<Double> unitValues = GetUnit(measurements);
 
@@ -21,12 +21,12 @@ public class TabOutsideTemperature extends Tab
 
     // DATA VARIABLES
     private double currentUnitValue;
-    private double minUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getMinOutsideTemp();
-    private double maxUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getMaxOutsideTemp();;
-    private double averageUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getMeanOutsideTemp();;
-    private double ModeUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getModeOutsideTemp();;
-    private double MedianUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getMedianOutsideTemp();;
-    private double stdDevUnitValue = SavedData.INSTANCE.SavedPeriod.getDataStorage().getStandardDeviationOutsideTemp();;
+    private double minUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getMinOutsideTemp();
+    private double maxUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getMaxOutsideTemp();;
+    private double averageUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getMeanOutsideTemp();;
+    private double ModeUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getModeOutsideTemp();;
+    private double MedianUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getMedianOutsideTemp();;
+    private double stdDevUnitValue = SavedData.INSTANCE.GetPeriod().getDataStorage().getStandardDeviationOutsideTemp();;
 
     // GRAPH VARIABLES
     private double deltaTimer = 0;
@@ -58,7 +58,7 @@ public class TabOutsideTemperature extends Tab
     protected void Run(double deltaTime) {
         deltaTimer += deltaTime;
 
-        if (runGraph == true && deltaTimer >= SavedData.INSTANCE.graphSpeed) {
+        if (runGraph == true && deltaTimer >= SavedData.INSTANCE.GetGraphSpeed()) {
             deltaTimer = 0;
             graph.RunCycle();
 

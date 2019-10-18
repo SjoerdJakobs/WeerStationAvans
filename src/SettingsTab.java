@@ -725,7 +725,7 @@ public class SettingsTab extends Tab {
             LocalDate startOfPeriod = LocalDate.of(beginYear, beginMonth, beginDay);
             LocalDate endOfPeriod = LocalDate.of(endYear, endMonth, endDay);
             SavedData.INSTANCE.SetPeriod(startOfPeriod,endOfPeriod);
-            System.out.print(SavedData.INSTANCE.SavedPeriod);
+            System.out.print(SavedData.INSTANCE.GetPeriod());
             state = 4;
 
         } else if (menuState == 1 && state == 4 && periodState == 4){
@@ -793,21 +793,21 @@ public class SettingsTab extends Tab {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of times " +
                     "\n crossed: " +
-                    Calculations.tempChange(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
+                    Calculations.tempChange(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
         } else if (state == 2 && preDefState == 5) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of degreedays: " +
-                    Calculations.calculateDegreeDays(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
+                    Calculations.calculateDegreeDays(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
         } else if (state == 2 && preDefState == 6) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Temeperature rising: " +
-                    Calculations.risingTemperatureDuration(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
+                    Calculations.risingTemperatureDuration(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
