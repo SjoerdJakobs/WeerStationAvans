@@ -316,6 +316,9 @@ public class Calculations {
         Collections.sort(sortedList);
         if (!arrayList.isEmpty()) {
             for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i--) {
+                if (arrayList.isEmpty()) {
+                    break;
+                }
                 double data = sortedList.get(i);
                 if (Double.isNaN(data)) {
                     sortedList.remove(i);
