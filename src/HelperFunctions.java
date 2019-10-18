@@ -92,7 +92,7 @@ public class HelperFunctions
 
         boolean numberIsNegative = false;
 
-        if (value == 0) {
+        if (Math.round(value* Math.pow(10, numbersBehindComma)) == 0) {
             IO.writeShort(segmentAdresses.get(0), 0);
         } else {
             if(value < 0)

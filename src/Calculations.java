@@ -324,7 +324,7 @@ public class Calculations {
                     sortedList.remove(i);
                 }
             }
-            return sortedList;
         }
+        return sortedList;
     }
 }
