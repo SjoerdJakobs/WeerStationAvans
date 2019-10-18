@@ -11,6 +11,7 @@ public class AirPressureTab extends Tab
         m_menu.DrawMenu();
         setPeriod();
         setValues();
+
         Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         current = measurement.getBarometer();
         if (Double.isNaN(current)){

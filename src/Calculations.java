@@ -311,19 +311,34 @@ public class Calculations {
      * @param arrayList unsorted list with NaN values.
      * @return sorted list without NaN values.
      */
+//    private static ArrayList<Double> NaNFilter(ArrayList<Double> arrayList) {
+//        ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
+//        Collections.sort(sortedList);
+//        if (!arrayList.isEmpty()) {
+//            for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i--) {
+//                if (arrayList.isEmpty()) {
+//                    break;
+//                }
+//                double data = sortedList.get(i);
+//                if (Double.isNaN(data)) {
+//                    sortedList.remove(i);
+//                }
+//            }
+//        }
+//        return sortedList;
+//    }
     private static ArrayList<Double> NaNFilter(ArrayList<Double> arrayList) {
         ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
-        Collections.sort(sortedList);
         if (!arrayList.isEmpty()) {
+            Collections.sort(sortedList);
             for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i--) {
-                if (arrayList.isEmpty()) {
-                    break;
-                }
                 double data = sortedList.get(i);
                 if (Double.isNaN(data)) {
                     sortedList.remove(i);
                 }
             }
+        } else {
+            sortedList.add(Double.NaN);
         }
         return sortedList;
     }
