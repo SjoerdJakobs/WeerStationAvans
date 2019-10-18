@@ -1,7 +1,4 @@
-
-import java.lang.reflect.Array;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class SettingsTab extends Tab {
     protected SettingsTab(Menu menu) {
@@ -97,7 +94,7 @@ public class SettingsTab extends Tab {
             yearState++;
             m_menu.DrawMenu();
         } else if (state == 1 && periodState == 1 && yearState == 1) {
-            HelperFunctions.WriteOnMatrixScreen("\n Year: 20010");
+            HelperFunctions.WriteOnMatrixScreen("\n Year: 2010");
             yearState++;
             m_menu.DrawMenu();
         } else if (state == 1 && periodState == 1 && yearState == 2) {
@@ -577,6 +574,13 @@ public class SettingsTab extends Tab {
             HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
                     "\n width: " + stepWidth);
             m_menu.DrawMenu();
+            if (stepWidth == 0) {
+                stepWidth = stepWidth + 1;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
+                        "\n width: " + stepWidth);
+                m_menu.DrawMenu();
+            }
             if (stepWidth > 50){
                 stepWidth = stepWidth + 5;
                 HelperFunctions.ClearTextDisplay();
@@ -596,6 +600,14 @@ public class SettingsTab extends Tab {
                 HelperFunctions.ClearTextDisplay();
                 HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
                         "\n width: " + stepWidth);
+                m_menu.DrawMenu();
+            }
+            if (stepWidth > 500) {
+                stepWidth = 0;
+                SavedData.INSTANCE.SetGraphStep();
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
+                        "\n width: auto");
                 m_menu.DrawMenu();
             }
         }
@@ -713,7 +725,7 @@ public class SettingsTab extends Tab {
             LocalDate startOfPeriod = LocalDate.of(beginYear, beginMonth, beginDay);
             LocalDate endOfPeriod = LocalDate.of(endYear, endMonth, endDay);
             SavedData.INSTANCE.SetPeriod(startOfPeriod,endOfPeriod);
-            System.out.print(SavedData.INSTANCE.SavedPeriod);
+            System.out.print(SavedData.INSTANCE.GetPeriod());
             state = 4;
 
         } else if (menuState == 1 && state == 4 && periodState == 4){
@@ -732,12 +744,14 @@ public class SettingsTab extends Tab {
             stepWidthAccord = false;
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Set graph step " +
-                    "\n width: " + stepWidth);
+                    "\n width: auto");
             m_menu.DrawMenu();
         } else if (state == 5 && menuState == 2 && stepWidthAccord == false){
             stepWidthAccord = true;
             if (state == 5 && menuState == 2 && stepWidthAccord ==true){
-                SavedData.INSTANCE.setStepWidth(stepWidth);
+                if (stepWidth != 0) SavedData.INSTANCE.SetGraphStep(stepWidth);
+                else SavedData.INSTANCE.SetGraphStep();
+                stepWidth = 0; // Reset stepWidth
                 state = 0;
                 menuState = 2;
                 HelperFunctions.ClearTextDisplay();
@@ -779,21 +793,21 @@ public class SettingsTab extends Tab {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of times " +
                     "\n crossed: " +
-                    Calculations.tempChange(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
+                    Calculations.tempChange(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
         } else if (state == 2 && preDefState == 5) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Amount of degreedays: " +
-                    Calculations.calculateDegreeDays(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
+                    Calculations.calculateDegreeDays(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
         } else if (state == 2 && preDefState == 6) {
             HelperFunctions.ClearTextDisplay();
             HelperFunctions.WriteOnMatrixScreen("\n Temeperature rising: " +
-                    Calculations.risingTemperatureDuration(SavedData.INSTANCE.SavedPeriod.getDataStorage().getPeriodMeasurements()));
+                    Calculations.risingTemperatureDuration(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
             m_menu.DrawMenu();
             state = 0;
             menuState = 3;
