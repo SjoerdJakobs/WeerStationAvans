@@ -51,6 +51,9 @@ public class TabOutsideTemperature extends Tab
     protected void OnClose() {
         //runs when tab is closed
         System.out.println("exampletab 2 closed");
+        menuCounter = 0;
+        runGraph = false;
+        HelperFunctions.ClearAll();
 
     }
 
@@ -114,7 +117,7 @@ public class TabOutsideTemperature extends Tab
     @Override
     protected void OnButtonRed() {
         //runs when red button is pressed(runs once, its an actual bu)
-        runGraph = !runGraph;
+        if (menuCounter % 8 == 7) runGraph = !runGraph;
 
         System.out.println("exampletab 2 redbutton pressed");
     }
