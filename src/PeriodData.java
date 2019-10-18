@@ -7,8 +7,6 @@ import java.util.Set;
  */
 public class PeriodData {
     private ArrayList<Measurement> periodMeasurements = new ArrayList<Measurement>();
-    private double stepSize;
-    private double graphSpeed;
 
     private double maxAirPressure;
     private double minAirPressure;
@@ -16,7 +14,6 @@ public class PeriodData {
     private double modeAirPressure;
     private double medianAirPressure;
     private double standardDeviationAirPressure;
-    private ArrayList<Integer> graphAirPressure;
 
     private double maxInsideTemp;
     private double minInsideTemp;
@@ -24,7 +21,6 @@ public class PeriodData {
     private double modeInsideTemp;
     private double medianInsideTemp;
     private double standardDeviationInsideTemp;
-    private ArrayList<Integer> graphInsideTemp;
 
     private double maxInsideHum;
     private double minInsideHum;
@@ -32,15 +28,12 @@ public class PeriodData {
     private double modeInsideHum;
     private double medianInsideHum;
     private double standardDeviationInsideHum;
-    private ArrayList<Integer> graphInsideHum;
-
     private double maxOutsideTemp;
     private double minOutsideTemp;
     private double meanOutsideTemp;
     private double modeOutsideTemp;
     private double medianOutsideTemp;
     private double standardDeviationOutsideTemp;
-    private ArrayList<Integer> graphOutsideTemp;
 
     private double maxWindSpeed;
     private double minWindSpeed;
@@ -48,7 +41,6 @@ public class PeriodData {
     private double modeWindSpeed;
     private double medianWindSpeed;
     private double standardDeviationWindSpeed;
-    private ArrayList<Integer> graphWindSpeed;
 
     private double maxAvgWindSpeed;
     private double minAvgWindSpeed;
@@ -56,7 +48,6 @@ public class PeriodData {
     private double modeAvgWindSpeed;
     private double medianAvgWindSpeed;
     private double standardDeviationAvgWindSpeed;
-    private ArrayList<Integer> graphAvgWindSpeed;
 
     private double maxWindDir;
     private double minWindDir;
@@ -64,7 +55,6 @@ public class PeriodData {
     private double modeWindDir;
     private double medianWindDir;
     private double standardDeviationWindDir;
-    private ArrayList<Integer> graphWindDir;
 
     private double maxOutsideHum;
     private double minOutsideHum;
@@ -72,7 +62,6 @@ public class PeriodData {
     private double modeOutsideHum;
     private double medianOutsideHum;
     private double standardDeviationOutsideHum;
-    private ArrayList<Integer> graphOutsideHum;
 
     private double maxRainRate;
     private double minRainRate;
@@ -80,7 +69,6 @@ public class PeriodData {
     private double modeRainRate;
     private double medianRainRate;
     private double standardDeviationRainRate;
-    private ArrayList<Integer> graphRainRate;
 
     private double maxUvLevel;
     private double minUvLevel;
@@ -88,7 +76,6 @@ public class PeriodData {
     private double modeUvLevel;
     private double medianUvLevel;
     private double standardDeviationUvLevel;
-    private ArrayList<Integer> graphUvLevel;
 
     private double maxBattLevel;
     private double minBattLevel;
@@ -96,7 +83,6 @@ public class PeriodData {
     private double modeBattLevel;
     private double medianBattLevel;
     private double standardDeviationBattLevel;
-    private ArrayList<Integer> graphBattLevel;
 
     private double maxSunSet;
     private double minSunSet;
@@ -104,7 +90,6 @@ public class PeriodData {
     private double modeSunSet;
     private double medianSunSet;
     private double standardDeviationSunSet;
-    private ArrayList<Integer> graphSunSet;
 
     private double maxSunRise;
     private double minSunRise;
@@ -112,7 +97,6 @@ public class PeriodData {
     private double modeSunRise;
     private double medianSunRise;
     private double standardDeviationSunRise;
-    private ArrayList<Integer> graphSunRise;
 
     private double maxWindChill;
     private double minWindChill;
@@ -120,7 +104,6 @@ public class PeriodData {
     private double modeWindChill;
     private double medianWindChill;
     private double standardDeviationWindChill;
-    private ArrayList<Integer> graphWindChill;
 
     private double maxHeatIndex;
     private double minHeatIndex;
@@ -128,7 +111,6 @@ public class PeriodData {
     private double modeHeatIndex;
     private double medianHeatIndex;
     private double standardDeviationHeatIndex;
-    private ArrayList<Integer> graphHeatIndex;
 
     private double maxDewPoint;
     private double minDewPoint;
@@ -136,7 +118,6 @@ public class PeriodData {
     private double modeDewPoint;
     private double medianDewPoint;
     private double standardDeviationDewPoint;
-    private ArrayList<Integer> graphDewPoint;
 
     private int mist;
     private double maxRain;
@@ -228,7 +209,6 @@ public class PeriodData {
         this.modeAirPressure = Calculations.mode(airPressure);
         this.medianAirPressure = Calculations.median(airPressure);
         this.standardDeviationAirPressure = Calculations.standardDeviation(airPressure);
-        this.graphAirPressure = SetGraph(airPressure);
     }
 
     /**
@@ -253,9 +233,6 @@ public class PeriodData {
     public double getStandardDeviationAirPressure() {
         return this.standardDeviationAirPressure;
     }
-    public ArrayList<Integer> getGraphAirPressure() {
-        return this.graphAirPressure;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -268,7 +245,6 @@ public class PeriodData {
         this.modeInsideTemp = Calculations.mode(insideTemp);
         this.medianInsideTemp = Calculations.median(insideTemp);
         this.standardDeviationInsideTemp = Calculations.standardDeviation(insideTemp);
-        this.graphInsideTemp = SetGraph(insideTemp);
     }
     /**
      * Individual gets for each calculated InsideTemp value to allow access from other classes.
@@ -292,9 +268,6 @@ public class PeriodData {
     public double getStandardDeviationInsideTemp() {
         return this.standardDeviationInsideTemp;
     }
-    public ArrayList<Integer> getGraphInsideTemp() {
-        return this.graphInsideTemp;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -307,7 +280,6 @@ public class PeriodData {
         this.modeInsideHum = Calculations.mode(insideHum);
         this.medianInsideHum = Calculations.median(insideHum);
         this.standardDeviationInsideHum = Calculations.standardDeviation(insideHum);
-        this.graphInsideHum = SetGraph(insideHum);
     }
     /**
      * Individual gets for each calculated MaxInsideHum value to allow access from other classes.
@@ -331,9 +303,6 @@ public class PeriodData {
     public double getStandardDeviationInsideHum() {
         return this.standardDeviationInsideHum;
     }
-    public ArrayList<Integer> getGraphInsideHum() {
-        return this.graphInsideHum;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -346,7 +315,6 @@ public class PeriodData {
         this.modeOutsideTemp = Calculations.mode(outsideTemp);
         this.medianOutsideTemp = Calculations.median(outsideTemp);
         this.standardDeviationOutsideTemp = Calculations.standardDeviation(outsideTemp);
-        this.graphOutsideTemp = SetGraph(outsideTemp);
     }
     /**
      * Individual gets for each calculated OutsideTemp value to allow access from other classes.
@@ -370,9 +338,6 @@ public class PeriodData {
     public double getStandardDeviationOutsideTemp() {
         return this.standardDeviationOutsideTemp;
     }
-    public ArrayList<Integer> getGraphOutsideTemp() {
-        return this.graphOutsideTemp;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -385,7 +350,6 @@ public class PeriodData {
         this.modeWindSpeed = Calculations.mode(windSpeed);
         this.medianWindSpeed = Calculations.median(windSpeed);
         this.standardDeviationWindSpeed = Calculations.standardDeviation(windSpeed);
-        this.graphWindSpeed = SetGraph(windSpeed);
     }
     /**
      * Individual gets for each calculated WindSpeed value to allow access from other classes.
@@ -409,9 +373,6 @@ public class PeriodData {
     public double getStandardDeviationWindSpeed() {
         return this.standardDeviationWindSpeed;
     }
-    public ArrayList<Integer> getGraphWindSpeed() {
-        return this.graphWindSpeed;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -424,7 +385,6 @@ public class PeriodData {
         this.modeAvgWindSpeed = Calculations.mode(avgWindSpeed);
         this.medianAvgWindSpeed = Calculations.median(avgWindSpeed);
         this.standardDeviationAvgWindSpeed = Calculations.standardDeviation(avgWindSpeed);
-        this.graphAvgWindSpeed = SetGraph(avgWindSpeed);
     }
     /**
      * Individual gets for each calculated AvgWindSpeed value to allow access from other classes.
@@ -448,9 +408,6 @@ public class PeriodData {
     public double getStandardDeviationAvgWindSpeed() {
         return this.standardDeviationAvgWindSpeed;
     }
-    public ArrayList<Integer> getGraphAvgWindSpeed() {
-        return this.graphAvgWindSpeed;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -463,7 +420,6 @@ public class PeriodData {
         this.modeWindDir = Calculations.mode(windDir);
         this.medianWindDir = Calculations.median(windDir);
         this.standardDeviationWindDir = Calculations.standardDeviation(windDir);
-        this.graphWindDir = SetGraph(windDir);
     }
     /**
      * Individual gets for each calculated WindDir value to allow access from other classes.
@@ -487,9 +443,6 @@ public class PeriodData {
     public double getStandardDeviationWindDir() {
         return this.standardDeviationWindDir;
     }
-    public ArrayList<Integer> getGraphWindDir() {
-        return this.graphWindDir;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -502,7 +455,6 @@ public class PeriodData {
         this.modeOutsideHum = Calculations.mode(outsideHum);
         this.medianOutsideHum = Calculations.median(outsideHum);
         this.standardDeviationOutsideHum = Calculations.standardDeviation(outsideHum);
-        this.graphOutsideHum = SetGraph(outsideHum);
     }
     /**
      * Individual gets for each calculated OutsideHum value to allow access from other classes.
@@ -526,9 +478,6 @@ public class PeriodData {
     public double getStandardDeviationOutsideHum() {
         return this.standardDeviationOutsideHum;
     }
-    public ArrayList<Integer> getGraphOutsideHum(){
-        return this.graphOutsideHum;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -541,7 +490,6 @@ public class PeriodData {
         this.modeRainRate = Calculations.mode(rainRate);
         this.medianRainRate = Calculations.median(rainRate);
         this.standardDeviationRainRate = Calculations.standardDeviation(rainRate);
-        this.graphRainRate = SetGraph(rainRate);
     }
     /**
      * Individual gets for each calculated RainRate value to allow access from other classes.
@@ -565,9 +513,6 @@ public class PeriodData {
     public double getStandardDeviationRainRate() {
         return this.standardDeviationRainRate;
     }
-    public ArrayList<Integer> getGraphRainRate() {
-        return this.graphRainRate;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -580,7 +525,6 @@ public class PeriodData {
         this.modeUvLevel = Calculations.mode(uvLevel);
         this.medianUvLevel = Calculations.median(uvLevel);
         this.standardDeviationUvLevel = Calculations.standardDeviation(uvLevel);
-        this.graphUvLevel = SetGraph(uvLevel);
     }
     /**
      * Individual gets for each calculated UvLevel value to allow access from other classes.
@@ -604,9 +548,6 @@ public class PeriodData {
     public double getStandardDeviationUvLevel() {
         return this.standardDeviationUvLevel;
     }
-    public ArrayList<Integer> getGraphUvLevel() {
-        return this.graphUvLevel;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -619,7 +560,6 @@ public class PeriodData {
         this.modeBattLevel = Calculations.mode(battLevel);
         this.medianBattLevel = Calculations.median(battLevel);
         this.standardDeviationBattLevel = Calculations.standardDeviation(battLevel);
-        this.graphBattLevel = SetGraph(battLevel);
     }
     /**
      * Individual gets for each calculated BattLevel value to allow access from other classes.
@@ -643,9 +583,6 @@ public class PeriodData {
     public double getStandardDeviationBattLevel() {
         return this.standardDeviationBattLevel;
     }
-    public ArrayList<Integer> getGraphBattLevel() {
-        return this.graphBattLevel;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -658,7 +595,6 @@ public class PeriodData {
         this.modeSunSet = Calculations.mode(sunSet);
         this.medianSunSet = Calculations.median(sunSet);
         this.standardDeviationSunSet = Calculations.standardDeviation(sunSet);
-        this.graphSunSet = SetGraph(sunSet);
     }
     /**
      * Individual gets for each calculated SunSet value to allow access from other classes.
@@ -682,9 +618,6 @@ public class PeriodData {
     public double getStandardDeviationSunSet() {
         return this.standardDeviationSunSet;
     }
-    public ArrayList<Integer> getGraphSunSet() {
-        return this.graphSunSet;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -697,7 +630,6 @@ public class PeriodData {
         this.modeSunRise = Calculations.mode(sunRise);
         this.medianSunRise = Calculations.median(sunRise);
         this.standardDeviationSunRise = Calculations.standardDeviation(sunRise);
-        this.graphSunRise = SetGraph(sunRise);
     }
     /**
      * Individual gets for each calculated SunRise value to allow access from other classes.
@@ -721,9 +653,6 @@ public class PeriodData {
     public double getStandardDeviationSunRise() {
         return this.standardDeviationSunRise;
     }
-    public ArrayList<Integer> getGraphSunRise() {
-        return this.graphSunRise;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -736,7 +665,6 @@ public class PeriodData {
         this.modeWindChill = Calculations.mode(windChill);
         this.medianWindChill = Calculations.median(windChill);
         this.standardDeviationWindChill = Calculations.standardDeviation(windChill);
-        this.graphWindChill = SetGraph(windChill);
     }
     /**
      * Individual gets for each calculated WindChill value to allow access from other classes.
@@ -760,9 +688,6 @@ public class PeriodData {
     public double getStandardDeviationWindChill() {
         return this.standardDeviationWindChill;
     }
-    public ArrayList<Integer> getGraphWindChill() {
-        return this.graphWindChill;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -775,7 +700,6 @@ public class PeriodData {
         this.modeHeatIndex = Calculations.mode(heatIndex);
         this.medianHeatIndex = Calculations.median(heatIndex);
         this.standardDeviationHeatIndex = Calculations.standardDeviation(heatIndex);
-        this.graphHeatIndex = SetGraph(heatIndex);
     }
     /**
      * Individual gets for each calculated HeatIndex value to allow access from other classes.
@@ -799,9 +723,6 @@ public class PeriodData {
     public double getStandardDeviationHeatIndex() {
         return this.standardDeviationHeatIndex;
     }
-    public ArrayList<Integer> getGraphHeatIndex() {
-        return this.graphHeatIndex;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
@@ -814,7 +735,6 @@ public class PeriodData {
         this.modeDewPoint = Calculations.mode(dewPoint);
         this.medianDewPoint = Calculations.median(dewPoint);
         this.standardDeviationDewPoint = Calculations.standardDeviation(dewPoint);
-        this.graphDewPoint = SetGraph(dewPoint);
     }
     /**
      * Individual gets for each calculated DewPoint value to allow access from other classes.
@@ -837,9 +757,6 @@ public class PeriodData {
     }
     public double getStandardDeviationDewPoint() {
         return this.standardDeviationDewPoint;
-    }
-    public ArrayList<Integer> getGraphDewPoint() {
-        return this.graphDewPoint;
     }
 
     /**
@@ -873,38 +790,4 @@ public class PeriodData {
         return this.risingTemperature;
     }
 
-    /**
-     * Sets the graph positions for each DataType ArrayList.
-     * @param array ArrayList containing one specific Data Type.
-     * @return ArrayList containing pre calculated positions for the graph.
-     */
-    private static ArrayList <Integer> SetGraph(ArrayList<Double> array) {
-        ArrayList<Integer> positions = new ArrayList<Integer>();
-        //
-        //
-        //
-        return positions;
-    }
-
-    /**
-     * Set and get function for stepSize, used in graph creation.
-     * @param step size of the step for the graph to take during creation.
-     */
-    public void setStepSize(double step) {
-        this.stepSize = step;
-    }
-    public double getStepSize() {
-        return this.stepSize;
-    }
-
-    /**
-     * Set and get function for graphSpeed, used in graph creation.
-     * @param speed speed of the graph in the interface.
-     */
-    public void setGraphSpeed(double speed) {
-        this.graphSpeed = speed;
-    }
-    public double getGraphSpeed() {
-        return this.graphSpeed;
-    }
 }
