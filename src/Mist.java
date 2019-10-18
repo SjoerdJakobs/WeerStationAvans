@@ -10,7 +10,7 @@ public class Mist extends Tab
 
     @Override
     protected void OnOpen() {
-        Period period = SavedData.getInstance().GetPeriod();
+        Period period = SavedData.INSTANCE.GetPeriod();
 
         int mist = period.getDataStorage().getMist();
         String mistResult = Integer.toString(mist);

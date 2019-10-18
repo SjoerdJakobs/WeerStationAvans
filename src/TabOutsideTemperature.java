@@ -9,7 +9,7 @@ public class TabOutsideTemperature extends Tab
         super(menu);
     }
     private Period period;
-    public void setPeriod(){period = SavedData.getInstance().GetPeriod(); }
+    public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
 
     // Get raw measurements of period
     private ArrayList<Measurement> measurements;
@@ -95,7 +95,7 @@ public class TabOutsideTemperature extends Tab
     protected void Run(double deltaTime) {
         deltaTimer += deltaTime;
 
-        if (runGraph == true && deltaTimer >= SavedData.getInstance().GetGraphSpeed()) {
+        if (runGraph == true && deltaTimer >= SavedData.INSTANCE.GetGraphSpeed()) {
             deltaTimer = 0;
             graph.RunCycle();
 
