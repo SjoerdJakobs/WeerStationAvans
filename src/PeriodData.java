@@ -1,5 +1,6 @@
 import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -161,41 +162,43 @@ public class PeriodData {
         ArrayList<Double> windChill = new ArrayList<Double>();
         ArrayList<Double> heatIndex = new ArrayList<Double>();
         ArrayList<Double> dewPoint = new ArrayList<Double>();
-        for (Measurement data : periodMeasurements){
-            airPressure.add(data.getBarometer());
-            insideTemp.add(data.getInsideTemp());
-            insideHum.add(data.getInsideHum());
-            outsideTemp.add(data.getOutsideTemp());
-            windSpeed.add(data.getWindSpeed());
-            avgWindSpeed.add(data.getAvgWindSpeed());
-            windDir.add(data.getWindDir());
-            outsideHum.add(data.getOutsideHum());
-            rainRate.add(data.getRainRate());
-            uvLevel.add(data.getUvLevel());
-            battLevel.add(data.getBattLevel());
-            sunSet.add(data.GetSunSet());
-            sunRise.add(data.GetSunRise());
-            windChill.add(Calculations.windChill(data.getOutsideTemp(),data.getWindSpeed()));
-            heatIndex.add(Calculations.heatIndex(data.getInsideTemp(),data.getInsideHum()));
-            dewPoint.add(Calculations.dewPoint(data.getOutsideTemp(), data.getOutsideHum()));
+        if (!periodMeasurements.isEmpty()) {
+            for (Measurement data : periodMeasurements) {
+                airPressure.add(data.getBarometer());
+                insideTemp.add(data.getInsideTemp());
+                insideHum.add(data.getInsideHum());
+                outsideTemp.add(data.getOutsideTemp());
+                windSpeed.add(data.getWindSpeed());
+                avgWindSpeed.add(data.getAvgWindSpeed());
+                windDir.add(data.getWindDir());
+                outsideHum.add(data.getOutsideHum());
+                rainRate.add(data.getRainRate());
+                uvLevel.add(data.getUvLevel());
+                battLevel.add(data.getBattLevel());
+                sunSet.add(data.GetSunSet());
+                sunRise.add(data.GetSunRise());
+                windChill.add(Calculations.windChill(data.getOutsideTemp(), data.getWindSpeed()));
+                heatIndex.add(Calculations.heatIndex(data.getInsideTemp(), data.getInsideHum()));
+                dewPoint.add(Calculations.dewPoint(data.getOutsideTemp(), data.getOutsideHum()));
+            }
+            SetAirPressure(airPressure);
+            SetInsideTemp(insideTemp);
+            SetInsideHum(insideHum);
+            SetOutsideTemp(outsideTemp);
+            SetWindSpeed(windSpeed);
+            SetAvgWindSpeed(avgWindSpeed);
+            SetWindDir(windDir);
+            SetOutsideHum(outsideHum);
+            SetRainRate(rainRate);
+            SetUvLevel(uvLevel);
+            SetBattLevel(battLevel);
+            SetSunSet(sunSet);
+            SetSunRise(sunRise);
+            SetWindChill(windChill);
+            SetHeatIndex(heatIndex);
+            SetDewPoint(dewPoint);
+            SetPreDefined(periodMeasurements);
         }
-        SetAirPressure(airPressure);
-        SetInsideTemp(insideTemp);
-        SetInsideHum(insideHum);
-        SetOutsideTemp(outsideTemp);
-        SetWindSpeed(windSpeed);
-        SetAvgWindSpeed(avgWindSpeed);
-        SetWindDir(windDir);
-        SetOutsideHum(outsideHum);
-        SetRainRate(rainRate);
-        SetUvLevel(uvLevel);
-        SetBattLevel(battLevel);
-        SetSunSet(sunSet);
-        SetSunRise(sunRise);
-        SetWindChill(windChill);
-        SetHeatIndex(heatIndex);
-        SetDewPoint(dewPoint);
-        SetPreDefined(periodMeasurements);
     }
 
     /**
@@ -203,12 +206,15 @@ public class PeriodData {
      * @param airPressure The filtered list of all measurements of this type within the given period.
      */
     private void SetAirPressure(ArrayList<Double> airPressure) {
-        this.maxAirPressure = Calculations.maximum(airPressure);
-        this.minAirPressure = Calculations.minimum(airPressure);
-        this.meanAirPressure = Calculations.mean(airPressure);
-        this.modeAirPressure = Calculations.mode(airPressure);
-        this.medianAirPressure = Calculations.median(airPressure);
-        this.standardDeviationAirPressure = Calculations.standardDeviation(airPressure);
+        NaNFilter(airPressure);
+        if (!airPressure.isEmpty()){
+            this.maxAirPressure = Calculations.maximum(airPressure);
+            this.minAirPressure = Calculations.minimum(airPressure);
+            this.meanAirPressure = Calculations.mean(airPressure);
+            this.modeAirPressure = Calculations.mode(airPressure);
+            this.medianAirPressure = Calculations.median(airPressure);
+            this.standardDeviationAirPressure = Calculations.standardDeviation(airPressure);
+        }
     }
 
     /**
@@ -239,12 +245,15 @@ public class PeriodData {
      * @param insideTemp The filtered list of all measurements of this type within the given period.
      */
     private void SetInsideTemp(ArrayList<Double> insideTemp) {
-        this.maxInsideTemp = Calculations.maximum(insideTemp);
-        this.minInsideTemp = Calculations.minimum(insideTemp);
-        this.meanInsideTemp = Calculations.mean(insideTemp);
-        this.modeInsideTemp = Calculations.mode(insideTemp);
-        this.medianInsideTemp = Calculations.median(insideTemp);
-        this.standardDeviationInsideTemp = Calculations.standardDeviation(insideTemp);
+        NaNFilter(insideTemp);
+        if (!insideTemp.isEmpty()){
+            this.maxInsideTemp = Calculations.maximum(insideTemp);
+            this.minInsideTemp = Calculations.minimum(insideTemp);
+            this.meanInsideTemp = Calculations.mean(insideTemp);
+            this.modeInsideTemp = Calculations.mode(insideTemp);
+            this.medianInsideTemp = Calculations.median(insideTemp);
+            this.standardDeviationInsideTemp = Calculations.standardDeviation(insideTemp);
+        }
     }
     /**
      * Individual gets for each calculated InsideTemp value to allow access from other classes.
@@ -274,12 +283,15 @@ public class PeriodData {
      * @param insideHum The filtered list of all measurements of this type within the given period.
      */
     private void SetInsideHum(ArrayList<Double> insideHum) {
-        this.maxInsideHum = Calculations.maximum(insideHum);
-        this.minInsideHum = Calculations.minimum(insideHum);
-        this.meanInsideHum = Calculations.mean(insideHum);
-        this.modeInsideHum = Calculations.mode(insideHum);
-        this.medianInsideHum = Calculations.median(insideHum);
-        this.standardDeviationInsideHum = Calculations.standardDeviation(insideHum);
+        NaNFilter(insideHum);
+        if (!insideHum.isEmpty()){
+            this.maxInsideHum = Calculations.maximum(insideHum);
+            this.minInsideHum = Calculations.minimum(insideHum);
+            this.meanInsideHum = Calculations.mean(insideHum);
+            this.modeInsideHum = Calculations.mode(insideHum);
+            this.medianInsideHum = Calculations.median(insideHum);
+            this.standardDeviationInsideHum = Calculations.standardDeviation(insideHum);
+        }
     }
     /**
      * Individual gets for each calculated MaxInsideHum value to allow access from other classes.
@@ -309,12 +321,15 @@ public class PeriodData {
      * @param outsideTemp The filtered list of all measurements of this type within the given period.
      */
     private void SetOutsideTemp(ArrayList<Double> outsideTemp) {
-        this.maxOutsideTemp = Calculations.maximum(outsideTemp);
-        this.minOutsideTemp = Calculations.minimum(outsideTemp);
-        this.meanOutsideTemp = Calculations.mean(outsideTemp);
-        this.modeOutsideTemp = Calculations.mode(outsideTemp);
-        this.medianOutsideTemp = Calculations.median(outsideTemp);
-        this.standardDeviationOutsideTemp = Calculations.standardDeviation(outsideTemp);
+        NaNFilter(outsideTemp);
+        if (!outsideTemp.isEmpty()) {
+            this.maxOutsideTemp = Calculations.maximum(outsideTemp);
+            this.minOutsideTemp = Calculations.minimum(outsideTemp);
+            this.meanOutsideTemp = Calculations.mean(outsideTemp);
+            this.modeOutsideTemp = Calculations.mode(outsideTemp);
+            this.medianOutsideTemp = Calculations.median(outsideTemp);
+            this.standardDeviationOutsideTemp = Calculations.standardDeviation(outsideTemp);
+        }
     }
     /**
      * Individual gets for each calculated OutsideTemp value to allow access from other classes.
@@ -344,12 +359,15 @@ public class PeriodData {
      * @param windSpeed The filtered list of all measurements of this type within the given period.
      */
     private void SetWindSpeed(ArrayList<Double> windSpeed){
-        this.maxWindSpeed = Calculations.maximum(windSpeed);
-        this.minWindSpeed = Calculations.minimum(windSpeed);
-        this.meanWindSpeed = Calculations.mean(windSpeed);
-        this.modeWindSpeed = Calculations.mode(windSpeed);
-        this.medianWindSpeed = Calculations.median(windSpeed);
-        this.standardDeviationWindSpeed = Calculations.standardDeviation(windSpeed);
+        NaNFilter(windSpeed);
+        if (!windSpeed.isEmpty()) {
+            this.maxWindSpeed = Calculations.maximum(windSpeed);
+            this.minWindSpeed = Calculations.minimum(windSpeed);
+            this.meanWindSpeed = Calculations.mean(windSpeed);
+            this.modeWindSpeed = Calculations.mode(windSpeed);
+            this.medianWindSpeed = Calculations.median(windSpeed);
+            this.standardDeviationWindSpeed = Calculations.standardDeviation(windSpeed);
+        }
     }
     /**
      * Individual gets for each calculated WindSpeed value to allow access from other classes.
@@ -379,12 +397,15 @@ public class PeriodData {
      * @param avgWindSpeed The filtered list of all measurements of this type within the given period.
      */
     private void SetAvgWindSpeed(ArrayList<Double> avgWindSpeed){
-        this.maxAvgWindSpeed = Calculations.maximum(avgWindSpeed);
-        this.minAvgWindSpeed = Calculations.minimum(avgWindSpeed);
-        this.meanAvgWindSpeed = Calculations.mean(avgWindSpeed);
-        this.modeAvgWindSpeed = Calculations.mode(avgWindSpeed);
-        this.medianAvgWindSpeed = Calculations.median(avgWindSpeed);
-        this.standardDeviationAvgWindSpeed = Calculations.standardDeviation(avgWindSpeed);
+        NaNFilter(avgWindSpeed);
+        if (!avgWindSpeed.isEmpty()) {
+            this.maxAvgWindSpeed = Calculations.maximum(avgWindSpeed);
+            this.minAvgWindSpeed = Calculations.minimum(avgWindSpeed);
+            this.meanAvgWindSpeed = Calculations.mean(avgWindSpeed);
+            this.modeAvgWindSpeed = Calculations.mode(avgWindSpeed);
+            this.medianAvgWindSpeed = Calculations.median(avgWindSpeed);
+            this.standardDeviationAvgWindSpeed = Calculations.standardDeviation(avgWindSpeed);
+        }
     }
     /**
      * Individual gets for each calculated AvgWindSpeed value to allow access from other classes.
@@ -414,12 +435,15 @@ public class PeriodData {
      * @param windDir The filtered list of all measurements of this type within the given period.
      */
     private void SetWindDir(ArrayList<Double> windDir) {
-        this.maxWindDir = Calculations.maximum(windDir);
-        this.minWindDir = Calculations.minimum(windDir);
-        this.meanWindDir = Calculations.mean(windDir);
-        this.modeWindDir = Calculations.mode(windDir);
-        this.medianWindDir = Calculations.median(windDir);
-        this.standardDeviationWindDir = Calculations.standardDeviation(windDir);
+        NaNFilter(windDir);
+        if (!windDir.isEmpty()) {
+            this.maxWindDir = Calculations.maximum(windDir);
+            this.minWindDir = Calculations.minimum(windDir);
+            this.meanWindDir = Calculations.mean(windDir);
+            this.modeWindDir = Calculations.mode(windDir);
+            this.medianWindDir = Calculations.median(windDir);
+            this.standardDeviationWindDir = Calculations.standardDeviation(windDir);
+        }
     }
     /**
      * Individual gets for each calculated WindDir value to allow access from other classes.
@@ -449,12 +473,15 @@ public class PeriodData {
      * @param outsideHum The filtered list of all measurements of this type within the given period.
      */
     private void SetOutsideHum(ArrayList<Double> outsideHum) {
-        this.maxOutsideHum = Calculations.maximum(outsideHum);
-        this.minOutsideHum = Calculations.minimum(outsideHum);
-        this.meanOutsideHum = Calculations.mean(outsideHum);
-        this.modeOutsideHum = Calculations.mode(outsideHum);
-        this.medianOutsideHum = Calculations.median(outsideHum);
-        this.standardDeviationOutsideHum = Calculations.standardDeviation(outsideHum);
+        NaNFilter(outsideHum);
+        if (!outsideHum.isEmpty()) {
+            this.maxOutsideHum = Calculations.maximum(outsideHum);
+            this.minOutsideHum = Calculations.minimum(outsideHum);
+            this.meanOutsideHum = Calculations.mean(outsideHum);
+            this.modeOutsideHum = Calculations.mode(outsideHum);
+            this.medianOutsideHum = Calculations.median(outsideHum);
+            this.standardDeviationOutsideHum = Calculations.standardDeviation(outsideHum);
+        }
     }
     /**
      * Individual gets for each calculated OutsideHum value to allow access from other classes.
@@ -484,12 +511,15 @@ public class PeriodData {
      * @param rainRate The filtered list of all measurements of this type within the given period.
      */
     private void SetRainRate(ArrayList<Double> rainRate) {
-        this.maxRainRate = Calculations.maximum(rainRate);
-        this.minRainRate = Calculations.minimum(rainRate);
-        this.meanRainRate = Calculations.mean(rainRate);
-        this.modeRainRate = Calculations.mode(rainRate);
-        this.medianRainRate = Calculations.median(rainRate);
-        this.standardDeviationRainRate = Calculations.standardDeviation(rainRate);
+        NaNFilter(rainRate);
+        if (!rainRate.isEmpty()) {
+            this.maxRainRate = Calculations.maximum(rainRate);
+            this.minRainRate = Calculations.minimum(rainRate);
+            this.meanRainRate = Calculations.mean(rainRate);
+            this.modeRainRate = Calculations.mode(rainRate);
+            this.medianRainRate = Calculations.median(rainRate);
+            this.standardDeviationRainRate = Calculations.standardDeviation(rainRate);
+        }
     }
     /**
      * Individual gets for each calculated RainRate value to allow access from other classes.
@@ -519,12 +549,15 @@ public class PeriodData {
      * @param uvLevel The filtered list of all measurements of this type within the given period.
      */
     private void SetUvLevel(ArrayList<Double> uvLevel) {
-        this.maxUvLevel = Calculations.maximum(uvLevel);
-        this.minUvLevel = Calculations.minimum(uvLevel);
-        this.meanUvLevel = Calculations.mean(uvLevel);
-        this.modeUvLevel = Calculations.mode(uvLevel);
-        this.medianUvLevel = Calculations.median(uvLevel);
-        this.standardDeviationUvLevel = Calculations.standardDeviation(uvLevel);
+        NaNFilter(uvLevel);
+        if (!uvLevel.isEmpty()) {
+            this.maxUvLevel = Calculations.maximum(uvLevel);
+            this.minUvLevel = Calculations.minimum(uvLevel);
+            this.meanUvLevel = Calculations.mean(uvLevel);
+            this.modeUvLevel = Calculations.mode(uvLevel);
+            this.medianUvLevel = Calculations.median(uvLevel);
+            this.standardDeviationUvLevel = Calculations.standardDeviation(uvLevel);
+        }
     }
     /**
      * Individual gets for each calculated UvLevel value to allow access from other classes.
@@ -554,12 +587,15 @@ public class PeriodData {
      * @param battLevel The filtered list of all measurements of this type within the given period.
      */
     private void SetBattLevel(ArrayList<Double> battLevel) {
-        this.maxBattLevel = Calculations.maximum(battLevel);
-        this.minBattLevel = Calculations.minimum(battLevel);
-        this.meanBattLevel = Calculations.mean(battLevel);
-        this.modeBattLevel = Calculations.mode(battLevel);
-        this.medianBattLevel = Calculations.median(battLevel);
-        this.standardDeviationBattLevel = Calculations.standardDeviation(battLevel);
+        NaNFilter(battLevel);
+        if (!battLevel.isEmpty()) {
+            this.maxBattLevel = Calculations.maximum(battLevel);
+            this.minBattLevel = Calculations.minimum(battLevel);
+            this.meanBattLevel = Calculations.mean(battLevel);
+            this.modeBattLevel = Calculations.mode(battLevel);
+            this.medianBattLevel = Calculations.median(battLevel);
+            this.standardDeviationBattLevel = Calculations.standardDeviation(battLevel);
+        }
     }
     /**
      * Individual gets for each calculated BattLevel value to allow access from other classes.
@@ -589,12 +625,15 @@ public class PeriodData {
      * @param sunSet The filtered list of all measurements of this type within the given period.
      */
     private void SetSunSet(ArrayList<Double> sunSet) {
-        this.maxSunSet = Calculations.maximum(sunSet);
-        this.minSunSet = Calculations.minimum(sunSet);
-        this.meanSunSet = Calculations.mean(sunSet);
-        this.modeSunSet = Calculations.mode(sunSet);
-        this.medianSunSet = Calculations.median(sunSet);
-        this.standardDeviationSunSet = Calculations.standardDeviation(sunSet);
+        NaNFilter(sunSet);
+        if (!sunSet.isEmpty()) {
+            this.maxSunSet = Calculations.maximum(sunSet);
+            this.minSunSet = Calculations.minimum(sunSet);
+            this.meanSunSet = Calculations.mean(sunSet);
+            this.modeSunSet = Calculations.mode(sunSet);
+            this.medianSunSet = Calculations.median(sunSet);
+            this.standardDeviationSunSet = Calculations.standardDeviation(sunSet);
+        }
     }
     /**
      * Individual gets for each calculated SunSet value to allow access from other classes.
@@ -623,12 +662,15 @@ public class PeriodData {
      * @param sunRise The filtered list of all measurements of this type within the given period.
      */
     private void SetSunRise(ArrayList<Double> sunRise) {
-        this.maxSunRise = Calculations.maximum(sunRise);
-        this.minSunRise = Calculations.minimum(sunRise);
-        this. meanSunRise = Calculations.mean(sunRise);
-        this.modeSunRise = Calculations.mode(sunRise);
-        this.medianSunRise = Calculations.median(sunRise);
-        this.standardDeviationSunRise = Calculations.standardDeviation(sunRise);
+        NaNFilter(sunRise);
+        if (!sunRise.isEmpty()) {
+            this.maxSunRise = Calculations.maximum(sunRise);
+            this.minSunRise = Calculations.minimum(sunRise);
+            this.meanSunRise = Calculations.mean(sunRise);
+            this.modeSunRise = Calculations.mode(sunRise);
+            this.medianSunRise = Calculations.median(sunRise);
+            this.standardDeviationSunRise = Calculations.standardDeviation(sunRise);
+        }
     }
     /**
      * Individual gets for each calculated SunRise value to allow access from other classes.
@@ -658,12 +700,15 @@ public class PeriodData {
      * @param windChill The filtered list of all measurements of this type within the given period.
      */
     private void SetWindChill(ArrayList<Double> windChill) {
-        this.maxWindChill = Calculations.maximum(windChill);
-        this.minWindChill = Calculations.minimum(windChill);
-        this.meanWindChill = Calculations.mean(windChill);
-        this.modeWindChill = Calculations.mode(windChill);
-        this.medianWindChill = Calculations.median(windChill);
-        this.standardDeviationWindChill = Calculations.standardDeviation(windChill);
+        NaNFilter(windChill);
+        if (!windChill.isEmpty()) {
+            this.maxWindChill = Calculations.maximum(windChill);
+            this.minWindChill = Calculations.minimum(windChill);
+            this.meanWindChill = Calculations.mean(windChill);
+            this.modeWindChill = Calculations.mode(windChill);
+            this.medianWindChill = Calculations.median(windChill);
+            this.standardDeviationWindChill = Calculations.standardDeviation(windChill);
+        }
     }
     /**
      * Individual gets for each calculated WindChill value to allow access from other classes.
@@ -693,12 +738,15 @@ public class PeriodData {
      * @param heatIndex The filtered list of all measurements of this type within the given period.
      */
     private void SetHeatIndex(ArrayList<Double> heatIndex) {
-        this.maxHeatIndex = Calculations.maximum(heatIndex);
-        this.minHeatIndex = Calculations.minimum(heatIndex);
-        this.meanHeatIndex = Calculations.mean(heatIndex);
-        this.modeHeatIndex = Calculations.mode(heatIndex);
-        this.medianHeatIndex = Calculations.median(heatIndex);
-        this.standardDeviationHeatIndex = Calculations.standardDeviation(heatIndex);
+        NaNFilter(heatIndex);
+        if (!heatIndex.isEmpty()) {
+            this.maxHeatIndex = Calculations.maximum(heatIndex);
+            this.minHeatIndex = Calculations.minimum(heatIndex);
+            this.meanHeatIndex = Calculations.mean(heatIndex);
+            this.modeHeatIndex = Calculations.mode(heatIndex);
+            this.medianHeatIndex = Calculations.median(heatIndex);
+            this.standardDeviationHeatIndex = Calculations.standardDeviation(heatIndex);
+        }
     }
     /**
      * Individual gets for each calculated HeatIndex value to allow access from other classes.
@@ -728,12 +776,15 @@ public class PeriodData {
      * @param dewPoint The filtered list of all measurements of this type within the given period.
      */
     private void SetDewPoint(ArrayList<Double> dewPoint) {
-        this.maxDewPoint = Calculations.maximum(dewPoint);
-        this.minDewPoint = Calculations.minimum(dewPoint);
-        this.meanDewPoint = Calculations.mean(dewPoint);
-        this.modeDewPoint = Calculations.mode(dewPoint);
-        this.medianDewPoint = Calculations.median(dewPoint);
-        this.standardDeviationDewPoint = Calculations.standardDeviation(dewPoint);
+        NaNFilter(dewPoint);
+        if (!dewPoint.isEmpty()) {
+            this.maxDewPoint = Calculations.maximum(dewPoint);
+            this.minDewPoint = Calculations.minimum(dewPoint);
+            this.meanDewPoint = Calculations.mean(dewPoint);
+            this.modeDewPoint = Calculations.mode(dewPoint);
+            this.medianDewPoint = Calculations.median(dewPoint);
+            this.standardDeviationDewPoint = Calculations.standardDeviation(dewPoint);
+        }
     }
     /**
      * Individual gets for each calculated DewPoint value to allow access from other classes.
@@ -787,5 +838,22 @@ public class PeriodData {
     }
     public int getRisingTemperature() {
         return this.risingTemperature;
+    }
+
+    /**
+     * Sorts the input list and filters out all NaN values.
+     * @param arrayList unsorted list with NaN values.
+     * @return sorted list without NaN values.
+     */
+    private void NaNFilter(ArrayList<Double> arrayList) {
+        if (!arrayList.isEmpty()) {
+            Collections.sort(arrayList);
+            for (int i = arrayList.size() - 1; i == arrayList.size() - 1; i--) {
+                double data = arrayList.get(i);
+                if (Double.isNaN(data)) {
+                    arrayList.remove(i);
+                }
+            }
+        }
     }
 }
