@@ -12,10 +12,13 @@ public class Program
 
     public Program()
     {
-        Menu menu = new Menu(this, true ,true ,true);
     }
 
     public void Run() {
+
+        IO.init();
+        HelperFunctions.ClearAll();
+        Menu menu = new Menu(this, true ,true ,true);
 
         long lastTime = System.nanoTime();
 
@@ -57,6 +60,7 @@ public class Program
 
     public void ExitProgram()
     {
+        HelperFunctions.ClearAll();
         run = false;
     }
 }
