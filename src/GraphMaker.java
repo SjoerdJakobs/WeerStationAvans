@@ -5,6 +5,12 @@ public class GraphMaker {
     ArrayList<Double> unitValues;
     private PixelGrid graph = new PixelGrid();
 
+    // TODO Time tester
+    double lastTime;
+    double calculateDots = 0;
+    double calculateValues = 0;
+    double calculateProcesses = 0;
+
     // Variables for graph boundaries an axels
     private int topBoundary = 8;
     private int rightBoundary = 127;
@@ -55,6 +61,10 @@ public class GraphMaker {
      * Create a new dot each time you run through the cycle.
      */
     public void RunCycle() {
+        // TODO Calculate processing time for seperate processes
+        long time = System.nanoTime();
+        lastTime = time;
+
         // Create new PixelGrid to update the main PixelGrid each run
         PixelGrid addToGraph = new PixelGrid();
 
@@ -66,8 +76,18 @@ public class GraphMaker {
 
         // Current xIndex must be able to get values from ArrayList temperatures
         if (unitValues.size() > Math.round(step * (xIndex - leftBoundary + 1))) {
+            // TODO Time tester
+            time = System.nanoTime();
+            calculateProcesses += ((double)(time - lastTime) / 1000_000_000);//delta time in seconds
+            lastTime = time;
+
             // VARIABLES
             double average = CalculateAverage(xIndex);
+
+            // TODO Time tester
+            time = System.nanoTime();
+            calculateValues += ((double)(time - lastTime) / 1000_000_000);//delta time in seconds
+            lastTime = time;
 
             if (!Double.isNaN(average)) {
                 result = (int)Math.round((average - minValue) / amplitudeOfUnitValues * (double)amplitudeOfGraph);
@@ -77,6 +97,11 @@ public class GraphMaker {
 
                 // Update the pixelGrid with latest result
                 addToGraph.PixelGrid[bottomBoundary - result - 1][drawColomn] = true;
+
+                // TODO Time tester
+                time = System.nanoTime();
+                calculateDots += ((double)(time - lastTime) / 1000_000_000);//delta time in seconds
+                lastTime = time;
             } // End if-statement check if value is not NaN
             else
                 // If value is NaN, use oldResult
@@ -95,6 +120,11 @@ public class GraphMaker {
                 HelperFunctions.SetDisplayPixel(true, (int)Math.ceil(xIndex / positionBar), y);
                 HelperFunctions.SetDisplayPixel(false, (int)Math.ceil(xIndex / positionBar ) - 2, y);
             }
+
+            // TODO Time tester
+            time = System.nanoTime();
+            calculateProcesses += ((double)(time - lastTime) / 1000_000_000);//delta time in seconds
+            lastTime = time;
         } // End if-statement current step is within unitValue's size
 
         // Else (if all values are shown as graph), restart the graph
@@ -117,22 +147,50 @@ public class GraphMaker {
             }
         } // End else
 
+        // TODO Time tester
+        time = System.nanoTime();
+        calculateProcesses += ((double)(time - lastTime) / 1000_000_000);//delta time in seconds
+        lastTime = time;
+
         // Calculate value on yAxel and show in top 7 segments display
         double unitValueAverageOnYAxel = 0;
         if (unitValues.size() > Math.round(step * (xIndex - (drawColomn - yAxel) - leftBoundary + 1))) {
             unitValueAverageOnYAxel = CalculateAverage(xIndex - (drawColomn - yAxel));
             if (!Double.isNaN(unitValueAverageOnYAxel)) {
+                // TODO Time tester
+                time = System.nanoTime();
+                calculateValues += ((double)(time - lastTime) / 1000_000_000);//delta time in seconds
+                lastTime = time;
+
                 HelperFunctions.ClearAllSegmentDisplays();
                 HelperFunctions.WriteValueOnSegments(1, unitValueAverageOnYAxel, 1);
+
+                // TODO Time tester
+                time = System.nanoTime();
+                calculateProcesses += ((double)(time - lastTime) / 1000_000_000);//delta time in seconds
+                lastTime = time;
             }
             else HelperFunctions.ClearAllSegmentDisplays();
         }
+
+        // TODO Time tester
+        time = System.nanoTime();
+        calculateProcesses += ((double)(time - lastTime) / 1000_000_000);//delta time in seconds
+        lastTime = time;
 
         PixelGridDrawer.INSTANCE_DRAWER.AddDraw(addToGraph.PixelGrid);
         xIndex++;
 
         // Update graph: add the last colomn
         graph.OrGrid(addToGraph);
+
+        // TODO Time tester
+        time = System.nanoTime();
+        calculateProcesses += ((double)(time - lastTime) / 1000_000_000);//delta time in seconds
+        lastTime = time;
+
+        // TODO Print time tester
+        System.out.println("Proces: " + calculateProcesses + "\t\tDots: " + calculateDots + "\t\tValues: " + calculateValues);
     }
 
 
