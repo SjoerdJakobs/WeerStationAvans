@@ -1,5 +1,6 @@
 import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -14,7 +15,6 @@ public class PeriodData {
     private double modeAirPressure;
     private double medianAirPressure;
     private double standardDeviationAirPressure;
-    private ArrayList<Integer> graphAirPressure;
 
     private double maxInsideTemp;
     private double minInsideTemp;
@@ -22,7 +22,6 @@ public class PeriodData {
     private double modeInsideTemp;
     private double medianInsideTemp;
     private double standardDeviationInsideTemp;
-    private ArrayList<Integer> graphInsideTemp;
 
     private double maxInsideHum;
     private double minInsideHum;
@@ -30,7 +29,6 @@ public class PeriodData {
     private double modeInsideHum;
     private double medianInsideHum;
     private double standardDeviationInsideHum;
-    private ArrayList<Integer> graphInsideHum;
 
     private double maxOutsideTemp;
     private double minOutsideTemp;
@@ -38,15 +36,12 @@ public class PeriodData {
     private double modeOutsideTemp;
     private double medianOutsideTemp;
     private double standardDeviationOutsideTemp;
-    private ArrayList<Integer> graphOutsideTemp;
-
     private double maxWindSpeed;
     private double minWindSpeed;
     private double meanWindSpeed;
     private double modeWindSpeed;
     private double medianWindSpeed;
     private double standardDeviationWindSpeed;
-    private ArrayList<Integer> graphWindSpeed;
 
     private double maxAvgWindSpeed;
     private double minAvgWindSpeed;
@@ -54,7 +49,6 @@ public class PeriodData {
     private double modeAvgWindSpeed;
     private double medianAvgWindSpeed;
     private double standardDeviationAvgWindSpeed;
-    private ArrayList<Integer> graphAvgWindSpeed;
 
     private double maxWindDir;
     private double minWindDir;
@@ -62,7 +56,6 @@ public class PeriodData {
     private double modeWindDir;
     private double medianWindDir;
     private double standardDeviationWindDir;
-    private ArrayList<Integer> graphWindDir;
 
     private double maxOutsideHum;
     private double minOutsideHum;
@@ -70,7 +63,6 @@ public class PeriodData {
     private double modeOutsideHum;
     private double medianOutsideHum;
     private double standardDeviationOutsideHum;
-    private ArrayList<Integer> graphOutsideHum;
 
     private double maxRainRate;
     private double minRainRate;
@@ -78,7 +70,6 @@ public class PeriodData {
     private double modeRainRate;
     private double medianRainRate;
     private double standardDeviationRainRate;
-    private ArrayList<Integer> graphRainRate;
 
     private double maxUvLevel;
     private double minUvLevel;
@@ -86,7 +77,6 @@ public class PeriodData {
     private double modeUvLevel;
     private double medianUvLevel;
     private double standardDeviationUvLevel;
-    private ArrayList<Integer> graphUvLevel;
 
     private double maxBattLevel;
     private double minBattLevel;
@@ -94,7 +84,6 @@ public class PeriodData {
     private double modeBattLevel;
     private double medianBattLevel;
     private double standardDeviationBattLevel;
-    private ArrayList<Integer> graphBattLevel;
 
     private double maxSunSet;
     private double minSunSet;
@@ -102,7 +91,6 @@ public class PeriodData {
     private double modeSunSet;
     private double medianSunSet;
     private double standardDeviationSunSet;
-    private ArrayList<Integer> graphSunSet;
 
     private double maxSunRise;
     private double minSunRise;
@@ -110,7 +98,6 @@ public class PeriodData {
     private double modeSunRise;
     private double medianSunRise;
     private double standardDeviationSunRise;
-    private ArrayList<Integer> graphSunRise;
 
     private double maxWindChill;
     private double minWindChill;
@@ -118,7 +105,6 @@ public class PeriodData {
     private double modeWindChill;
     private double medianWindChill;
     private double standardDeviationWindChill;
-    private ArrayList<Integer> graphWindChill;
 
     private double maxHeatIndex;
     private double minHeatIndex;
@@ -126,7 +112,6 @@ public class PeriodData {
     private double modeHeatIndex;
     private double medianHeatIndex;
     private double standardDeviationHeatIndex;
-    private ArrayList<Integer> graphHeatIndex;
 
     private double maxDewPoint;
     private double minDewPoint;
@@ -134,7 +119,6 @@ public class PeriodData {
     private double modeDewPoint;
     private double medianDewPoint;
     private double standardDeviationDewPoint;
-    private ArrayList<Integer> graphDewPoint;
 
     private int mist;
     private double maxRain;
@@ -178,41 +162,43 @@ public class PeriodData {
         ArrayList<Double> windChill = new ArrayList<Double>();
         ArrayList<Double> heatIndex = new ArrayList<Double>();
         ArrayList<Double> dewPoint = new ArrayList<Double>();
-        for (Measurement data : periodMeasurements){
-            airPressure.add(data.getBarometer());
-            insideTemp.add(data.getInsideTemp());
-            insideHum.add(data.getInsideHum());
-            outsideTemp.add(data.getOutsideTemp());
-            windSpeed.add(data.getWindSpeed());
-            avgWindSpeed.add(data.getAvgWindSpeed());
-            windDir.add(data.getWindDir());
-            outsideHum.add(data.getOutsideHum());
-            rainRate.add(data.getRainRate());
-            uvLevel.add(data.getUvLevel());
-            battLevel.add(data.getBattLevel());
-            sunSet.add(data.GetSunSet());
-            sunRise.add(data.GetSunRise());
-            windChill.add(Calculations.windChill(data.getOutsideTemp(),data.getWindSpeed()));
-            heatIndex.add(Calculations.heatIndex(data.getInsideTemp(),data.getInsideHum()));
-            dewPoint.add(Calculations.dewPoint(data.getOutsideTemp(), data.getOutsideHum()));
+        if (!periodMeasurements.isEmpty()) {
+            for (Measurement data : periodMeasurements) {
+                airPressure.add(data.getBarometer());
+                insideTemp.add(data.getInsideTemp());
+                insideHum.add(data.getInsideHum());
+                outsideTemp.add(data.getOutsideTemp());
+                windSpeed.add(data.getWindSpeed());
+                avgWindSpeed.add(data.getAvgWindSpeed());
+                windDir.add(data.getWindDir());
+                outsideHum.add(data.getOutsideHum());
+                rainRate.add(data.getRainRate());
+                uvLevel.add(data.getUvLevel());
+                battLevel.add(data.getBattLevel());
+                sunSet.add(data.GetSunSet());
+                sunRise.add(data.GetSunRise());
+                windChill.add(Calculations.windChill(data.getOutsideTemp(), data.getWindSpeed()));
+                heatIndex.add(Calculations.heatIndex(data.getInsideTemp(), data.getInsideHum()));
+                dewPoint.add(Calculations.dewPoint(data.getOutsideTemp(), data.getOutsideHum()));
+            }
+            SetAirPressure(airPressure);
+            SetInsideTemp(insideTemp);
+            SetInsideHum(insideHum);
+            SetOutsideTemp(outsideTemp);
+            SetWindSpeed(windSpeed);
+            SetAvgWindSpeed(avgWindSpeed);
+            SetWindDir(windDir);
+            SetOutsideHum(outsideHum);
+            SetRainRate(rainRate);
+            SetUvLevel(uvLevel);
+            SetBattLevel(battLevel);
+            SetSunSet(sunSet);
+            SetSunRise(sunRise);
+            SetWindChill(windChill);
+            SetHeatIndex(heatIndex);
+            SetDewPoint(dewPoint);
+            SetPreDefined(periodMeasurements);
         }
-        SetAirPressure(airPressure);
-        SetInsideTemp(insideTemp);
-        SetInsideHum(insideHum);
-        SetOutsideTemp(outsideTemp);
-        SetWindSpeed(windSpeed);
-        SetAvgWindSpeed(avgWindSpeed);
-        SetWindDir(windDir);
-        SetOutsideHum(outsideHum);
-        SetRainRate(rainRate);
-        SetUvLevel(uvLevel);
-        SetBattLevel(battLevel);
-        SetSunSet(sunSet);
-        SetSunRise(sunRise);
-        SetWindChill(windChill);
-        SetHeatIndex(heatIndex);
-        SetDewPoint(dewPoint);
-        SetPreDefined(periodMeasurements);
     }
 
     /**
@@ -220,13 +206,15 @@ public class PeriodData {
      * @param airPressure The filtered list of all measurements of this type within the given period.
      */
     private void SetAirPressure(ArrayList<Double> airPressure) {
-        this.maxAirPressure = Calculations.maximum(airPressure);
-        this.minAirPressure = Calculations.minimum(airPressure);
-        this.meanAirPressure = Calculations.mean(airPressure);
-        this.modeAirPressure = Calculations.mode(airPressure);
-        this.medianAirPressure = Calculations.median(airPressure);
-        this.standardDeviationAirPressure = Calculations.standardDeviation(airPressure);
-        this.graphAirPressure = SetGraph(airPressure);
+        NaNFilter(airPressure);
+        if (!airPressure.isEmpty()){
+            this.maxAirPressure = Calculations.maximum(airPressure);
+            this.minAirPressure = Calculations.minimum(airPressure);
+            this.meanAirPressure = Calculations.mean(airPressure);
+            this.modeAirPressure = Calculations.mode(airPressure);
+            this.medianAirPressure = Calculations.median(airPressure);
+            this.standardDeviationAirPressure = Calculations.standardDeviation(airPressure);
+        }
     }
 
     /**
@@ -251,22 +239,21 @@ public class PeriodData {
     public double getStandardDeviationAirPressure() {
         return this.standardDeviationAirPressure;
     }
-    public ArrayList<Integer> getGraphAirPressure() {
-        return this.graphAirPressure;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param insideTemp The filtered list of all measurements of this type within the given period.
      */
     private void SetInsideTemp(ArrayList<Double> insideTemp) {
-        this.maxInsideTemp = Calculations.maximum(insideTemp);
-        this.minInsideTemp = Calculations.minimum(insideTemp);
-        this.meanInsideTemp = Calculations.mean(insideTemp);
-        this.modeInsideTemp = Calculations.mode(insideTemp);
-        this.medianInsideTemp = Calculations.median(insideTemp);
-        this.standardDeviationInsideTemp = Calculations.standardDeviation(insideTemp);
-        this.graphInsideTemp = SetGraph(insideTemp);
+        NaNFilter(insideTemp);
+        if (!insideTemp.isEmpty()){
+            this.maxInsideTemp = Calculations.maximum(insideTemp);
+            this.minInsideTemp = Calculations.minimum(insideTemp);
+            this.meanInsideTemp = Calculations.mean(insideTemp);
+            this.modeInsideTemp = Calculations.mode(insideTemp);
+            this.medianInsideTemp = Calculations.median(insideTemp);
+            this.standardDeviationInsideTemp = Calculations.standardDeviation(insideTemp);
+        }
     }
     /**
      * Individual gets for each calculated InsideTemp value to allow access from other classes.
@@ -290,22 +277,21 @@ public class PeriodData {
     public double getStandardDeviationInsideTemp() {
         return this.standardDeviationInsideTemp;
     }
-    public ArrayList<Integer> getGraphInsideTemp() {
-        return this.graphInsideTemp;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param insideHum The filtered list of all measurements of this type within the given period.
      */
     private void SetInsideHum(ArrayList<Double> insideHum) {
-        this.maxInsideHum = Calculations.maximum(insideHum);
-        this.minInsideHum = Calculations.minimum(insideHum);
-        this.meanInsideHum = Calculations.mean(insideHum);
-        this.modeInsideHum = Calculations.mode(insideHum);
-        this.medianInsideHum = Calculations.median(insideHum);
-        this.standardDeviationInsideHum = Calculations.standardDeviation(insideHum);
-        this.graphInsideHum = SetGraph(insideHum);
+        NaNFilter(insideHum);
+        if (!insideHum.isEmpty()){
+            this.maxInsideHum = Calculations.maximum(insideHum);
+            this.minInsideHum = Calculations.minimum(insideHum);
+            this.meanInsideHum = Calculations.mean(insideHum);
+            this.modeInsideHum = Calculations.mode(insideHum);
+            this.medianInsideHum = Calculations.median(insideHum);
+            this.standardDeviationInsideHum = Calculations.standardDeviation(insideHum);
+        }
     }
     /**
      * Individual gets for each calculated MaxInsideHum value to allow access from other classes.
@@ -329,22 +315,21 @@ public class PeriodData {
     public double getStandardDeviationInsideHum() {
         return this.standardDeviationInsideHum;
     }
-    public ArrayList<Integer> getGraphInsideHum() {
-        return this.graphInsideHum;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param outsideTemp The filtered list of all measurements of this type within the given period.
      */
     private void SetOutsideTemp(ArrayList<Double> outsideTemp) {
-        this.maxOutsideTemp = Calculations.maximum(outsideTemp);
-        this.minOutsideTemp = Calculations.minimum(outsideTemp);
-        this.meanOutsideTemp = Calculations.mean(outsideTemp);
-        this.modeOutsideTemp = Calculations.mode(outsideTemp);
-        this.medianOutsideTemp = Calculations.median(outsideTemp);
-        this.standardDeviationOutsideTemp = Calculations.standardDeviation(outsideTemp);
-        this.graphOutsideTemp = SetGraph(outsideTemp);
+        NaNFilter(outsideTemp);
+        if (!outsideTemp.isEmpty()) {
+            this.maxOutsideTemp = Calculations.maximum(outsideTemp);
+            this.minOutsideTemp = Calculations.minimum(outsideTemp);
+            this.meanOutsideTemp = Calculations.mean(outsideTemp);
+            this.modeOutsideTemp = Calculations.mode(outsideTemp);
+            this.medianOutsideTemp = Calculations.median(outsideTemp);
+            this.standardDeviationOutsideTemp = Calculations.standardDeviation(outsideTemp);
+        }
     }
     /**
      * Individual gets for each calculated OutsideTemp value to allow access from other classes.
@@ -368,22 +353,21 @@ public class PeriodData {
     public double getStandardDeviationOutsideTemp() {
         return this.standardDeviationOutsideTemp;
     }
-    public ArrayList<Integer> getGraphOutsideTemp() {
-        return this.graphOutsideTemp;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param windSpeed The filtered list of all measurements of this type within the given period.
      */
     private void SetWindSpeed(ArrayList<Double> windSpeed){
-        this.maxWindSpeed = Calculations.maximum(windSpeed);
-        this.minWindSpeed = Calculations.minimum(windSpeed);
-        this.meanWindSpeed = Calculations.mean(windSpeed);
-        this.modeWindSpeed = Calculations.mode(windSpeed);
-        this.medianWindSpeed = Calculations.median(windSpeed);
-        this.standardDeviationWindSpeed = Calculations.standardDeviation(windSpeed);
-        this.graphWindSpeed = SetGraph(windSpeed);
+        NaNFilter(windSpeed);
+        if (!windSpeed.isEmpty()) {
+            this.maxWindSpeed = Calculations.maximum(windSpeed);
+            this.minWindSpeed = Calculations.minimum(windSpeed);
+            this.meanWindSpeed = Calculations.mean(windSpeed);
+            this.modeWindSpeed = Calculations.mode(windSpeed);
+            this.medianWindSpeed = Calculations.median(windSpeed);
+            this.standardDeviationWindSpeed = Calculations.standardDeviation(windSpeed);
+        }
     }
     /**
      * Individual gets for each calculated WindSpeed value to allow access from other classes.
@@ -407,22 +391,21 @@ public class PeriodData {
     public double getStandardDeviationWindSpeed() {
         return this.standardDeviationWindSpeed;
     }
-    public ArrayList<Integer> getGraphWindSpeed() {
-        return this.graphWindSpeed;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param avgWindSpeed The filtered list of all measurements of this type within the given period.
      */
     private void SetAvgWindSpeed(ArrayList<Double> avgWindSpeed){
-        this.maxAvgWindSpeed = Calculations.maximum(avgWindSpeed);
-        this.minAvgWindSpeed = Calculations.minimum(avgWindSpeed);
-        this.meanAvgWindSpeed = Calculations.mean(avgWindSpeed);
-        this.modeAvgWindSpeed = Calculations.mode(avgWindSpeed);
-        this.medianAvgWindSpeed = Calculations.median(avgWindSpeed);
-        this.standardDeviationAvgWindSpeed = Calculations.standardDeviation(avgWindSpeed);
-        this.graphAvgWindSpeed = SetGraph(avgWindSpeed);
+        NaNFilter(avgWindSpeed);
+        if (!avgWindSpeed.isEmpty()) {
+            this.maxAvgWindSpeed = Calculations.maximum(avgWindSpeed);
+            this.minAvgWindSpeed = Calculations.minimum(avgWindSpeed);
+            this.meanAvgWindSpeed = Calculations.mean(avgWindSpeed);
+            this.modeAvgWindSpeed = Calculations.mode(avgWindSpeed);
+            this.medianAvgWindSpeed = Calculations.median(avgWindSpeed);
+            this.standardDeviationAvgWindSpeed = Calculations.standardDeviation(avgWindSpeed);
+        }
     }
     /**
      * Individual gets for each calculated AvgWindSpeed value to allow access from other classes.
@@ -446,22 +429,21 @@ public class PeriodData {
     public double getStandardDeviationAvgWindSpeed() {
         return this.standardDeviationAvgWindSpeed;
     }
-    public ArrayList<Integer> getGraphAvgWindSpeed() {
-        return this.graphAvgWindSpeed;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param windDir The filtered list of all measurements of this type within the given period.
      */
     private void SetWindDir(ArrayList<Double> windDir) {
-        this.maxWindDir = Calculations.maximum(windDir);
-        this.minWindDir = Calculations.minimum(windDir);
-        this.meanWindDir = Calculations.mean(windDir);
-        this.modeWindDir = Calculations.mode(windDir);
-        this.medianWindDir = Calculations.median(windDir);
-        this.standardDeviationWindDir = Calculations.standardDeviation(windDir);
-        this.graphWindDir = SetGraph(windDir);
+        NaNFilter(windDir);
+        if (!windDir.isEmpty()) {
+            this.maxWindDir = Calculations.maximum(windDir);
+            this.minWindDir = Calculations.minimum(windDir);
+            this.meanWindDir = Calculations.mean(windDir);
+            this.modeWindDir = Calculations.mode(windDir);
+            this.medianWindDir = Calculations.median(windDir);
+            this.standardDeviationWindDir = Calculations.standardDeviation(windDir);
+        }
     }
     /**
      * Individual gets for each calculated WindDir value to allow access from other classes.
@@ -485,22 +467,21 @@ public class PeriodData {
     public double getStandardDeviationWindDir() {
         return this.standardDeviationWindDir;
     }
-    public ArrayList<Integer> getGraphWindDir() {
-        return this.graphWindDir;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param outsideHum The filtered list of all measurements of this type within the given period.
      */
     private void SetOutsideHum(ArrayList<Double> outsideHum) {
-        this.maxOutsideHum = Calculations.maximum(outsideHum);
-        this.minOutsideHum = Calculations.minimum(outsideHum);
-        this.meanOutsideHum = Calculations.mean(outsideHum);
-        this.modeOutsideHum = Calculations.mode(outsideHum);
-        this.medianOutsideHum = Calculations.median(outsideHum);
-        this.standardDeviationOutsideHum = Calculations.standardDeviation(outsideHum);
-        this.graphOutsideHum = SetGraph(outsideHum);
+        NaNFilter(outsideHum);
+        if (!outsideHum.isEmpty()) {
+            this.maxOutsideHum = Calculations.maximum(outsideHum);
+            this.minOutsideHum = Calculations.minimum(outsideHum);
+            this.meanOutsideHum = Calculations.mean(outsideHum);
+            this.modeOutsideHum = Calculations.mode(outsideHum);
+            this.medianOutsideHum = Calculations.median(outsideHum);
+            this.standardDeviationOutsideHum = Calculations.standardDeviation(outsideHum);
+        }
     }
     /**
      * Individual gets for each calculated OutsideHum value to allow access from other classes.
@@ -524,22 +505,21 @@ public class PeriodData {
     public double getStandardDeviationOutsideHum() {
         return this.standardDeviationOutsideHum;
     }
-    public ArrayList<Integer> getGraphOutsideHum(){
-        return this.graphOutsideHum;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param rainRate The filtered list of all measurements of this type within the given period.
      */
     private void SetRainRate(ArrayList<Double> rainRate) {
-        this.maxRainRate = Calculations.maximum(rainRate);
-        this.minRainRate = Calculations.minimum(rainRate);
-        this.meanRainRate = Calculations.mean(rainRate);
-        this.modeRainRate = Calculations.mode(rainRate);
-        this.medianRainRate = Calculations.median(rainRate);
-        this.standardDeviationRainRate = Calculations.standardDeviation(rainRate);
-        this.graphRainRate = SetGraph(rainRate);
+        NaNFilter(rainRate);
+        if (!rainRate.isEmpty()) {
+            this.maxRainRate = Calculations.maximum(rainRate);
+            this.minRainRate = Calculations.minimum(rainRate);
+            this.meanRainRate = Calculations.mean(rainRate);
+            this.modeRainRate = Calculations.mode(rainRate);
+            this.medianRainRate = Calculations.median(rainRate);
+            this.standardDeviationRainRate = Calculations.standardDeviation(rainRate);
+        }
     }
     /**
      * Individual gets for each calculated RainRate value to allow access from other classes.
@@ -563,22 +543,21 @@ public class PeriodData {
     public double getStandardDeviationRainRate() {
         return this.standardDeviationRainRate;
     }
-    public ArrayList<Integer> getGraphRainRate() {
-        return this.graphRainRate;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param uvLevel The filtered list of all measurements of this type within the given period.
      */
     private void SetUvLevel(ArrayList<Double> uvLevel) {
-        this.maxUvLevel = Calculations.maximum(uvLevel);
-        this.minUvLevel = Calculations.minimum(uvLevel);
-        this.meanUvLevel = Calculations.mean(uvLevel);
-        this.modeUvLevel = Calculations.mode(uvLevel);
-        this.medianUvLevel = Calculations.median(uvLevel);
-        this.standardDeviationUvLevel = Calculations.standardDeviation(uvLevel);
-        this.graphUvLevel = SetGraph(uvLevel);
+        NaNFilter(uvLevel);
+        if (!uvLevel.isEmpty()) {
+            this.maxUvLevel = Calculations.maximum(uvLevel);
+            this.minUvLevel = Calculations.minimum(uvLevel);
+            this.meanUvLevel = Calculations.mean(uvLevel);
+            this.modeUvLevel = Calculations.mode(uvLevel);
+            this.medianUvLevel = Calculations.median(uvLevel);
+            this.standardDeviationUvLevel = Calculations.standardDeviation(uvLevel);
+        }
     }
     /**
      * Individual gets for each calculated UvLevel value to allow access from other classes.
@@ -602,22 +581,21 @@ public class PeriodData {
     public double getStandardDeviationUvLevel() {
         return this.standardDeviationUvLevel;
     }
-    public ArrayList<Integer> getGraphUvLevel() {
-        return this.graphUvLevel;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param battLevel The filtered list of all measurements of this type within the given period.
      */
     private void SetBattLevel(ArrayList<Double> battLevel) {
-        this.maxBattLevel = Calculations.maximum(battLevel);
-        this.minBattLevel = Calculations.minimum(battLevel);
-        this.meanBattLevel = Calculations.mean(battLevel);
-        this.modeBattLevel = Calculations.mode(battLevel);
-        this.medianBattLevel = Calculations.median(battLevel);
-        this.standardDeviationBattLevel = Calculations.standardDeviation(battLevel);
-        this.graphBattLevel = SetGraph(battLevel);
+        NaNFilter(battLevel);
+        if (!battLevel.isEmpty()) {
+            this.maxBattLevel = Calculations.maximum(battLevel);
+            this.minBattLevel = Calculations.minimum(battLevel);
+            this.meanBattLevel = Calculations.mean(battLevel);
+            this.modeBattLevel = Calculations.mode(battLevel);
+            this.medianBattLevel = Calculations.median(battLevel);
+            this.standardDeviationBattLevel = Calculations.standardDeviation(battLevel);
+        }
     }
     /**
      * Individual gets for each calculated BattLevel value to allow access from other classes.
@@ -641,22 +619,21 @@ public class PeriodData {
     public double getStandardDeviationBattLevel() {
         return this.standardDeviationBattLevel;
     }
-    public ArrayList<Integer> getGraphBattLevel() {
-        return this.graphBattLevel;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param sunSet The filtered list of all measurements of this type within the given period.
      */
     private void SetSunSet(ArrayList<Double> sunSet) {
-        this.maxSunSet = Calculations.maximum(sunSet);
-        this.minSunSet = Calculations.minimum(sunSet);
-        this.meanSunSet = Calculations.mean(sunSet);
-        this.modeSunSet = Calculations.mode(sunSet);
-        this.medianSunSet = Calculations.median(sunSet);
-        this.standardDeviationSunSet = Calculations.standardDeviation(sunSet);
-        this.graphSunSet = SetGraph(sunSet);
+        NaNFilter(sunSet);
+        if (!sunSet.isEmpty()) {
+            this.maxSunSet = Calculations.maximum(sunSet);
+            this.minSunSet = Calculations.minimum(sunSet);
+            this.meanSunSet = Calculations.mean(sunSet);
+            this.modeSunSet = Calculations.mode(sunSet);
+            this.medianSunSet = Calculations.median(sunSet);
+            this.standardDeviationSunSet = Calculations.standardDeviation(sunSet);
+        }
     }
     /**
      * Individual gets for each calculated SunSet value to allow access from other classes.
@@ -680,22 +657,20 @@ public class PeriodData {
     public double getStandardDeviationSunSet() {
         return this.standardDeviationSunSet;
     }
-    public ArrayList<Integer> getGraphSunSet() {
-        return this.graphSunSet;
-    }
-
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param sunRise The filtered list of all measurements of this type within the given period.
      */
     private void SetSunRise(ArrayList<Double> sunRise) {
-        this.maxSunRise = Calculations.maximum(sunRise);
-        this.minSunRise = Calculations.minimum(sunRise);
-        this. meanSunRise = Calculations.mean(sunRise);
-        this.modeSunRise = Calculations.mode(sunRise);
-        this.medianSunRise = Calculations.median(sunRise);
-        this.standardDeviationSunRise = Calculations.standardDeviation(sunRise);
-        this.graphSunRise = SetGraph(sunRise);
+        NaNFilter(sunRise);
+        if (!sunRise.isEmpty()) {
+            this.maxSunRise = Calculations.maximum(sunRise);
+            this.minSunRise = Calculations.minimum(sunRise);
+            this.meanSunRise = Calculations.mean(sunRise);
+            this.modeSunRise = Calculations.mode(sunRise);
+            this.medianSunRise = Calculations.median(sunRise);
+            this.standardDeviationSunRise = Calculations.standardDeviation(sunRise);
+        }
     }
     /**
      * Individual gets for each calculated SunRise value to allow access from other classes.
@@ -719,22 +694,21 @@ public class PeriodData {
     public double getStandardDeviationSunRise() {
         return this.standardDeviationSunRise;
     }
-    public ArrayList<Integer> getGraphSunRise() {
-        return this.graphSunRise;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param windChill The filtered list of all measurements of this type within the given period.
      */
     private void SetWindChill(ArrayList<Double> windChill) {
-        this.maxWindChill = Calculations.maximum(windChill);
-        this.minWindChill = Calculations.minimum(windChill);
-        this.meanWindChill = Calculations.mean(windChill);
-        this.modeWindChill = Calculations.mode(windChill);
-        this.medianWindChill = Calculations.median(windChill);
-        this.standardDeviationWindChill = Calculations.standardDeviation(windChill);
-        this.graphWindChill = SetGraph(windChill);
+        NaNFilter(windChill);
+        if (!windChill.isEmpty()) {
+            this.maxWindChill = Calculations.maximum(windChill);
+            this.minWindChill = Calculations.minimum(windChill);
+            this.meanWindChill = Calculations.mean(windChill);
+            this.modeWindChill = Calculations.mode(windChill);
+            this.medianWindChill = Calculations.median(windChill);
+            this.standardDeviationWindChill = Calculations.standardDeviation(windChill);
+        }
     }
     /**
      * Individual gets for each calculated WindChill value to allow access from other classes.
@@ -758,22 +732,21 @@ public class PeriodData {
     public double getStandardDeviationWindChill() {
         return this.standardDeviationWindChill;
     }
-    public ArrayList<Integer> getGraphWindChill() {
-        return this.graphWindChill;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param heatIndex The filtered list of all measurements of this type within the given period.
      */
     private void SetHeatIndex(ArrayList<Double> heatIndex) {
-        this.maxHeatIndex = Calculations.maximum(heatIndex);
-        this.minHeatIndex = Calculations.minimum(heatIndex);
-        this.meanHeatIndex = Calculations.mean(heatIndex);
-        this.modeHeatIndex = Calculations.mode(heatIndex);
-        this.medianHeatIndex = Calculations.median(heatIndex);
-        this.standardDeviationHeatIndex = Calculations.standardDeviation(heatIndex);
-        this.graphHeatIndex = SetGraph(heatIndex);
+        NaNFilter(heatIndex);
+        if (!heatIndex.isEmpty()) {
+            this.maxHeatIndex = Calculations.maximum(heatIndex);
+            this.minHeatIndex = Calculations.minimum(heatIndex);
+            this.meanHeatIndex = Calculations.mean(heatIndex);
+            this.modeHeatIndex = Calculations.mode(heatIndex);
+            this.medianHeatIndex = Calculations.median(heatIndex);
+            this.standardDeviationHeatIndex = Calculations.standardDeviation(heatIndex);
+        }
     }
     /**
      * Individual gets for each calculated HeatIndex value to allow access from other classes.
@@ -797,22 +770,21 @@ public class PeriodData {
     public double getStandardDeviationHeatIndex() {
         return this.standardDeviationHeatIndex;
     }
-    public ArrayList<Integer> getGraphHeatIndex() {
-        return this.graphHeatIndex;
-    }
 
     /**
      * Sets the calculated data by calling the calculation functions and adding the results to the data storage.
      * @param dewPoint The filtered list of all measurements of this type within the given period.
      */
     private void SetDewPoint(ArrayList<Double> dewPoint) {
-        this.maxDewPoint = Calculations.maximum(dewPoint);
-        this.minDewPoint = Calculations.minimum(dewPoint);
-        this.meanDewPoint = Calculations.mean(dewPoint);
-        this.modeDewPoint = Calculations.mode(dewPoint);
-        this.medianDewPoint = Calculations.median(dewPoint);
-        this.standardDeviationDewPoint = Calculations.standardDeviation(dewPoint);
-        this.graphDewPoint = SetGraph(dewPoint);
+        NaNFilter(dewPoint);
+        if (!dewPoint.isEmpty()) {
+            this.maxDewPoint = Calculations.maximum(dewPoint);
+            this.minDewPoint = Calculations.minimum(dewPoint);
+            this.meanDewPoint = Calculations.mean(dewPoint);
+            this.modeDewPoint = Calculations.mode(dewPoint);
+            this.medianDewPoint = Calculations.median(dewPoint);
+            this.standardDeviationDewPoint = Calculations.standardDeviation(dewPoint);
+        }
     }
     /**
      * Individual gets for each calculated DewPoint value to allow access from other classes.
@@ -835,9 +807,6 @@ public class PeriodData {
     }
     public double getStandardDeviationDewPoint() {
         return this.standardDeviationDewPoint;
-    }
-    public ArrayList<Integer> getGraphDewPoint() {
-        return this.graphDewPoint;
     }
 
     /**
@@ -872,17 +841,19 @@ public class PeriodData {
     }
 
     /**
-     * Sets the graph positions for each DataType ArrayList.
-     * @param array ArrayList containing one specific Data Type.
-     * @return ArrayList containing pre calculated positions for the graph.
+     * Sorts the input list and filters out all NaN values.
+     * @param arrayList unsorted list with NaN values.
+     * @return sorted list without NaN values.
      */
-    private static ArrayList <Integer> SetGraph(ArrayList<Double> array) {
-        ArrayList<Integer> positions = new ArrayList<Integer>();
-        double stepSize = SavedData.INSTANCE.GetGraphStep();
-        double graphSpeed = SavedData.INSTANCE.GetGraphSpeed();
-        //
-        //
-        //
-        return positions;
+    private void NaNFilter(ArrayList<Double> arrayList) {
+        if (!arrayList.isEmpty()) {
+            Collections.sort(arrayList);
+            for (int i = arrayList.size() - 1; i == arrayList.size() - 1; i--) {
+                double data = arrayList.get(i);
+                if (Double.isNaN(data)) {
+                    arrayList.remove(i);
+                }
+            }
+        }
     }
 }
