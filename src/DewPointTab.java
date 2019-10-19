@@ -143,7 +143,7 @@ public class DewPointTab extends Tab
     // Runs when the red button is pressed
     @Override
     protected void OnButtonRed() {
-        if (menuCounter == 7) runGraph = !runGraph;
+        if (menuCounter % 8 == 7) runGraph = !runGraph;
     }
 
     /**
