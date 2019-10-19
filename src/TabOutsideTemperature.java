@@ -83,7 +83,6 @@ public class TabOutsideTemperature extends Tab
     @Override
     protected void OnClose() {
         //runs when tab is closed
-        System.out.println("exampletab 2 closed");
         menuCounter = 0;
         runGraph = false;
         HelperFunctions.ClearAll();
