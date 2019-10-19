@@ -69,7 +69,7 @@ public class AvgWindSpeedTab extends Tab
         RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
         Measurement measurement = new Measurement(rawData);
         currentUnitValue = measurement.getAvgWindSpeed();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage Windspeed\ncurrent: %.1f", currentUnitValue) + " km/u");
+        HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage Windspeed\ncurrent: %.1f", currentUnitValue) + " km/h");
 
         graph.initialise(unitValues);
     }
@@ -112,22 +112,22 @@ public class AvgWindSpeedTab extends Tab
                 if (Double.isNaN(currentUnitValue))
                     HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\ncurrent: no value"));
                 else
-                    HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\ncurrent: %.1f", currentUnitValue) + " km/u");
+                    HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\ncurrent: %.1f", currentUnitValue) + " km/h");
                 break;
             case 1:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\nmin: %.1f", minUnitValue) + " km/u");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\nmin: %.1f", minUnitValue) + " km/h");
                 break;
             case 2  :
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\nmax: %.1f", maxUnitValue) + " km/u");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\nmax: %.1f", maxUnitValue) + " km/h");
                 break;
             case 3:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\naverage: %.1f", averageUnitValue) + " km/u");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\naverage: %.1f", averageUnitValue) + " km/h");
                 break;
             case 4:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\nmodus: %.1f", ModeUnitValue) + " km/u");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\nmodus: %.1f", ModeUnitValue) + " km/h");
                 break;
             case 5:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\nmedian: %.1f", MedianUnitValue) + " km/u");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\nmedian: %.1f", MedianUnitValue) + " km/h");
                 break;
             case 6:
                 HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage WindSpeed\nstd deviation: %.2f", stdDevUnitValue));
@@ -143,7 +143,7 @@ public class AvgWindSpeedTab extends Tab
     // Runs when the red button is pressed
     @Override
     protected void OnButtonRed() {
-        if (menuCounter == 7) runGraph = !runGraph;
+        if (menuCounter % 8 == 7) runGraph = !runGraph;
     }
 
     /**

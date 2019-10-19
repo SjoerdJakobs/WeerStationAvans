@@ -96,6 +96,8 @@ public class ValueConverter {
     }
 
     public static String IntTimeIntToString(short rawValue) {
+        if (rawValue > 2400) return "no value";
+
         int integerOne = rawValue/100;
         int integerTwo = (rawValue-(integerOne*100));
         String leftString;

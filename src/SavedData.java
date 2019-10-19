@@ -6,10 +6,10 @@ public enum SavedData
 
     // VARIABLES
     private Measurement LastMeasurement;
-    private Period SavedPeriod = new Period(LocalDate.of(2010, 1, 1), LocalDate.of(2010, 1, 31));
+    private Period SavedPeriod = new Period(LocalDate.of(2010, 7, 1), LocalDate.of(2010, 7, 31));
 
     private int graphStep = SetGraphStep();
-    private double graphSpeed = 0.06; // 3 different speeds: slow (0.15), medium (0.06) or fast (0.02)
+    private double graphSpeed = 0.02; // 3 different speeds: slow (0.15), medium (0.06) or fast (0.02)
 
     /**
      * Re-calculate all results of the new period
