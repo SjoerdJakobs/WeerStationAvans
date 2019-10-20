@@ -742,7 +742,6 @@ public class SettingsTab extends Tab {
                 periodState++;
                 m_menu.DrawMenu();
             } else if (menuState == 1 && state == 3 && periodState == 4){
-                HelperFunctions.ClearTextDisplay();
                 endDay = dayState;
                 HelperFunctions.ClearTextDisplay();
                 HelperFunctions.WriteOnMatrixScreen("\nChosen end period: " + "\n" + endYear + ", " + endMonth + ", " + endDay);
@@ -751,7 +750,6 @@ public class SettingsTab extends Tab {
                 LocalDate startOfPeriod = LocalDate.of(beginYear, beginMonth, beginDay);
                 LocalDate endOfPeriod = LocalDate.of(endYear, endMonth, endDay);
                 SavedData.INSTANCE.SetPeriod(startOfPeriod,endOfPeriod);
-                System.out.print(SavedData.INSTANCE.GetPeriod());
                 state = 4;
             } else if (menuState == 1 && state == 4 && periodState == 4){
                 //reset state, menuState to go back to main settings menu
