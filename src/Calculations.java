@@ -136,16 +136,15 @@ public class Calculations {
     }
 
     /**
-     * TODO Sjoerd
+     * @author Sjoerd
+     * This function calculates the max rain fall in the given period of time.
+     * @param measurements consists of the values during the period of which to check the value.
+     * Max: sums up the measured rainfall during the given period.
      */
-    public static void MaxRain() {
-        ArrayList<RawMeasurement> rawDatas = DatabaseConnection.getMeasurementsLastYear();
-        ArrayList<Measurement> measurements = new ArrayList<Measurement>();
-
+    public static double MaxRain(ArrayList<Measurement> measurements) {
         double max = 0.0;
         double finalMax = 0.0;
-        for (int i = 0; i < rawDatas.size(); i++) {
-            measurements.add(new Measurement(rawDatas.get(i)));
+        for (int i = 0; i < measurements.size(); i++) {
             if (!Double.isNaN(measurements.get(i).getRainRate())) {
                 if (measurements.get(i).getRainRate() > 0) {
                     max += measurements.get(i).getRainRate();
@@ -157,7 +156,7 @@ public class Calculations {
                 }
             }
         }
-        System.out.println("max rain is " + finalMax);
+        return finalMax;
     }
 
     /**
@@ -189,15 +188,9 @@ public class Calculations {
                 if (colderOutside == true && insideTemp > outsideTemp) {
                     count++;
                     colderOutside = false;
-                    System.out.println(measurement.get(i).getDateStamp());
-                    System.out.println("inside: "+ measurement.get(i).getInsideTemp());
-                    System.out.println("outside: " + measurement.get(i).getOutsideTemp());
                 } else if (colderOutside == false && outsideTemp > insideTemp) {
                     count++;
                     colderOutside = true;
-                    System.out.println(measurement.get(i).getDateStamp());
-                    System.out.println("inside: "+ measurement.get(i).getInsideTemp());
-                    System.out.println("outside: " + measurement.get(i).getOutsideTemp());
                 }
             }
         }

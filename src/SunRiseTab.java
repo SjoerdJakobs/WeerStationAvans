@@ -1,99 +1,114 @@
+import sun.awt.SunHints;
+
+import java.util.ArrayList;
+
 public class SunRiseTab extends Tab
 {
-    private int counter = 0;
-    private Period period;
     protected SunRiseTab(Menu menu) {
         super(menu);
     }
 
-    @Override
-    protected void OnOpen() {
-        m_menu.DrawMenu();
-        setPeriod();
-        setValues();
-        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
-        current = ValueConverter.IntTimeIntToString((short)measurement.GetSunRise());
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\ncurrent: "+ current));
-
-
-    }
-
-    @Override
-    protected void OnClose() {
-        HelperFunctions.ClearTextDisplay();
-    }
-
-    @Override
-    protected void Run(double deltaTime) {
-        //runs every frame when tab is opened
-
-    }
-
-    @Override
-    protected void OnButtonBlueTwo() {
-        counter++;
-        HelperFunctions.ClearTextDisplay();
-        m_menu.DrawMenu();
-
-
-        if (counter == 1){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\nmin: "+min));
-        }
-
-        else if (counter == 2){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\nmax: "+max));
-        }
-
-        else if (counter == 3){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\naverage: "+average));
-        }
-
-        else if (counter == 4){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\nmodus: "+Mode));
-        }
-
-        else if (counter == 5){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\nmedian: "+Median));
-        }
-
-        else if (counter == 6){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\nstd deviation: "+stdDev));
-        }
-        else if (counter > 6){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nSun rise\ncurrent: "+current));
-            counter = 0;
-
-        }
-    }
-
+    private Period period;
     public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
 
-    private String current;
-    private String min;
-    private String max;
-    private String average;
-    private String Mode;
-    private String Median;
-    private double stdDev;
+    // MENU VARIABLES
+    private int menuCounter = 0;
 
+    // DATA VARIABLES
+    private String currentUnitValue;
+    private String minUnitValue;
+    private String maxUnitValue;
+    private String averageUnitValue;
+    private String ModeUnitValue;
+    private String MedianUnitValue;
+    private double stdDevUnitValue;
+
+// TODO ***************
+    /**
+     * Set the data veriables
+     */
     public void setValues(){
-        min = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMinSunRise());
-        max = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMaxSunRise());
-        average = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMeanSunRise());
-        Mode = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getModeSunRise());
-        Median = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMedianSunRise());
-        stdDev = period.getDataStorage().getStandardDeviationSunRise();
+        minUnitValue = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMinSunRise());
+        maxUnitValue = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMaxSunRise());
+        averageUnitValue = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMeanSunRise());
+        ModeUnitValue = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getModeSunRise());
+        MedianUnitValue = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMedianSunRise());
+        stdDevUnitValue = period.getDataStorage().getStandardDeviationSunRise();
     }
 
+    // Runs when tab is opened
+    @Override
+    protected void OnOpen() {
+        HelperFunctions.ClearTextDisplay();
+        HelperFunctions.ClearAll();
+        setPeriod();
+        setValues();
+
+        menuCounter=0;
+        m_menu.DrawMenu();
+
+        // TODO
+        // Get current sunrise
+        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
+        Measurement measurement = new Measurement(rawData);
+        currentUnitValue = ValueConverter.IntTimeIntToString((short)measurement.GetSunRise());
+        HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\ncurrent: %s", currentUnitValue));
+    }
+
+    // Runs when tab is closed
+    @Override
+    protected void OnClose() {
+        menuCounter = 0;
+        HelperFunctions.ClearAll();
+    }
+
+    // Runs
+    @Override
+    protected void Run(double deltaTime) {
+        // No graph available
+    }
+
+    // Runs when the second blue button is pressed
+    @Override
+    protected void OnButtonBlueTwo() {
+        menuCounter++;
+        HelperFunctions.ClearAll();
+        m_menu.DrawMenu();
+
+        switch (menuCounter % 7) {
+            case 0:
+                // Get current sunrise
+                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
+                Measurement measurement = new Measurement(rawData);
+                currentUnitValue = ValueConverter.IntTimeIntToString((short)measurement.GetSunRise());
+
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\ncurrent: %s", currentUnitValue));
+                break;
+            case 1:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\nmin: %s", minUnitValue));
+                break;
+            case 2  :
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\nmax: %s", maxUnitValue));
+                break;
+            case 3:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\naverage: %s", averageUnitValue));
+                break;
+            case 4:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\nmodus: %s", ModeUnitValue));
+                break;
+            case 5:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\nmedian: %s", MedianUnitValue));
+                break;
+            case 6:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\nstd deviation: %.2f", stdDevUnitValue));
+                break;
+        } // End switch-case
+
+    }
+
+    // Runs when the red button is pressed
     @Override
     protected void OnButtonRed() {
-        //runs when red button is pressed(runs once, its an actual bu)
     }
 }
 
