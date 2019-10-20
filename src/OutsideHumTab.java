@@ -38,7 +38,7 @@ public class OutsideHumTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinOutsideHum();
@@ -68,8 +68,7 @@ public class OutsideHumTab extends Tab
 
         // TODO
         // Get current outside humidity
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getOutsideHum();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside humidity\ncurrent: %.1f", currentUnitValue) + "%");
 
@@ -107,8 +106,7 @@ public class OutsideHumTab extends Tab
                 runGraph = false;
 
                 // Get current outside humidity
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = measurement.getOutsideHum();
 
                 if (Double.isNaN(currentUnitValue))

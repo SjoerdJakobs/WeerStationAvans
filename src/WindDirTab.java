@@ -38,7 +38,7 @@ public class WindDirTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinWindDir();
@@ -68,8 +68,7 @@ public class WindDirTab extends Tab
 
         // TODO
         // Get current wind direction
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getWindDir();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nWind direction\ncurrent: %.1f", currentUnitValue) + " degrees");
 
@@ -107,8 +106,7 @@ public class WindDirTab extends Tab
                 runGraph = false;
 
                 // Get current wind direction
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = measurement.getWindDir();
 
                 if (Double.isNaN(currentUnitValue))
