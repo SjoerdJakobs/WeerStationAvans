@@ -22,7 +22,7 @@ public class SunSetTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMinSunSet());
@@ -46,8 +46,7 @@ public class SunSetTab extends Tab
 
         // TODO
         // Get current sunset
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = ValueConverter.IntTimeIntToString((short)measurement.GetSunSet());
         HelperFunctions.WriteOnMatrixScreen(String.format("\nSunset\ncurrent: %s", currentUnitValue));
     }
@@ -75,8 +74,7 @@ public class SunSetTab extends Tab
         switch (menuCounter % 7) {
             case 0:
                 // Get current sunset
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = ValueConverter.IntTimeIntToString((short)measurement.GetSunSet());
 
                 HelperFunctions.WriteOnMatrixScreen(String.format("\nSunset\ncurrent: %s", currentUnitValue));

@@ -38,7 +38,7 @@ public class OutsideTempTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinOutsideTemp();
@@ -68,8 +68,7 @@ public class OutsideTempTab extends Tab
 
         // TODO
         // Get current temperature
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getOutsideTemp();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: %.1f", currentUnitValue) + " C");
 
@@ -107,8 +106,7 @@ public class OutsideTempTab extends Tab
                 runGraph = false;
 
                 // Get current temperature
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = measurement.getOutsideTemp();
 
                 if (Double.isNaN(currentUnitValue))

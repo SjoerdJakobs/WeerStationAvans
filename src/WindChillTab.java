@@ -38,7 +38,7 @@ public class WindChillTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinWindChill();
@@ -68,8 +68,7 @@ public class WindChillTab extends Tab
 
         // TODO
         // Get current windchill
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = Calculations.windChill(measurement.getOutsideTemp(), measurement.getWindSpeed());
         HelperFunctions.WriteOnMatrixScreen(String.format("\nWindchill\ncurrent: %.1f", currentUnitValue) + " C");
 
@@ -107,8 +106,7 @@ public class WindChillTab extends Tab
                 runGraph = false;
 
                 // Get current windchill
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = Calculations.windChill(measurement.getOutsideTemp(), measurement.getWindSpeed());
 
                 if (Double.isNaN(currentUnitValue))

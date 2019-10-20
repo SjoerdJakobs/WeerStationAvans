@@ -37,7 +37,7 @@ public class HeatIndexTab extends Tab
     private double stdDevUnitValue;
 
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinHeatIndex();
@@ -67,8 +67,7 @@ public class HeatIndexTab extends Tab
 
         // TODO
         // Get current heat index
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = Calculations.heatIndex(measurement.getInsideTemp(),measurement.getInsideHum());
         HelperFunctions.WriteOnMatrixScreen(String.format("\nHeat index\ncurrent: %.1f", currentUnitValue) + " C");
 
@@ -106,8 +105,7 @@ public class HeatIndexTab extends Tab
                 runGraph = false;
 
                 // Get current heat index
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = Calculations.heatIndex(measurement.getInsideTemp(),measurement.getInsideHum());
 
                 if (Double.isNaN(currentUnitValue))

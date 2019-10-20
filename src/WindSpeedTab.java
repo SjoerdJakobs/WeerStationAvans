@@ -38,7 +38,7 @@ public class WindSpeedTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinWindSpeed();
@@ -68,8 +68,7 @@ public class WindSpeedTab extends Tab
 
         // TODO
         // Get current wind speed
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getWindSpeed();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nWind speed\ncurrent: %.1f", currentUnitValue) + " km/h");
 
@@ -107,8 +106,7 @@ public class WindSpeedTab extends Tab
                 runGraph = false;
 
                 // Get current wind speed
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = measurement.getWindSpeed();
 
                 if (Double.isNaN(currentUnitValue))

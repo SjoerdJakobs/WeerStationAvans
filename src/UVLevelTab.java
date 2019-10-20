@@ -38,7 +38,7 @@ public class UVLevelTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinUvLevel();
@@ -68,8 +68,7 @@ public class UVLevelTab extends Tab
 
         // TODO
         // Get current uv level
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getUvLevel();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nUV Level\ncurrent: %.1f", currentUnitValue));
 
@@ -107,8 +106,7 @@ public class UVLevelTab extends Tab
                 runGraph = false;
 
                 // Get current uv level
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = measurement.getUvLevel();
 
                 if (Double.isNaN(currentUnitValue))

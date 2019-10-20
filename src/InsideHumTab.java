@@ -38,7 +38,7 @@ public class InsideHumTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinInsideHum();
@@ -68,8 +68,7 @@ public class InsideHumTab extends Tab
 
         // TODO
         // Get current inside humidity
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getInsideHum();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nInside Humidity\ncurrent: %.1f", currentUnitValue) + "%");
 
@@ -107,8 +106,7 @@ public class InsideHumTab extends Tab
                 runGraph = false;
 
                 // Get current inside humidity
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = measurement.getInsideHum();
 
                 if (Double.isNaN(currentUnitValue))

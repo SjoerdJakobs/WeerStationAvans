@@ -37,7 +37,7 @@ public class AvgWindSpeedTab extends Tab
     private double stdDevUnitValue;
 
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinAvgWindSpeed();
@@ -66,8 +66,7 @@ public class AvgWindSpeedTab extends Tab
         m_menu.DrawMenu();
 
         // Get current temperature
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getAvgWindSpeed();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nAverage Windspeed\ncurrent: %.1f", currentUnitValue) + " km/h");
 
@@ -105,8 +104,7 @@ public class AvgWindSpeedTab extends Tab
                 runGraph = false;
 
                 // Get current temperature
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = measurement.getAvgWindSpeed();
 
                 if (Double.isNaN(currentUnitValue))

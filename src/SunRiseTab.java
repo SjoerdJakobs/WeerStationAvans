@@ -1,4 +1,3 @@
-//import sun.awt.SunHints;
 
 import java.util.ArrayList;
 
@@ -25,7 +24,7 @@ public class SunRiseTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = ValueConverter.IntTimeIntToString((short)period.getDataStorage().getMinSunRise());
@@ -49,8 +48,7 @@ public class SunRiseTab extends Tab
 
         // TODO
         // Get current sunrise
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = ValueConverter.IntTimeIntToString((short)measurement.GetSunRise());
         HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\ncurrent: %s", currentUnitValue));
     }
@@ -78,8 +76,7 @@ public class SunRiseTab extends Tab
         switch (menuCounter % 7) {
             case 0:
                 // Get current sunrise
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = ValueConverter.IntTimeIntToString((short)measurement.GetSunRise());
 
                 HelperFunctions.WriteOnMatrixScreen(String.format("\nSunrise\ncurrent: %s", currentUnitValue));
