@@ -37,7 +37,7 @@ public class DewPointTab extends Tab
     private double stdDevUnitValue;
 
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinDewPoint();
@@ -66,8 +66,7 @@ public class DewPointTab extends Tab
         m_menu.DrawMenu();
 
         // Get current temperature
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = Calculations.dewPoint(measurement.getOutsideTemp(), measurement.getOutsideHum());
         HelperFunctions.WriteOnMatrixScreen(String.format("\nDew point\ncurrent: %.1f", currentUnitValue) + " C");
 
@@ -105,8 +104,7 @@ public class DewPointTab extends Tab
                 runGraph = false;
 
                 // Get current temperature
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = Calculations.dewPoint(measurement.getOutsideTemp(), measurement.getOutsideHum());
 
                 if (Double.isNaN(currentUnitValue))

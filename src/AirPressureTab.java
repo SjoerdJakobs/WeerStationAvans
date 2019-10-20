@@ -37,7 +37,7 @@ public class AirPressureTab extends Tab
     private double stdDevUnitValue;
 
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinAirPressure();
@@ -66,8 +66,7 @@ public class AirPressureTab extends Tab
         m_menu.DrawMenu();
 
         // Get current temperature
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getBarometer();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\ncurrent: %.1f", currentUnitValue) + " hP");
 
@@ -105,8 +104,7 @@ public class AirPressureTab extends Tab
                 runGraph = false;
 
                 // Get current temperature
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = measurement.getBarometer();
 
                 if (Double.isNaN(currentUnitValue))

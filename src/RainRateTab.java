@@ -38,7 +38,7 @@ public class RainRateTab extends Tab
 
 // TODO ***************
     /**
-     * Set the data veriables
+     * Set the data variables
      */
     public void setValues(){
         minUnitValue = period.getDataStorage().getMinRainRate();
@@ -68,8 +68,7 @@ public class RainRateTab extends Tab
 
         // TODO
         // Get current rain rate
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getRainRate();
         HelperFunctions.WriteOnMatrixScreen(String.format("\nRain rate\ncurrent: %.1f", currentUnitValue) + " mm/hour");
 
@@ -107,8 +106,7 @@ public class RainRateTab extends Tab
                 runGraph = false;
 
                 // Get current rain rate
-                RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-                Measurement measurement = new Measurement(rawData);
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
                 currentUnitValue = measurement.getRainRate();
 
                 if (Double.isNaN(currentUnitValue))
