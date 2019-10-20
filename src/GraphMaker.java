@@ -58,7 +58,7 @@ public class GraphMaker {
      */
     public void DrawAxels() {
         for (int i = leftBoundary; i <= rightBoundary; i++) graph.PixelGrid[bottomBoundary][i] = true;
-        PixelGridDrawer.INSTANCE_DRAWER.AddDraw(graph.PixelGrid);
+        PixelGridDrawer.INSTANCE.AddDraw(graph.PixelGrid);
     }
 
     /**
@@ -138,7 +138,7 @@ public class GraphMaker {
             else HelperFunctions.ClearAllSegmentDisplays();
         }
 
-        PixelGridDrawer.INSTANCE_DRAWER.AddDraw(addToGraph.PixelGrid);
+        PixelGridDrawer.INSTANCE.AddDraw(addToGraph.PixelGrid);
         xIndex++;
 
         // Update graph: add the last colomn
@@ -283,7 +283,7 @@ public class GraphMaker {
             }
         } // End for-loop with var x
 
-        PixelGridDrawer.INSTANCE_DRAWER.AddDraw(frame.PixelGrid);
+        PixelGridDrawer.INSTANCE.AddDraw(frame.PixelGrid);
     } // End function
 
 

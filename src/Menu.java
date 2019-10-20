@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Menu extends RunableObject
+public class Menu extends RunnableObject
 {
     private PixelGrid m_pixelGrid;
 
@@ -20,8 +20,8 @@ public class Menu extends RunableObject
     private Button m_buttonBlueTwo = new Button((short) 0x100);
     private Button m_buttonRed = new Button((short) 0x80);
 
-    protected Menu(Program program, boolean usesInput, boolean usesMain, boolean usesRenderer) {
-        super(program, usesInput, usesMain, usesRenderer);
+    protected Menu(Program program, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
+        super(program, usesInput, usesMain, usesRenderer, startsActivated);
     }
 
     @Override
@@ -156,10 +156,12 @@ public class Menu extends RunableObject
         }
         else if(address == 0x90)
         {
+            m_program.DetectCode(0);
             NextTab();
         }
         else if(address == 0x100)
         {
+            m_program.DetectCode(1);
             CurrentTab.OnButtonBlueTwo();
         }
     }
@@ -188,7 +190,7 @@ public class Menu extends RunableObject
     }
 
     @Override
-    protected void Destroy(Program program) {
-        super.Destroy(program);
+    protected void Destroy() {
+        super.Destroy();
     }
 }

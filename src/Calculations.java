@@ -141,9 +141,11 @@ public class Calculations {
      * @param measurements consists of the values during the period of which to check the value.
      * Max: sums up the measured rainfall during the given period.
      */
-    public static double MaxRain(ArrayList<Measurement> measurements) {
+    public static double MaxRain(ArrayList<Measurement> measurements)
+    {
         double max = 0.0;
         double finalMax = 0.0;
+
         for (int i = 0; i < measurements.size(); i++) {
             if (!Double.isNaN(measurements.get(i).getRainRate())) {
                 if (measurements.get(i).getRainRate() > 0) {
