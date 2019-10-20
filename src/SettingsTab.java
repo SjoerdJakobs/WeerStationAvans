@@ -12,6 +12,7 @@ public class SettingsTab extends Tab {
      * int year/month/day state = keeps count on which year/month/day the user is on
      * int beginYear/beginMonth/beginDay = the time period the user inserted for the first time
      * int endYear/endMonth/endDay = the time period the user inserted the second time
+     * boolean redButtonPushed = dis/enables the red button when needed
      * int stepWidth = used for the stepWidth of the drawn points in the graphs
      * boolean stepWidthAccord = equals true if the user accepts the set stepWidth for the graphs
      * int preDefState = keeps count on which predefined (individual) assignment the user is on
@@ -30,6 +31,8 @@ public class SettingsTab extends Tab {
     int endYear;
     int endMonth;
     int endDay;
+
+    boolean redButtonPushed = true;
 
     int stepWidth = 0;
     boolean stepWidthAccord = true;
@@ -62,6 +65,7 @@ public class SettingsTab extends Tab {
     @Override
     protected void OnButtonBlueTwo() {
         HelperFunctions.ClearMatrixDisplay();
+        redButtonPushed = true;
         /**
          * Scroll through main settings menu
          */
@@ -674,186 +678,195 @@ public class SettingsTab extends Tab {
          * When pressed on the red button, the state is changed into 1. This opens up a new "menu" to select year, month and day,
          * seperated by a click on the red button
          */
-        if (menuState == 1 && periodState == 0) {
-            state = 1;
-            periodState = 1;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nChoose a begin year: ");
-            m_menu.DrawMenu();
-        } else if (menuState == 1 && state == 1 && periodState == 1) {
-            beginYear = 2008 + yearState;
-            if (beginYear == 2009){
-                monthState = 6;
-                beginYear = 2008 + yearState;
+        if (redButtonPushed){
+            if (menuState == 1 && periodState == 0) {
+                redButtonPushed = false;
+                state = 1;
+                periodState = 1;
                 HelperFunctions.ClearTextDisplay();
-                HelperFunctions.WriteOnMatrixScreen("\nChoose a begin month: ");
-                periodState++;
+                HelperFunctions.WriteOnMatrixScreen("\nChoose a begin year: ");
                 m_menu.DrawMenu();
-            } else {
-                HelperFunctions.ClearTextDisplay();
-                HelperFunctions.WriteOnMatrixScreen("\nChoose a begin month: ");
-                periodState++;
-                m_menu.DrawMenu();
-            }
-        } else if (menuState == 1 && state == 1 && periodState == 2) {
-            beginMonth = monthState;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nChoose a begin day: ");
-            periodState++;
-            m_menu.DrawMenu();
-        } else if (menuState == 1 && state == 1 && periodState == 3) {
-            beginDay = dayState;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nChosen begin period: " + beginYear +", " + beginMonth + ", " + beginDay);
-            state = 3;
-            periodState = 1;
-            //continue setting the desired period from the year, month and day that was put in for the begin period
-            yearState = beginYear;
-            monthState = beginMonth -1;
-            dayState = beginDay;
-            m_menu.DrawMenu();
-        } else if (menuState == 1 && state == 3 && periodState == 1){
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nChoose an end year: ");
-            periodState++;
-            m_menu.DrawMenu();
-        } else if (menuState == 1 && state == 3 && periodState == 2) {
-            endYear = 2008 + yearState;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nChoose an end month: ");
-            periodState++;
-            m_menu.DrawMenu();
-        } else if (menuState == 1 && state == 3 && periodState == 3){
-            endMonth = monthState;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nChoose an end day: ");
-            periodState++;
-            m_menu.DrawMenu();
-        } else if (menuState == 1 && state == 3 && periodState == 4){
-            HelperFunctions.ClearTextDisplay();
-            endDay = dayState;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nChosen end period: " + "\n " + endYear + ", " + endMonth + ", " + endDay);
-            m_menu.DrawMenu();
-            //set a new dateStamp for the desired period of time
-            LocalDate startOfPeriod = LocalDate.of(beginYear, beginMonth, beginDay);
-            LocalDate endOfPeriod = LocalDate.of(endYear, endMonth, endDay);
-            SavedData.INSTANCE.SetPeriod(startOfPeriod,endOfPeriod);
-            System.out.print(SavedData.INSTANCE.GetPeriod());
-            state = 4;
-        } else if (menuState == 1 && state == 4 && periodState == 4){
-            //reset state, menuState to go back to main settings menu
-            //reset yearState, monthState, dayState for the next time a period is set
-            state = 0;
-            menuState = 0;
-            periodState = 0;
-            yearState = 0;
-            monthState = 1;
-            dayState = 1;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nSettings: ");
-            m_menu.DrawMenu();
-        }
 
-        /**
-         * Graph step setting
-         */
-        else if (state == 0 && menuState == 2){
-            state = 5;
-            stepWidthAccord = false;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nSet graph step " +
-                    "\nwidth: auto");
-            m_menu.DrawMenu();
-        } else if (state == 5 && menuState == 2 && stepWidthAccord == false){
-            stepWidthAccord = true;
-            if (state == 5 && menuState == 2 && stepWidthAccord ==true){
-                if (stepWidth != 0) SavedData.INSTANCE.SetGraphStep(stepWidth);
-                else SavedData.INSTANCE.SetGraphStep();
-                stepWidth = 0; // Reset stepWidth
+            } else if (menuState == 1 && state == 1 && periodState == 1) {
+                redButtonPushed = false;
+                beginYear = 2008 + yearState;
+                if (beginYear == 2009){
+                    monthState = 6;
+                    beginYear = 2008 + yearState;
+                    HelperFunctions.ClearTextDisplay();
+                    HelperFunctions.WriteOnMatrixScreen("\nChoose a begin month: ");
+                    periodState++;
+                    m_menu.DrawMenu();
+                } else {
+                    HelperFunctions.ClearTextDisplay();
+                    HelperFunctions.WriteOnMatrixScreen("\nChoose a begin month: ");
+                    periodState++;
+                    m_menu.DrawMenu();
+                }
+            } else if (menuState == 1 && state == 1 && periodState == 2) {
+                redButtonPushed = false;
+                beginMonth = monthState;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nChoose a begin day: ");
+                periodState++;
+                m_menu.DrawMenu();
+            } else if (menuState == 1 && state == 1 && periodState == 3) {
+                beginDay = dayState;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nChosen begin period: " + beginYear +", " + beginMonth + ", " + beginDay);
+                state = 3;
+                periodState = 1;
+                //continue setting the desired period from the year, month and day that was put in for the begin period
+                yearState = beginYear;
+                monthState = beginMonth -1;
+                dayState = beginDay;
+                m_menu.DrawMenu();
+            } else if (menuState == 1 && state == 3 && periodState == 1){
+                redButtonPushed = false;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nChoose an end year: ");
+                periodState++;
+                m_menu.DrawMenu();
+            } else if (menuState == 1 && state == 3 && periodState == 2) {
+                redButtonPushed = false;
+                endYear = 2008 + yearState;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nChoose an end month: ");
+                periodState++;
+                m_menu.DrawMenu();
+            } else if (menuState == 1 && state == 3 && periodState == 3){
+                redButtonPushed = false;
+                endMonth = monthState;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nChoose an end day: ");
+                periodState++;
+                m_menu.DrawMenu();
+            } else if (menuState == 1 && state == 3 && periodState == 4){
+                endDay = dayState;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nChosen end period: " + "\n" + endYear + ", " + endMonth + ", " + endDay);
+                m_menu.DrawMenu();
+                //set a new dateStamp for the desired period of time
+                LocalDate startOfPeriod = LocalDate.of(beginYear, beginMonth, beginDay);
+                LocalDate endOfPeriod = LocalDate.of(endYear, endMonth, endDay);
+                SavedData.INSTANCE.SetPeriod(startOfPeriod,endOfPeriod);
+                state = 4;
+            } else if (menuState == 1 && state == 4 && periodState == 4){
+                //reset state, menuState to go back to main settings menu
+                //reset yearState, monthState, dayState for the next time a period is set
+                redButtonPushed = false;
                 state = 0;
-                menuState = 2;
+                menuState = 0;
+                periodState = 0;
+                yearState = 0;
+                monthState = 1;
+                dayState = 1;
                 HelperFunctions.ClearTextDisplay();
                 HelperFunctions.WriteOnMatrixScreen("\nSettings: ");
                 m_menu.DrawMenu();
             }
+
+            /**
+             * Graph step setting
+             */
+            else if (state == 0 && menuState == 2){
+                state = 5;
+                stepWidthAccord = false;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nSet graph step " +
+                        "\nwidth: auto");
+                m_menu.DrawMenu();
+            } else if (state == 5 && menuState == 2 && stepWidthAccord == false){
+                stepWidthAccord = true;
+                if (state == 5 && menuState == 2 && stepWidthAccord ==true){
+                    if (stepWidth != 0) SavedData.INSTANCE.SetGraphStep(stepWidth);
+                    else SavedData.INSTANCE.SetGraphStep();
+                    stepWidth = 0; // Reset stepWidth
+                    state = 0;
+                    menuState = 2;
+                    HelperFunctions.ClearTextDisplay();
+                    HelperFunctions.WriteOnMatrixScreen("\nSettings: ");
+                    m_menu.DrawMenu();
+                }
+            }
+
+            /**
+             * When pressed on the red button, it opens up a new menu to scroll through the predefined calculations (individual assignments)
+             */
+            else if (state == 0 && menuState == 3) {
+                preDefState = 1;
+                state = 2;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nOptions: ");
+                m_menu.DrawMenu();
+            } else if (state == 2 && preDefState == 2){
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nDays with chance of " +
+                        "\nmist: " + Calculations.mist(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
+                m_menu.DrawMenu();
+                state = 0; //reset state & menuState to go back to predefined options menu
+                menuState = 3;
+            } else if (state == 2 && preDefState == 3) {
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nMax rainfall in" +
+                        "\nperiod: " +
+                        String.format("%.2f", Calculations.MaxRain(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements())));
+                m_menu.DrawMenu();
+                state = 0;
+                menuState = 3;
+            } else if (state == 2 && preDefState == 4) {
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nAmount of times " +
+                        "\ncrossed: " +
+                        Calculations.tempChange(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
+                m_menu.DrawMenu();
+                state = 0;
+                menuState = 3;
+            } else if (state == 2 && preDefState == 5) {
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nAmount of degreedays: " +
+                        Calculations.calculateDegreeDays(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
+                m_menu.DrawMenu();
+                state = 0;
+                menuState = 3;
+            } else if (state == 2 && preDefState == 6) {
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nTemperature rising: " +
+                        Calculations.risingTemperatureDuration(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
+                m_menu.DrawMenu();
+                state = 0;
+                menuState = 3;
+            } else if (state == 2 && preDefState == 7){
+                state = 0; //reset state & menuState to go back to main setting menu
+                menuState = 0;
+                HelperFunctions.ClearTextDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\nSettings: ");
+                m_menu.DrawMenu();
+            }
+
+            /**
+             * When pressed, the settings menu should revert to the (first) tab with the current weather information
+             */
+            else if(state ==0 && menuState ==4){
+                HelperFunctions.ClearMatrixDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\n Press first blue " +
+                        "\n button to go forward");
+                state = 0;
+                menuState = 0;
+                m_menu.DrawMenu();
+            }
+            /**
+             * When pressed, the GUI should quit
+             */
+            else if (state == 0 && menuState == 5) {
+                m_menu.DrawMenu();
+                HelperFunctions.ClearMatrixDisplay();
+                HelperFunctions.WriteOnMatrixScreen("\n Goodbye!");
+                IO.delay(500);
+                HelperFunctions.ClearTextDisplay();
+                m_menu.m_program.ExitProgram();
+            }
         }
 
-        /**
-         * When pressed on the red button, it opens up a new menu to scroll through the predefined calculations (individual assignments)
-         */
-        else if (state == 0 && menuState == 3) {
-            preDefState = 1;
-            state = 2;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nOptions: ");
-            m_menu.DrawMenu();
-        } else if (state == 2 && preDefState == 2){
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nDays with chance of " +
-                    "\nmist: " + Calculations.mist(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
-            m_menu.DrawMenu();
-            state = 0; //reset state & menuState to go back to predefined options menu
-            menuState = 3;
-        } else if (state == 2 && preDefState == 3) {
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nMax rainfall in" +
-                    "\nperiod: " +
-                    String.format("%.2f", Calculations.MaxRain(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements())));
-            m_menu.DrawMenu();
-            state = 0;
-            menuState = 3;
-        } else if (state == 2 && preDefState == 4) {
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nAmount of times " +
-                    "\ncrossed: " +
-                    Calculations.tempChange(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
-            m_menu.DrawMenu();
-            state = 0;
-            menuState = 3;
-        } else if (state == 2 && preDefState == 5) {
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nAmount of degreedays: " +
-                    Calculations.calculateDegreeDays(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
-            m_menu.DrawMenu();
-            state = 0;
-            menuState = 3;
-        } else if (state == 2 && preDefState == 6) {
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nTemeperature rising: " +
-                    Calculations.risingTemperatureDuration(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
-            m_menu.DrawMenu();
-            state = 0;
-            menuState = 3;
-        } else if (state == 2 && preDefState == 7){
-            state = 0; //reset state & menuState to go back to main setting menu
-            menuState = 0;
-            HelperFunctions.ClearTextDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\nSettings: ");
-            m_menu.DrawMenu();
-        }
-
-        /**
-         * When pressed, the settings menu should revert to the (first) tab with the current weather information
-         */
-        else if(state ==0 && menuState ==4){
-            HelperFunctions.ClearMatrixDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Press first blue " +
-                    "\n button to go back");
-            state = 0;
-            menuState = 0;
-            m_menu.DrawMenu();
-        }
-        /**
-         * When pressed, the GUI should quit
-         */
-        else if (state == 0 && menuState == 5) {
-            m_menu.DrawMenu();
-            HelperFunctions.ClearMatrixDisplay();
-            HelperFunctions.WriteOnMatrixScreen("\n Goodbye!");
-            IO.delay(500);
-            HelperFunctions.ClearTextDisplay();
-            m_menu.m_program.ExitProgram();
-        }
     }
 }
