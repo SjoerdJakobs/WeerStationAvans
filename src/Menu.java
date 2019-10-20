@@ -27,6 +27,8 @@ public class Menu extends RunableObject
     @Override
     protected void Start() {
         super.Start();
+        SavedData.INSTANCE.SetLastMeasurement();
+
         m_pixelGrid = new PixelGrid();
 
         m_tabs = new ArrayList<Tab>();
@@ -35,18 +37,20 @@ public class Menu extends RunableObject
         // m_tabs.add(new ExampleTab3(this));
         m_tabs.add(new SettingsTab(this));
         m_tabs.add(new AirPressureTab(this));
+
         m_tabs.add(new InsideTempTab(this));
         m_tabs.add(new InsideHumTab(this));
 
-//        m_tabs.add(new OutsideTempTab(this));
-        m_tabs.add(new TabOutsideTemperature(this));
+        m_tabs.add(new OutsideTempTab(this));
+        m_tabs.add(new OutsideHumTab(this));
 
         m_tabs.add(new WindSpeedTab(this));
         m_tabs.add(new AvgWindSpeedTab(this));
         m_tabs.add(new WindDirTab(this));
-        m_tabs.add(new OutsideHumTab(this));
+
         m_tabs.add(new RainRateTab(this));
         m_tabs.add(new UVLevelTab(this));
+
         m_tabs.add(new SunRiseTab(this));
         m_tabs.add(new SunSetTab(this));
         m_tabs.add(new DewPointTab(this));

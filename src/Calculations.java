@@ -9,8 +9,7 @@ public class Calculations {
     /**
      * calculate the mode (most frequent number in the array)
      */
-    public static double mode(ArrayList<Double> input) {
-        ArrayList<Double> array = NaNFilter(input);
+    public static double mode(ArrayList<Double> array) {
         int counter = 0;
         int prevCount = 0;
         double result = 0;
@@ -35,8 +34,7 @@ public class Calculations {
     /**
      * calculate the median (the middle value of a sorted array)
      */
-    public static double median(ArrayList<Double> input) {
-        ArrayList<Double> array = NaNFilter(input);
+    public static double median(ArrayList<Double> array) {
         if (array.size() % 2 == 0) {
             return (array.get((array.size() / 2) - 1) + array.get(array.size() / 2)) / 2;
         } else {
@@ -47,8 +45,7 @@ public class Calculations {
     /**
      * calculate the mean
      */
-    public static double mean(ArrayList<Double> input) {
-        ArrayList<Double> array = NaNFilter(input);
+    public static double mean(ArrayList<Double> array) {
         double sum = 0;
         double average;
         for (double data : array) {
@@ -61,8 +58,7 @@ public class Calculations {
     /**
      * calculate the standard deviation
      */
-    public static double standardDeviation(ArrayList<Double> input) {
-        ArrayList<Double> array = NaNFilter(input);
+    public static double standardDeviation(ArrayList<Double> array) {
         double sd;
         double sum = 0;
         double mean = mean(array);
@@ -76,16 +72,14 @@ public class Calculations {
     /**
      * calculate the minimum
      */
-    public static double minimum(ArrayList<Double> input) {
-        ArrayList<Double> array = NaNFilter(input);
+    public static double minimum(ArrayList<Double> array) {
         return array.get(0);
     }
 
     /**
      * calculate the maximum
      */
-    public static double maximum(ArrayList<Double> input) {
-        ArrayList<Double> array = NaNFilter(input);
+    public static double maximum(ArrayList<Double> array) {
         return array.get(array.size() - 1);
     }
 
@@ -142,16 +136,15 @@ public class Calculations {
     }
 
     /**
-     * TODO Sjoerd
+     * @author Sjoerd
+     * This function calculates the max rain fall in the given period of time.
+     * @param measurements consists of the values during the period of which to check the value.
+     * Max: sums up the measured rainfall during the given period.
      */
-    public static void MaxRain() {
-        ArrayList<RawMeasurement> rawDatas = DatabaseConnection.getMeasurementsLastYear();
-        ArrayList<Measurement> measurements = new ArrayList<Measurement>();
-
+    public static double MaxRain(ArrayList<Measurement> measurements) {
         double max = 0.0;
         double finalMax = 0.0;
-        for (int i = 0; i < rawDatas.size(); i++) {
-            measurements.add(new Measurement(rawDatas.get(i)));
+        for (int i = 0; i < measurements.size(); i++) {
             if (!Double.isNaN(measurements.get(i).getRainRate())) {
                 if (measurements.get(i).getRainRate() > 0) {
                     max += measurements.get(i).getRainRate();
@@ -163,7 +156,7 @@ public class Calculations {
                 }
             }
         }
-        System.out.println("max rain is " + finalMax);
+        return finalMax;
     }
 
     /**
@@ -195,15 +188,9 @@ public class Calculations {
                 if (colderOutside == true && insideTemp > outsideTemp) {
                     count++;
                     colderOutside = false;
-                    System.out.println(measurement.get(i).getDateStamp());
-                    System.out.println("inside: "+ measurement.get(i).getInsideTemp());
-                    System.out.println("outside: " + measurement.get(i).getOutsideTemp());
                 } else if (colderOutside == false && outsideTemp > insideTemp) {
                     count++;
                     colderOutside = true;
-                    System.out.println(measurement.get(i).getDateStamp());
-                    System.out.println("inside: "+ measurement.get(i).getInsideTemp());
-                    System.out.println("outside: " + measurement.get(i).getOutsideTemp());
                 }
             }
         }
@@ -304,24 +291,5 @@ public class Calculations {
             }
         }
         return series;
-    }
-
-    /**
-     * Sorts the input list and filters out all NaN values.
-     * @param arrayList unsorted list with NaN values.
-     * @return sorted list without NaN values.
-     */
-    private static ArrayList<Double> NaNFilter(ArrayList<Double> arrayList) {
-        ArrayList<Double> sortedList = new ArrayList<Double>(arrayList);
-        Collections.sort(sortedList);
-        if (!arrayList.isEmpty()) {
-            for (int i = sortedList.size() - 1; i == sortedList.size() - 1; i--) {
-                double data = sortedList.get(i);
-                if (Double.isNaN(data)) {
-                    sortedList.remove(i);
-                }
-            }
-        }
-        return sortedList;
     }
 }
