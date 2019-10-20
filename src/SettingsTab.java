@@ -12,6 +12,7 @@ public class SettingsTab extends Tab {
      * int year/month/day state = keeps count on which year/month/day the user is on
      * int beginYear/beginMonth/beginDay = the time period the user inserted for the first time
      * int endYear/endMonth/endDay = the time period the user inserted the second time
+     * boolean redButtonPushed = dis/enables the red button when needed
      * int stepWidth = used for the stepWidth of the drawn points in the graphs
      * boolean stepWidthAccord = equals true if the user accepts the set stepWidth for the graphs
      * int preDefState = keeps count on which predefined (individual) assignment the user is on
@@ -31,7 +32,6 @@ public class SettingsTab extends Tab {
     int endMonth;
     int endDay;
 
-    boolean blueButtonPushed = true;
     boolean redButtonPushed = true;
 
     int stepWidth = 0;
@@ -66,7 +66,6 @@ public class SettingsTab extends Tab {
     protected void OnButtonBlueTwo() {
         HelperFunctions.ClearMatrixDisplay();
         redButtonPushed = true;
-        blueButtonPushed = true;
         /**
          * Scroll through main settings menu
          */
@@ -834,7 +833,7 @@ public class SettingsTab extends Tab {
                 menuState = 3;
             } else if (state == 2 && preDefState == 6) {
                 HelperFunctions.ClearTextDisplay();
-                HelperFunctions.WriteOnMatrixScreen("\nTemeperature rising: " +
+                HelperFunctions.WriteOnMatrixScreen("\nTemperature rising: " +
                         Calculations.risingTemperatureDuration(SavedData.INSTANCE.GetPeriod().getDataStorage().getPeriodMeasurements()));
                 m_menu.DrawMenu();
                 state = 0;
@@ -853,7 +852,7 @@ public class SettingsTab extends Tab {
             else if(state ==0 && menuState ==4){
                 HelperFunctions.ClearMatrixDisplay();
                 HelperFunctions.WriteOnMatrixScreen("\n Press first blue " +
-                        "\n button to go back");
+                        "\n button to go forward");
                 state = 0;
                 menuState = 0;
                 m_menu.DrawMenu();
