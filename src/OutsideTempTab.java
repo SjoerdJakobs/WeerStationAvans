@@ -70,7 +70,7 @@ public class OutsideTempTab extends Tab
         // Get current temperature
         Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
         currentUnitValue = measurement.getOutsideTemp();
-        HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: %.1f", currentUnitValue) + " C");
+        HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\ncurrent: %.1f", currentUnitValue) + " C");
 
         graph.initialise(unitValues);
     }
@@ -110,27 +110,27 @@ public class OutsideTempTab extends Tab
                 currentUnitValue = measurement.getOutsideTemp();
 
                 if (Double.isNaN(currentUnitValue))
-                    HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: no value"));
+                    HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\ncurrent: no value"));
                 else
-                    HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\ncurrent: %.1f", currentUnitValue) + " C");
+                    HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\ncurrent: %.1f", currentUnitValue) + " C");
                 break;
             case 1:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmin: %.1f", minUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nmin: %.1f", minUnitValue) + " C");
                 break;
             case 2  :
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmax: %.1f", maxUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nmax: %.1f", maxUnitValue) + " C");
                 break;
             case 3:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\naverage: %.1f", averageUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\naverage: %.1f", averageUnitValue) + " C");
                 break;
             case 4:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmodus: %.1f", ModeUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nmodus: %.1f", ModeUnitValue) + " C");
                 break;
             case 5:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nmedian: %.1f", MedianUnitValue) + " C");
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nmedian: %.1f", MedianUnitValue) + " C");
                 break;
             case 6:
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside Temperature\nstd deviation: %.2f", stdDevUnitValue));
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nOutside temperature\nstd deviation: %.2f", stdDevUnitValue));
                 break;
             case 7:
                 runGraph = true;

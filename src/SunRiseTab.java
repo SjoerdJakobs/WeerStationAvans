@@ -1,6 +1,3 @@
-
-import java.util.ArrayList;
-
 public class SunRiseTab extends Tab
 {
     protected SunRiseTab(Menu menu) {

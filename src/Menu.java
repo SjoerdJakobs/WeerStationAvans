@@ -32,9 +32,7 @@ public class Menu extends RunableObject
         m_pixelGrid = new PixelGrid();
 
         m_tabs = new ArrayList<Tab>();
-//        m_tabs.add(new ExampleTab(this));
-        // m_tabs.add(new ExampleTab2(this));
-        // m_tabs.add(new ExampleTab3(this));
+
         m_tabs.add(new SettingsTab(this));
         m_tabs.add(new AirPressureTab(this));
 
@@ -56,18 +54,6 @@ public class Menu extends RunableObject
         m_tabs.add(new DewPointTab(this));
         m_tabs.add(new WindChillTab(this));
         m_tabs.add(new HeatIndexTab(this));
-            /*
-        // if we ever need hidden tabs
-        m_scrollTabs = new ArrayList<Tab>();
-        m_scrollTabs.add(new ExampleTab(this));
-        m_scrollTabs.add(new ExampleTab2(this));
-        m_scrollTabs.add(new ExampleTab3(this));
-
-        m_allTabs = new ArrayList<Tab>();
-        m_allTabs.add(new ExampleTab(this));
-        m_allTabs.add(new ExampleTab2(this));
-        m_allTabs.add(new ExampleTab3(this));
-         */
 
         CurrentTabIndex = 0;
         CurrentTab = m_tabs.get(CurrentTabIndex);
