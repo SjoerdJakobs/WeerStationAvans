@@ -201,7 +201,7 @@ public class SnekGame extends RunnableObject {
     public void SpawnFood() {
         int y = 1 + (int) (Math.random() * (32 - 1));
         int x = 1 + (int) (Math.random() * (128 - 1));
-        System.out.println(x + " " + y);
+
         m_nodeGrid[y][x].HasFood = true;
         m_pixelGrid.PixelGrid[y][x] = true;
     }
