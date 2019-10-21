@@ -33,7 +33,7 @@ public class SnekGame extends RunnableObject {
 
         m_nodeGrid = new GridNode[32][128];
         m_pixelGrid = new PixelGrid();
-        m_snek = new Snek(this,64,16);
+        m_snek = new Snek(this, 64, 16);
         m_Drawer = PixelGridDrawer.INSTANCE;
         m_Drawer.m_lastFrame = new boolean[32][128];
 
@@ -46,17 +46,18 @@ public class SnekGame extends RunnableObject {
                 if (i == 0 || j == 0 || i == m_nodeGrid.length - 1 || j == m_nodeGrid[0].length - 1) {
                     m_nodeGrid[i][j].Obstructed = true;
                     m_pixelGrid.PixelGrid[i][j] = true;
-                }
-                else
-                {
+                } else {
                     m_nodeGrid[i][j].Obstructed = false;
                     m_pixelGrid.PixelGrid[i][j] = false;
                 }
             }
         }
         m_snekBody = new ArrayList<GridNode>();
-        MoveSnek(m_snek.SnekXpos,m_snek.SnekYpos,1);
+        MoveSnek(m_snek.SnekXpos, m_snek.SnekYpos, 1);
 
+        m_score = 0;
+        SpawnFood();
+        SpawnFood();
         SpawnFood();
         SpawnFood();
     }
@@ -71,8 +72,7 @@ public class SnekGame extends RunnableObject {
     @Override
     protected void MainLoop(double deltaTime) {
         m_gameTickTimer += deltaTime;
-        if(m_gameTickTimer >= m_gameTickSpeed)
-        {
+        if (m_gameTickTimer >= m_gameTickSpeed) {
             SnekMovement();
             m_Drawer.HardDraw(m_pixelGrid.PixelGrid);
             m_gameTickTimer = 0;
@@ -116,13 +116,13 @@ public class SnekGame extends RunnableObject {
                 } else if (m_nodeGrid[m_snek.SnekYpos + 1][m_snek.SnekXpos].HasFood) {
                     //add
                     SpawnFood();
-                    m_score ++;
+                    m_score++;
                     m_snek.SnekYpos++;
-                    MoveSnek(m_snek.SnekXpos,m_snek.SnekYpos,1);
+                    MoveSnek(m_snek.SnekXpos, m_snek.SnekYpos, 1);
                 } else {
                     //add
                     m_snek.SnekYpos++;
-                    MoveSnek(m_snek.SnekXpos,m_snek.SnekYpos,0);
+                    MoveSnek(m_snek.SnekXpos, m_snek.SnekYpos, 0);
                 }
                 break;
 
@@ -133,13 +133,13 @@ public class SnekGame extends RunnableObject {
                 } else if (m_nodeGrid[m_snek.SnekYpos - 1][m_snek.SnekXpos].HasFood) {
                     //add
                     SpawnFood();
-                    m_score ++;
+                    m_score++;
                     m_snek.SnekYpos--;
-                    MoveSnek(m_snek.SnekXpos,m_snek.SnekYpos,1);
+                    MoveSnek(m_snek.SnekXpos, m_snek.SnekYpos, 1);
                 } else {
                     //add
                     m_snek.SnekYpos--;
-                    MoveSnek(m_snek.SnekXpos,m_snek.SnekYpos,0);
+                    MoveSnek(m_snek.SnekXpos, m_snek.SnekYpos, 0);
                 }
                 break;
             case RIGHT:
@@ -149,13 +149,13 @@ public class SnekGame extends RunnableObject {
                 } else if (m_nodeGrid[m_snek.SnekYpos][m_snek.SnekXpos + 1].HasFood) {
                     //add
                     SpawnFood();
-                    m_score ++;
+                    m_score++;
                     m_snek.SnekXpos++;
-                    MoveSnek(m_snek.SnekXpos,m_snek.SnekYpos,1);
+                    MoveSnek(m_snek.SnekXpos, m_snek.SnekYpos, 1);
                 } else {
                     //add
                     m_snek.SnekXpos++;
-                    MoveSnek(m_snek.SnekXpos,m_snek.SnekYpos,0);
+                    MoveSnek(m_snek.SnekXpos, m_snek.SnekYpos, 0);
                 }
                 break;
             case LEFT:
@@ -164,21 +164,20 @@ public class SnekGame extends RunnableObject {
                 } else if (m_nodeGrid[m_snek.SnekYpos][m_snek.SnekXpos - 1].HasFood) {
                     //add
                     SpawnFood();
-                    m_score ++;
+                    m_score++;
                     m_snek.SnekXpos--;
-                    MoveSnek(m_snek.SnekXpos,m_snek.SnekYpos,1);
+                    MoveSnek(m_snek.SnekXpos, m_snek.SnekYpos, 1);
                 } else {
                     //add
                     m_snek.SnekXpos--;
-                    MoveSnek(m_snek.SnekXpos,m_snek.SnekYpos,0);
+                    MoveSnek(m_snek.SnekXpos, m_snek.SnekYpos, 0);
                 }
                 break;
         }
-        HelperFunctions.WriteValueOnSegments(1,m_score,0);
+        HelperFunctions.WriteValueOnSegments(1, m_score, 0);
     }
 
-    private void MoveSnek(int addXpos, int addYpos, int foodAmount)
-    {
+    private void MoveSnek(int addXpos, int addYpos, int foodAmount) {
         m_snekBody.add(m_nodeGrid[addYpos][addXpos]);
         m_nodeGrid[addYpos][addXpos].Obstructed = true;
         m_nodeGrid[addYpos][addXpos].IsInSnakeCounter = m_snek.SnekLenght;
@@ -188,31 +187,27 @@ public class SnekGame extends RunnableObject {
         Iterator<GridNode> it = m_snekBody.iterator();
         while (it.hasNext()) {
             GridNode gn = it.next();
-            gn.IsInSnakeCounter +=foodAmount;
-            if (gn.IsInSnakeCounter <= 0)
-            {
+            gn.IsInSnakeCounter += foodAmount;
+            if (gn.IsInSnakeCounter <= 0) {
                 gn.Obstructed = false;
                 m_pixelGrid.PixelGrid[gn.YPos][gn.XPos] = false;
                 it.remove();
-            }
-            else
-            {
+            } else {
                 gn.IsInSnakeCounter--;
             }
         }
     }
 
-    public void SpawnFood()
-    {
-        int y = 1 + (int)(Math.random() * (32 - 1));
-        int x = 1 + (int)(Math.random() * (128 - 1));
+    public void SpawnFood() {
+        int y = 1 + (int) (Math.random() * (32 - 1));
+        int x = 1 + (int) (Math.random() * (128 - 1));
+        System.out.println(x + " " + y);
         m_nodeGrid[y][x].HasFood = true;
         m_pixelGrid.PixelGrid[y][x] = true;
     }
 
-    public void OnDeath()
-    {
-        HelperFunctions.WriteOnMatrixScreen("       DED SNEK\n    Score: "+ m_score);
+    public void OnDeath() {
+        HelperFunctions.WriteOnMatrixScreen("       DED SNEK\n    Score: " + m_score);
 
         //a lazy way to make a delay to show the title a little longer
         try {
@@ -226,15 +221,11 @@ public class SnekGame extends RunnableObject {
     /**
      * I know this code is in the menu class too and that i should write a input handler but life happened and I had to cut some corners
      */
-    private void CheckForButtonPress(Button button)
-    {
-        if (IO.readShort(button.Address) != 0 && !button.On)
-        {
+    private void CheckForButtonPress(Button button) {
+        if (IO.readShort(button.Address) != 0 && !button.On) {
             button.On = true;
             ButtonCall(button.Address);
-        }
-        else if (IO.readShort(button.Address) == 0 && button.On)
-        {
+        } else if (IO.readShort(button.Address) == 0 && button.On) {
             button.On = false;
             ButtonCall(button.Address);
         }
