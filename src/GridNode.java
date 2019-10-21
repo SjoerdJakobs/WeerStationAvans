@@ -1,12 +1,17 @@
 public class GridNode
 {
-    boolean m_obstructed;
-    boolean m_hasFood;
-    Direction direction;
+    public boolean Obstructed;
+    public boolean HasFood;
+
+    public int XPos;
+    public int YPos;
+
+    public int IsInSnakeCounter;
+
     public GridNode()
     {
-        m_obstructed = false;
-        m_hasFood = false;
-        direction = Direction.DEFAULT;
+        IsInSnakeCounter = 0;
+        Obstructed = false;
+        HasFood = false;
     }
 }

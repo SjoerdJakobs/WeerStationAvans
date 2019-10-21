@@ -16,7 +16,6 @@ public class RunnableObject
 
     protected RunnableObject(Program program, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
         m_program = program;
-
         UsesInput = usesInput;
         UsesMain = usesMain;
         UsesRenderer = usesRenderer;

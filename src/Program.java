@@ -115,11 +115,13 @@ public class Program
         else if(m_codeStep == 7)
         {
             SwitchRunables();
+            m_codeStep = 0;
         }
         else
         {
             m_codeStep = 0;
         }
+        System.out.println(m_codeStep);
     }
     public void SwitchRunables()
     {

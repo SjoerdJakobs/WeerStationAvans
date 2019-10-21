@@ -32,31 +32,24 @@ public class Menu extends RunnableObject
         m_pixelGrid = new PixelGrid();
 
         m_tabs = new ArrayList<Tab>();
-//        m_tabs.add(new ExampleTab(this));
-        // m_tabs.add(new ExampleTab2(this));
-        // m_tabs.add(new ExampleTab3(this));
-        m_tabs.add(new SettingsTab(this));
-        m_tabs.add(new AirPressureTab(this));
-
         m_tabs.add(new InsideTempTab(this));
-        m_tabs.add(new InsideHumTab(this));
-
         m_tabs.add(new OutsideTempTab(this));
+        m_tabs.add(new InsideHumTab(this));
         m_tabs.add(new OutsideHumTab(this));
-
+        m_tabs.add(new AirPressureTab(this));
         m_tabs.add(new WindSpeedTab(this));
         m_tabs.add(new AvgWindSpeedTab(this));
         m_tabs.add(new WindDirTab(this));
-
         m_tabs.add(new RainRateTab(this));
         m_tabs.add(new UVLevelTab(this));
-
         m_tabs.add(new SunRiseTab(this));
         m_tabs.add(new SunSetTab(this));
         m_tabs.add(new DewPointTab(this));
         m_tabs.add(new WindChillTab(this));
         m_tabs.add(new HeatIndexTab(this));
-            /*
+        m_tabs.add(new SettingsTab(this));
+
+        /*
         // if we ever need hidden tabs
         m_scrollTabs = new ArrayList<Tab>();
         m_scrollTabs.add(new ExampleTab(this));
@@ -89,6 +82,7 @@ public class Menu extends RunnableObject
         if(renewMeasurementsTimer >= 60)
         {
             SavedData.INSTANCE.SetLastMeasurement();
+            renewMeasurementsTimer = 0;
         }
     }
 
@@ -99,6 +93,12 @@ public class Menu extends RunnableObject
         //draw stuff
     }
 
+    @Override
+    protected void Awake()
+    {
+        CurrentTabIndex = m_tabs.size()-1;
+        JumpTab(CurrentTabIndex);
+    }
 
     /**
      * go to the next tab in the arraylist
@@ -153,6 +153,12 @@ public class Menu extends RunnableObject
         if(address == 0x80)
         {
             CurrentTab.OnButtonRed();
+            m_program.DetectCode(3);
+            if(CurrentTabIndex != m_tabs.size()-1)
+            {
+                CurrentTabIndex = m_tabs.size()-1;
+                JumpTab(CurrentTabIndex);
+            }
         }
         else if(address == 0x90)
         {
