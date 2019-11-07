@@ -28,6 +28,8 @@ public class main
         System.out.println(lastYear.getDataStorage().getModeAirPressure());
         System.out.println(lastYear.getDataStorage().getMedianAirPressure());
         System.out.println(lastYear.getDataStorage().getStandardDeviationAirPressure());*/
+
+        //test
     }
 
 
