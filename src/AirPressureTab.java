@@ -1,107 +1,158 @@
+import java.util.ArrayList;
+
 public class AirPressureTab extends Tab
 {
-    private int counter = 0;
-    private Period period;
     protected AirPressureTab(Menu menu) {
         super(menu);
     }
-
-    @Override
-    protected void OnOpen() {
-        m_menu.DrawMenu();
-        setPeriod();
-        setValues();
-        RawMeasurement rawData = DatabaseConnection.getMostRecentMeasurement();
-        Measurement measurement = new Measurement(rawData);
-        current = measurement.getBarometer();
-        if (Double.isNaN(current)){
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent: no value"));
-        }
-        else {
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent: %.2f",current)+" hP");
-        }
-
-    }
-
-    @Override
-    protected void OnClose() {
-        HelperFunctions.ClearTextDisplay();
-    }
-
-    @Override
-    protected void Run(double deltaTime) {
-        //runs every frame when tab is opened
-
-    }
-
-    @Override
-    protected void OnButtonBlueTwo() {
-        counter++;
-        HelperFunctions.ClearTextDisplay();
-        m_menu.DrawMenu();
-
-        if (counter == 1){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmin: %.2f",min)+" hP");
-        }
-
-        else if (counter == 2){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmax: %.2f",max)+" hP");
-        }
-
-        else if (counter == 3){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\naverage: %.2f",average)+" hP");
-        }
-
-        else if (counter == 4){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmodus: %.2f",Mode)+" hP");
-        }
-
-        else if (counter == 5){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nmedian: %.2f",Median)+" hP");
-        }
-
-        else if (counter == 6){
-
-            HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\nstd deviation: %.2f",stdDev));
-        }
-        else if (counter > 6){
-            if (Double.isNaN(current)){
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent: no value"));
-            }
-            else {
-                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir pressure\ncurrent: %.2f",current)+" hP");
-            }
-            counter = 0;
-
-        }
-    }
+    private Period period;
     public void setPeriod(){period = SavedData.INSTANCE.GetPeriod(); }
 
-    private double current;
-    private double min;
-    private double max;
-    private double average;
-    private double Mode;
-    private double Median;
-    private double stdDev;
+    // Get raw measurements of period
+    private ArrayList<Measurement> measurements;
+    public void setMeasurements(){
+        measurements = period.getDataStorage().getPeriodMeasurements();
 
-    public void setValues(){
-        min = period.getDataStorage().getMinAirPressure();
-        max = period.getDataStorage().getMaxAirPressure();
-        average = period.getDataStorage().getMeanAirPressure();
-        Mode = period.getDataStorage().getModeAirPressure();
-        Median = period.getDataStorage().getMedianAirPressure();
-        stdDev = period.getDataStorage().getStandardDeviationAirPressure();
+    }
+    // Get the correct values from the measurement
+    private ArrayList<Double> unitValues;
+    public void setUnitValues(){
+        unitValues = GetUnit(measurements);
     }
 
+    // Create a PixelGrid to keep track of the shown dots
+    GraphMaker graph = new GraphMaker();
+
+    // MENU VARIABLES
+    private int menuCounter = 0;
+    private boolean runGraph = false;
+
+    // DATA VARIABLES
+    private double currentUnitValue;
+    private double minUnitValue;
+    private double maxUnitValue;
+    private double averageUnitValue;
+    private double ModeUnitValue;
+    private double MedianUnitValue;
+    private double stdDevUnitValue;
+
+    /**
+     * Set the data variables
+     */
+    public void setValues(){
+        minUnitValue = period.getDataStorage().getMinAirPressure();
+        maxUnitValue = period.getDataStorage().getMaxAirPressure();
+        averageUnitValue = period.getDataStorage().getMeanAirPressure();
+        ModeUnitValue = period.getDataStorage().getModeAirPressure();
+        MedianUnitValue = period.getDataStorage().getMedianAirPressure();
+        stdDevUnitValue = period.getDataStorage().getStandardDeviationAirPressure();
+    }
+
+    // GRAPH VARIABLES
+    private double deltaTimer = 0;
+    private double graphSpeed = 0.03;
+
+    // Runs when tab is opened
+    @Override
+    protected void OnOpen() {
+        HelperFunctions.ClearTextDisplay();
+        HelperFunctions.ClearAll();
+        setPeriod();
+        setValues();
+        setMeasurements();
+        setUnitValues();
+
+        menuCounter=0;
+        m_menu.DrawMenu();
+
+        // Get current temperature
+        Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
+        currentUnitValue = measurement.getBarometer();
+        HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\ncurrent: %.1f", currentUnitValue) + " hP");
+
+        graph.initialise(unitValues);
+    }
+
+    // Runs when tab is closed
+    @Override
+    protected void OnClose() {
+        menuCounter = 0;
+        runGraph = false;
+        HelperFunctions.ClearAll();
+    }
+
+    // Runs always but content is run only when runGraph is true
+    @Override
+    protected void Run(double deltaTime) {
+        deltaTimer += deltaTime;
+
+        if (runGraph && deltaTimer >= SavedData.INSTANCE.GetGraphSpeed()) {
+            deltaTimer = 0;
+            graph.RunCycle();
+        }
+    }
+
+    // Runs when the second blue button is pressed
+    @Override
+    protected void OnButtonBlueTwo() {
+        menuCounter++;
+        HelperFunctions.ClearAll();
+        m_menu.DrawMenu();
+
+        switch (menuCounter % 8) {
+            case 0:
+                runGraph = false;
+
+                // Get current temperature
+                Measurement measurement = SavedData.INSTANCE.GetLastMeasurement();
+                currentUnitValue = measurement.getBarometer();
+
+                if (Double.isNaN(currentUnitValue))
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\ncurrent: no value"));
+                else
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\ncurrent: %.1f", currentUnitValue) + " hP");
+                break;
+            case 1:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\nmin: %.1f", minUnitValue) + " hP");
+                break;
+            case 2  :
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\nmax: %.1f", maxUnitValue) + " hP");
+                break;
+            case 3:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\naverage: %.1f", averageUnitValue) + " hP");
+                break;
+            case 4:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\nmodus: %.1f", ModeUnitValue) + " hP");
+                break;
+            case 5:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\nmedian: %.1f", MedianUnitValue) + " hP");
+                break;
+            case 6:
+                HelperFunctions.WriteOnMatrixScreen(String.format("\nAir Pressure\nstd deviation: %.2f", stdDevUnitValue));
+                break;
+            case 7:
+                runGraph = true;
+                graph.DrawAxels();
+                break;
+        } // End switch-case
+
+    }
+
+    // Runs when the red button is pressed
     @Override
     protected void OnButtonRed() {
-        //runs when red button is pressed(runs once, its an actual bu)
+        if (menuCounter % 8 == 7) runGraph = !runGraph;
+    }
+
+    /**
+     * Getting the values of a predefined unit
+     * @param measurements ArrayList with all unitValues
+     * @return ArrayList with values of only unit
+     */
+    private ArrayList<Double> GetUnit(ArrayList<Measurement> measurements) {
+        ArrayList<Double> data = new ArrayList<>();
+        for (int i = 0; i < measurements.size(); i++) data.add(measurements.get(i).getBarometer());
+        return data;
     }
 }
 

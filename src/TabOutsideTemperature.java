@@ -30,6 +30,7 @@ public class TabOutsideTemperature extends Tab
     private int menuCounter = 0;
     private boolean runGraph = false;
 
+    // DATA VARIABLES
     private double currentUnitValue;
     private double minUnitValue;
     private double maxUnitValue;
@@ -38,16 +39,17 @@ public class TabOutsideTemperature extends Tab
     private double MedianUnitValue;
     private double stdDevUnitValue;
 
-    // DATA VARIABLES
+    /**
+     * Set the data veriables
+     */
     public void setValues(){
      minUnitValue = period.getDataStorage().getMinOutsideTemp();
      maxUnitValue = period.getDataStorage().getMaxOutsideTemp();
-    averageUnitValue = period.getDataStorage().getMeanOutsideTemp();
+     averageUnitValue = period.getDataStorage().getMeanOutsideTemp();
      ModeUnitValue = period.getDataStorage().getModeOutsideTemp();
      MedianUnitValue = period.getDataStorage().getMedianOutsideTemp();
      stdDevUnitValue = period.getDataStorage().getStandardDeviationOutsideTemp();
 }
-
 
     // GRAPH VARIABLES
     private double deltaTimer = 0;
@@ -81,7 +83,6 @@ public class TabOutsideTemperature extends Tab
     @Override
     protected void OnClose() {
         //runs when tab is closed
-        System.out.println("exampletab 2 closed");
         menuCounter = 0;
         runGraph = false;
         HelperFunctions.ClearAll();

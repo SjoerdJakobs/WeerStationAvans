@@ -1,6 +1,6 @@
 public enum PixelGridDrawer
 {
-        INSTANCE_DRAWER;
+        INSTANCE;
 
         public boolean[][] m_lastFrame = new boolean[32][128];
         public void Draw(boolean[][] newFrame)

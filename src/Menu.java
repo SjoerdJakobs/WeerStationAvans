@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Menu extends RunableObject
+public class Menu extends RunnableObject
 {
     private PixelGrid m_pixelGrid;
 
@@ -20,8 +20,8 @@ public class Menu extends RunableObject
     private Button m_buttonBlueTwo = new Button((short) 0x100);
     private Button m_buttonRed = new Button((short) 0x80);
 
-    protected Menu(Program program, boolean usesInput, boolean usesMain, boolean usesRenderer) {
-        super(program, usesInput, usesMain, usesRenderer);
+    protected Menu(Program program, boolean usesInput, boolean usesMain, boolean usesRenderer, boolean startsActivated) {
+        super(program, usesInput, usesMain, usesRenderer, startsActivated);
     }
 
     @Override
@@ -32,21 +32,14 @@ public class Menu extends RunableObject
         m_pixelGrid = new PixelGrid();
 
         m_tabs = new ArrayList<Tab>();
-//        m_tabs.add(new ExampleTab(this));
-        // m_tabs.add(new ExampleTab2(this));
-        // m_tabs.add(new ExampleTab3(this));
-        m_tabs.add(new SettingsTab(this));
-        m_tabs.add(new AirPressureTab(this));
         m_tabs.add(new InsideTempTab(this));
+        m_tabs.add(new OutsideTempTab(this));
         m_tabs.add(new InsideHumTab(this));
-
-//        m_tabs.add(new OutsideTempTab(this));
-        m_tabs.add(new TabOutsideTemperature(this));
-
+        m_tabs.add(new OutsideHumTab(this));
+        m_tabs.add(new AirPressureTab(this));
         m_tabs.add(new WindSpeedTab(this));
         m_tabs.add(new AvgWindSpeedTab(this));
         m_tabs.add(new WindDirTab(this));
-        m_tabs.add(new OutsideHumTab(this));
         m_tabs.add(new RainRateTab(this));
         m_tabs.add(new UVLevelTab(this));
         m_tabs.add(new SunRiseTab(this));
@@ -54,7 +47,9 @@ public class Menu extends RunableObject
         m_tabs.add(new DewPointTab(this));
         m_tabs.add(new WindChillTab(this));
         m_tabs.add(new HeatIndexTab(this));
-            /*
+        m_tabs.add(new SettingsTab(this));
+
+        /*
         // if we ever need hidden tabs
         m_scrollTabs = new ArrayList<Tab>();
         m_scrollTabs.add(new ExampleTab(this));
@@ -87,6 +82,7 @@ public class Menu extends RunableObject
         if(renewMeasurementsTimer >= 60)
         {
             SavedData.INSTANCE.SetLastMeasurement();
+            renewMeasurementsTimer = 0;
         }
     }
 
@@ -97,6 +93,12 @@ public class Menu extends RunableObject
         //draw stuff
     }
 
+    @Override
+    protected void Awake()
+    {
+        CurrentTabIndex = m_tabs.size()-1;
+        JumpTab(CurrentTabIndex);
+    }
 
     /**
      * go to the next tab in the arraylist
@@ -151,13 +153,21 @@ public class Menu extends RunableObject
         if(address == 0x80)
         {
             CurrentTab.OnButtonRed();
+            m_program.DetectCode(3);
+            if(CurrentTabIndex != m_tabs.size()-1)
+            {
+                CurrentTabIndex = m_tabs.size()-1;
+                JumpTab(CurrentTabIndex);
+            }
         }
         else if(address == 0x90)
         {
+            m_program.DetectCode(0);
             NextTab();
         }
         else if(address == 0x100)
         {
+            m_program.DetectCode(1);
             CurrentTab.OnButtonBlueTwo();
         }
     }
@@ -186,7 +196,7 @@ public class Menu extends RunableObject
     }
 
     @Override
-    protected void Destroy(Program program) {
-        super.Destroy(program);
+    protected void Destroy() {
+        super.Destroy();
     }
 }
